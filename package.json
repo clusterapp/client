@@ -1,0 +1,30 @@
+{
+  "name": "Cluster_Frontend",
+  "version": "0.0.1",
+  "description": "fontend =======",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/clusterapp/fontend.git"
+  },
+  "author": "Ollie Jennings & Jack Franklin",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/clusterapp/fontend/issues"
+  },
+  "homepage": "https://github.com/clusterapp/fontend",
+  "devDependencies": {
+    "gulp": "^3.8.6",
+    "gulp-concat": "^2.3.3",
+    "gulp-load-plugins": "^0.5.3",
+    "gulp-ng-annotate": "^0.2.0",
+    "gulp-sourcemaps": "^0.4.5",
+    "gulp-uglify": "^0.3.1"
+  },
+  "dependencies": {
+    "st": "^0.5.1"
+  }
+}
