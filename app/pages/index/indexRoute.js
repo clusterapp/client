@@ -1,5 +1,5 @@
 angular.module('app')
-.config(function ($routeProvider) {
+.config(function ($routeProvider, $locationProvider) {
 
     $routeProvider
     .when('/', {
@@ -10,4 +10,5 @@ angular.module('app')
       redirectTo: '/'
     });
 
+    $locationProvider.html5Mode(true);
 });
