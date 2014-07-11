@@ -7,11 +7,12 @@ var bodyParser = require('body-parser');
 var logger = require('morgan');
 var compress = require('compression');
 
-var app = express();                 // create our app w/ express
+var app = express();
+
 
 // configuration =================
-app.use(express.static(__dirname + '/app/'));     // set the static files location /public/img will be /img for users
-app.use(logger('dev'));             // log every request to the console
+app.use(express.static(__dirname + '/app/'));
+app.use(logger('dev'));
 app.use(compress());
 app.use(bodyParser.urlencoded({ extended: true }));
 
