@@ -1,20 +1,29 @@
-var st = require('st'),
-    http = require('http'),
-    dir = process.cwd() + '/app/';
+// server.js
 
-var mount = st({
-  path: dir,
-  url: '/',
-  index: 'index.html'
+// set up ========================
+var express  = require('express');
+var http = require('http');
+var bodyParser = require('body-parser');
+var logger = require('morgan');
+var compress = require('compression');
+
+var app = express();
+
+
+// configuration =================
+app.use(express.static(__dirname + '/app/'));
+app.use(logger('dev'));
+app.use(compress());
+app.use(bodyParser.urlencoded({ extended: true }));
+
+
+app.get('*', function (req, res) {
+  res.sendfile('./app/index.html');
 });
 
-http.createServer(function(req, res) {
-  var stHandled = mount(req, res);
-  if (stHandled) {
-    return;
-  } else {
-    res.end('Not a static file');
-  }
-}).listen(process.env.PORT || 3002);
 
-console.log("Server is running on 0.0.0.0:3002");
+// listen (start app with node server.js) ======================================
+app.listen(3002);
+console.log("App listening on port 3002");
+
+

@@ -19,8 +19,16 @@ gulp.task('js', function () {
 })
 
 
-gulp.task('dev', ['js'], function () {
-  gulp.watch('app/assets/js/**/*.js', ['js'])
+gulp.task('sass', function () {
+  gulp.src('app/assets/sass/cluster.sass')
+    .pipe($.rubySass({style: 'compressed', loadPath: process.cwd() + '/app/assets/sass'}))
+    .pipe(gulp.dest('app/assets/css'));
+});
+
+
+gulp.task('dev', ['js', 'sass'], function () {
+  gulp.watch(['app/pages/**/*.js', 'app/shared/**/*.js'], ['js'])
+  gulp.watch('app/assets/sass/**/*.sass', ['sass'])
 })
 
 
