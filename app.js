@@ -16,3 +16,5 @@ http.createServer(function(req, res) {
     res.end('Not a static file');
   }
 }).listen(process.env.PORT || 3002);
+
+console.log("Server is running on 0.0.0.0:3002");

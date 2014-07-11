@@ -1,8 +1,9 @@
 angular.module('app')
 .config(function ($routeProvider) {
-  $routeProvider
+
+    $routeProvider
     .when('/', {
-      templateUrl: '/views/home.html',
+      templateUrl: '/pages/index/indexTemplate.html',
       controller: 'IndexCtrl'
     })
     .otherwise({
