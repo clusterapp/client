@@ -1,5 +1,5 @@
 angular.module('app')
-.controller('IndexCtrl', function ($scope, $routeParams, $cookies, $location) {
+.controller('IndexCtrl', function ($scope, $routeParams, $cookies, $location, api) {
 
 
     // check if routeParams has values
@@ -17,6 +17,10 @@ angular.module('app')
     console.log($cookies);
     if ($cookies.user) {
       $scope.isLoggedIn = true;
+
+      console.log(api.getUser());
+
+
     }
 
    // delete $cookies['user'];

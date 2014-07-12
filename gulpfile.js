@@ -8,6 +8,7 @@ gulp.task('js', function () {
       'app/shared/vendor/angular.min.js',
       'app/shared/vendor/*.js',
       'app/modules.js',
+      'app/shared/**/*.js',
       'app/pages/**/*.js'
     ])
     .pipe($.sourcemaps.init())
