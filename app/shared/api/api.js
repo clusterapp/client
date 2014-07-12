@@ -4,16 +4,13 @@ angular.module('app')
   var endpoint = "http://0.0.0.0:3000";
 
   this.getUser = function () {
-    $http.get(endpoint + '/users/',
-      {
-        params: {
-          'token': $cookies.user.token,
-          'userId': $cookies.user.user_id
-        }
+    return $http.get(endpoint + '/users', {
+      params: {
+        'token': $cookies.userToken,
+        'userId': $cookies.userId
       }
-    )
-    .success(function (data) {
-      return data;
-    })
+    }).then(function(result) {
+      return result.data;
+    });
   };
 });
