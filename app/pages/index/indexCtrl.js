@@ -1,5 +1,5 @@
 angular.module('app')
-.controller('IndexCtrl', function ($scope, $routeParams, $cookies, $location, api) {
+.controller('IndexCtrl', function ($scope, $routeParams, $cookies, $location, UserApiService) {
   // check if routeParams has values
   if ($routeParams.token && $routeParams.user_id && $routeParams.user_name) {
     $cookies.userToken = $routeParams.token;
@@ -11,11 +11,14 @@ angular.module('app')
 
   if ($cookies.userToken) {
     $scope.isLoggedIn = true;
-    api.getUser().then(function(result) {
-      if(result.errors.length) {
+    UserApiService.getUser({
+      userId: $cookies.userId,
+      userToken: $cookies.userToken
+    }).then(function(result) {
+      if(result.errors && result.errors.length) {
         // something went wrong
       }
-      console.log(result);
+      // result is the user
     });
   }
   // delete $cookies['user'];

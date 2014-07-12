@@ -1,14 +1,12 @@
 angular.module('app')
-.service('api', function ($cookies, $http) {
+.service('UserApiService', function ($cookies, $http) {
 
   var endpoint = "http://0.0.0.0:3000";
 
-  this.getUser = function () {
+  this.ENDPOINT = endpoint;
+  this.getUser = function(params) {
     return $http.get(endpoint + '/users', {
-      params: {
-        'token': $cookies.userToken,
-        'userId': $cookies.userId
-      }
+      params: params
     }).then(function(result) {
       return result.data;
     });
