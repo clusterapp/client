@@ -12,6 +12,9 @@ angular.module('app')
   if ($cookies.userToken) {
     $scope.isLoggedIn = true;
     api.getUser().then(function(result) {
+      if(result.errors.length) {
+        // something went wrong
+      }
       console.log(result);
     });
   }
