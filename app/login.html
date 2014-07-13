@@ -24,7 +24,15 @@
       </div>
     </section>
 
-
+    <script>
+      window.onload = function () {
+        var url = "http://127.0.0.1:3000/auth/reddit?redirect=";
+        url += window.location.protocol + "//" + window.location.host +  window.location.pathname;
+        document.getElementById('loginButton').href = url;
+        console.log(url);
+      };
+    
+    </script>
 
   </body>
 </html>

@@ -1,22 +1,14 @@
 angular.module('app')
-.controller('IndexCtrl', function ($scope, $routeParams, $cookies, $location) {
+.controller('IndexCtrl', function ($scope, $routeParams, CookieStore, UserApiService) {
 
+  CookieStore.save($routeParams);
 
-    // check if routeParams has values
-  console.log($cookies, $routeParams);
-    if ($routeParams.token && $routeParams.user_id && $routeParams.user_name) {
-      $cookies.user = {
-        token: $routeParams.token,
-        user_id: $routeParams.user_id,
-        user_name: $routeParams.user_name
-      };
-
-      $location.url($location.path());
+  UserApiService.getUser().then(function(result) {
+    if(result.errors && result.errors.length) {
+      // something went wrong
     }
+    // result is the user
+    console.log(result);
+  });
 
-    if ($cookies.user) {
-      $scope.isLoggedIn = true;
-    }
-
-   // delete $cookies['user'];
 });

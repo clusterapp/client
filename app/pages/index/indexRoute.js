@@ -4,7 +4,8 @@ angular.module('app')
     $routeProvider
     .when('/', {
       templateUrl: '/pages/index/indexTemplate.html',
-      controller: 'IndexCtrl'
+      controller: 'IndexCtrl',
+      reloadOnSearch: false
     })
     .otherwise({
       redirectTo: '/'
