@@ -9,7 +9,9 @@ gulp.task('js', function () {
       'app/shared/vendor/*.js',
       'app/modules.js',
       'app/shared/**/*.js',
-      'app/pages/**/*.js'
+      '!app/shared/**/*Spec.js',
+      'app/pages/**/*.js',
+      '!app/pages/**/*Spec.js'
     ])
     .pipe($.sourcemaps.init())
     .pipe($.concat('cluster.js'))
