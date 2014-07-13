@@ -13,3 +13,5 @@ To run the client:
 * run `node app`
 
 Then visit the url `0.0.0.0:3002` in your browser
+
+Hello world
