@@ -32,7 +32,7 @@ app.get('/logout', function (req, res) {
 
 // When user hits server ================
 app.get('*', function (req, res) {
-  // // must check if route has parameters of token and user etc... (if so then this is logging a user in)
+  // must check if route has parameters of token and user etc... (if so then this is logging a user in)
   var sess = req.session;
   var params = req.query;
 
@@ -48,10 +48,8 @@ app.get('*', function (req, res) {
   console.log('This is a session:', sess);
 
   if (sess.user && sess.user.token && sess.user.user_id) {
-  //   // if user is logged in go to this page
     res.sendfile('./app/app.html');
   } else {
-  //   // otherwise send this page
     res.sendfile('./app/login.html');
   }
 });
