@@ -1,7 +1,7 @@
 Client
 ======
 
-[![Build Status](https://travis-ci.org/clusterapp/client.svg?branch=user-dashboard)](https://travis-ci.org/clusterapp/client)
+[![Build Status](https://travis-ci.org/clusterapp/client.svg?branch=master)](https://travis-ci.org/clusterapp/client)
 
 This Client code for Clusterapp
 
