@@ -1,6 +1,8 @@
 Client
 ======
 
+[![Build Status](https://travis-ci.org/clusterapp/client.svg?branch=user-dashboard)](https://travis-ci.org/clusterapp/client)
+
 This Client code for Clusterapp
 
 
@@ -14,4 +16,4 @@ To run the client:
 
 Then visit the url `0.0.0.0:3002` in your browser
 
-Hello world
+
