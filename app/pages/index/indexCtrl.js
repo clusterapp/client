@@ -14,7 +14,6 @@ angular.module('app')
       $location.url($location.path());
     }
 
-    console.log($cookies);
     if ($cookies.user) {
       $scope.isLoggedIn = true;
     }
