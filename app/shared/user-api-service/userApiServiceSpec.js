@@ -25,9 +25,16 @@ describe('UserApiService Spec', function() {
 
   describe('#getUser()', function() {
     it('should get the users details from the api', function() {
-      $httpBackend.when('GET', UserApiService.ENDPOINT + '/users?token=456&userId=123').respond({});
-      $httpBackend.expectGET(UserApiService.ENDPOINT + '/users?token=456&userId=123');
+      $httpBackend.expectGET(UserApiService.ENDPOINT + '?token=456&userId=123').respond({});
       UserApiService.getUser();
+      $httpBackend.flush();
+    });
+  });
+
+  describe('#getUserOwnClusters()', function() {
+    it('should make a request to /users/owner', function() {
+      $httpBackend.expectGET(UserApiService.ENDPOINT + '/clusters/own?token=456&userId=123').respond({});
+      UserApiService.getUserOwnClusters();
       $httpBackend.flush();
     });
   });

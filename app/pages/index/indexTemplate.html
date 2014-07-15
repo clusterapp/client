@@ -1,7 +1,13 @@
-
-Hello
+<h2>Welcome to Cluster, {{ user.redditName }}</h2>
 
 This means l am logged in
+
+<h3>Own clusters</h3>
+<ul>
+  <li ng-repeat="cluster in clusters.own">
+    {{ cluster.name }}
+  </li>
+</ul>
 
 
 
