@@ -18,6 +18,9 @@ app.use(session({secret: 'keyboard cat', saveUninitialized: true, resave:true}))
 app.use(bodyParser.urlencoded({ extended: true }));
 
 
+
+
+
 app.get('/logout', function (req, res) {
   var sess = req.session
 
