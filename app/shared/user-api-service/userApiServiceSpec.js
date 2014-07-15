@@ -46,4 +46,12 @@ describe('UserApiService Spec', function() {
       $httpBackend.flush();
     });
   });
+
+  describe('#getUserSubscribedClusters()', function() {
+    it('should make a request to /users/subscribed', function() {
+      $httpBackend.expectGET(UserApiService.ENDPOINT + '/clusters/subscribed?token=456&userId=123').respond({});
+      UserApiService.getUserSubscribedClusters();
+      $httpBackend.flush();
+    });
+  });
 });

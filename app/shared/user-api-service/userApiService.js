@@ -31,4 +31,8 @@ angular.module('app')
   this.getUserAdminClusters = function() {
     return get('/clusters/admin');
   };
+
+  this.getUserSubscribedClusters = function() {
+    return get('/clusters/subscribed');
+  };
 });

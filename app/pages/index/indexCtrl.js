@@ -20,4 +20,8 @@ angular.module('app')
     $scope.clusters.admin = clusters;
   });
 
+  UserApiService.getUserSubscribedClusters().then(function(clusters) {
+    $scope.clusters.subscribed = clusters;
+  });
+
 });

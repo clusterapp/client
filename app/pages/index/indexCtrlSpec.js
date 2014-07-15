@@ -15,6 +15,7 @@ describe('IndexCtrl Spec', function() {
     $httpBackend.when('GET', UserApiService.ENDPOINT + '?token=123&userId=456').respond({redditName: 'jack'});
     $httpBackend.when('GET', UserApiService.ENDPOINT + '/clusters/own?token=123&userId=456').respond([{ name: 'foo' }]);
     $httpBackend.when('GET', UserApiService.ENDPOINT + '/clusters/admin?token=123&userId=456').respond([{ name: 'bar' }]);
+    $httpBackend.when('GET', UserApiService.ENDPOINT + '/clusters/subscribed?token=123&userId=456').respond([{ name: 'baz' }]);
   }));
 
 
@@ -45,6 +46,11 @@ describe('IndexCtrl Spec', function() {
   it('fetches the users admin clusters', function() {
     $httpBackend.flush();
     expect(scope.clusters.admin).toEqual([ {name: 'bar'} ]);
+  });
+
+  it('fetches the users subscribed clusters', function() {
+    $httpBackend.flush();
+    expect(scope.clusters.subscribed).toEqual([ {name: 'baz'} ]);
   });
 
   it('calls the CookieStore.save method', function() {
