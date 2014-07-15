@@ -16,4 +16,8 @@ angular.module('app')
     $scope.clusters.own = clusters;
   });
 
+  UserApiService.getUserAdminClusters().then(function(clusters) {
+    $scope.clusters.admin = clusters;
+  });
+
 });

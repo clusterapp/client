@@ -27,4 +27,8 @@ angular.module('app')
   this.getUserOwnClusters = function() {
     return get('/clusters/own');
   };
+
+  this.getUserAdminClusters = function() {
+    return get('/clusters/admin');
+  };
 });

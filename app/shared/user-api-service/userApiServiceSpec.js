@@ -38,4 +38,12 @@ describe('UserApiService Spec', function() {
       $httpBackend.flush();
     });
   });
+
+  describe('#getUserAdminClusters()', function() {
+    it('should make a request to /users/admin', function() {
+      $httpBackend.expectGET(UserApiService.ENDPOINT + '/clusters/admin?token=456&userId=123').respond({});
+      UserApiService.getUserAdminClusters();
+      $httpBackend.flush();
+    });
+  });
 });
