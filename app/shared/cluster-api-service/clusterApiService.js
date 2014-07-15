@@ -6,8 +6,8 @@ angular.module('app')
   this.ENDPOINT = endpoint;
   this.create = function(data) {
     data.owner = $cookies.userId;
-    return $http.post(endpoint + 'create?userId=' + $cookies.userId + '&token=' + $cookies.userToken, data
-    ).then(function(result) {
+    return $http.post(endpoint + 'create?userId=' + $cookies.userId + '&token=' + $cookies.userToken, data)
+    .then(function(result) {
       return result.data;
     });
   };

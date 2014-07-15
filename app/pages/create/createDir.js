@@ -23,10 +23,7 @@ angular.module('app')
   }
 
   function validParams(name, subreddits, public) {
-    if (name && subreddits) {
-      return true;
-    }
-    return false;
+    return (name && subreddits);
   };
 
 
