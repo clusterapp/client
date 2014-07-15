@@ -7,8 +7,15 @@
   </head>
   <body ng-app="app">
 
-
-    <section ng-view class="mc"></section>
+    <section class="sidebar"></section>
+    <section class="mw">
+      <header class="hd">
+        <div class="hd-search">
+          <input type="text" name="search" autocomplete="off" spellcheck="false" placeholder="Search for a cluster, subreddit or a user..." class="hds-input">
+        </div>
+      </header>
+      <div class="" ng-view></div>
+    </section>
 
 
 
