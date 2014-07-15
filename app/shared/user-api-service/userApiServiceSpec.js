@@ -25,8 +25,8 @@ describe('UserApiService Spec', function() {
 
   describe('#getUser()', function() {
     it('should get the users details from the api', function() {
-      $httpBackend.when('GET', UserApiService.ENDPOINT + '/users?token=456&userId=123').respond({});
-      $httpBackend.expectGET(UserApiService.ENDPOINT + '/users?token=456&userId=123');
+      $httpBackend.when('GET', UserApiService.ENDPOINT + '?token=456&userId=123').respond({});
+      $httpBackend.expectGET(UserApiService.ENDPOINT + '?token=456&userId=123');
       UserApiService.getUser();
       $httpBackend.flush();
     });
