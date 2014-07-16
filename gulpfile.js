@@ -11,6 +11,7 @@ gulp.task('js', function () {
       'app/shared/**/*.js',
       '!app/shared/**/*Spec.js',
       'app/pages/**/*.js',
+      '!app/pages/guest/*.js',
       '!app/pages/**/*Spec.js'
     ])
     .pipe($.sourcemaps.init())
@@ -22,6 +23,30 @@ gulp.task('js', function () {
 })
 
 
+
+gulp.task('guestjs', function () {
+
+  gulp.src([
+      'app/shared/vendor/angular.min.js',
+      'app/shared/vendor/*.js',
+      'app/modules.js',
+      'app/shared/**/*.js',
+      '!app/shared/routes/*.js',
+      '!app/shared/**/*Spec.js',
+      'app/pages/**/*.js',
+      '!app/pages/**/*Spec.js'
+  ])
+  .pipe($.sourcemaps.init())
+  .pipe($.concat('guest.js'))
+  // .pipe($.ngAnnotate())
+  // .pipe($.uglify())
+  .pipe($.sourcemaps.write())
+  .pipe(gulp.dest('app/assets/js'))
+
+})
+
+
+
 gulp.task('sass', function () {
   gulp.src('app/assets/sass/cluster.sass')
     .pipe($.rubySass({style: 'compressed', loadPath: process.cwd() + '/app/assets/sass'}))
@@ -29,8 +54,8 @@ gulp.task('sass', function () {
 });
 
 
-gulp.task('dev', ['js', 'sass'], function () {
-  gulp.watch(['app/pages/**/*.js', 'app/shared/**/*.js'], ['js'])
+gulp.task('dev', ['js', 'guestjs', 'sass'], function () {
+  gulp.watch(['app/pages/**/*.js', 'app/shared/**/*.js'], ['js', 'guestjs'])
   gulp.watch('app/assets/sass/**/*.sass', ['sass'])
 })
 
