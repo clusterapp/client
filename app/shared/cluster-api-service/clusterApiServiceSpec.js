@@ -27,27 +27,39 @@ describe('ClusterApiService Spec', function () {
 
 
   describe('#create()', function() {
-  
     it('should create a cluster, and return the new created cluster', function() {
 
-        $httpBackend.expectPOST(ClusterApiService.ENDPOINT + 'create?userId=123&token=456', {
-          owner: '123',
-          name: 'testcluster',
-          subreddits: ['vim', 'angularjs'],
-          public: false
-        }).respond(200, {});
+      $httpBackend.expectPOST(ClusterApiService.ENDPOINT + 'create?userId=123&token=456', {
+        owner: '123',
+        name: 'testcluster',
+        subreddits: ['vim', 'angularjs'],
+        public: false
+      }).respond(200, {});
 
-        ClusterApiService.create({
-          name: 'testcluster',
-          subreddits: ['vim', 'angularjs'],
-          public: false
-        });
+      ClusterApiService.create({
+        name: 'testcluster',
+        subreddits: ['vim', 'angularjs'],
+        public: false
+      });
 
-        $httpBackend.flush();
+      $httpBackend.flush();
     });
   });
 
+  describe('#getCluster()', function() {
+    it('makes a get request', function() {
+      $httpBackend.expectGET(ClusterApiService.ENDPOINT + 'name?clusterRoute=foo&token=456&userId=123').respond(200, {});
+      ClusterApiService.getCluster('foo');
+      $httpBackend.flush();
+    });
+  });
 
-
+  describe('#getListings()', function() {
+    it('makes a get request', function() {
+      $httpBackend.expectGET(ClusterApiService.ENDPOINT + 'listing?clusterId=abc&token=456&userId=123').respond(200, {});
+      ClusterApiService.getListings('abc');
+      $httpBackend.flush();
+    });
+  });
 
 });

@@ -13,7 +13,7 @@ angular.module('app')
     });
   };
 
-  this.getPrivateCluster = function (clusterRoute) {
+  this.getCluster = function (clusterRoute) {
     return ApiHelperService.get(endpoint, 'name', {
       'clusterRoute': clusterRoute
     });
