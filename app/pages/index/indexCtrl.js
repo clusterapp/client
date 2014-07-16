@@ -11,17 +11,5 @@ angular.module('app')
     }
   });
 
-  $scope.clusters = {};
-  UserApiService.getUserOwnClusters().then(function(clusters) {
-    $scope.clusters.own = clusters;
-  });
-
-  UserApiService.getUserAdminClusters().then(function(clusters) {
-    $scope.clusters.admin = clusters;
-  });
-
-  UserApiService.getUserSubscribedClusters().then(function(clusters) {
-    $scope.clusters.subscribed = clusters;
-  });
 
 });
