@@ -1,7 +1,25 @@
+<h2>Welcome to Cluster, {{ user.redditName }}</h2>
 
-Hello
+<h3>Own clusters</h3>
+<ul>
+  <li ng-repeat="cluster in clusters.own">
+    <a href="/{{cluster.owner.redditName}}/{{cluster.name}}">{{ cluster.name }}</a>
+  </li>
+</ul>
 
-This means l am logged in
+<h3>Admin clusters</h3>
+<ul>
+  <li ng-repeat="cluster in clusters.admin">
+    {{ cluster.name }}
+  </li>
+</ul>
+
+<h3>Subscribed clusters</h3>
+<ul>
+  <li ng-repeat="cluster in clusters.subscribed">
+    {{ cluster.name }}
+  </li>
+</ul>
 
 
 

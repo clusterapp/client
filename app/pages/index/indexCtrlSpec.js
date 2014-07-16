@@ -8,10 +8,14 @@ describe('IndexCtrl Spec', function() {
     $httpBackend = $injector.get('$httpBackend');
     UserApiService = $injector.get('UserApiService');
     CookieStore = $injector.get('CookieStore');
+
     createController = function(params) {
       return $controller('IndexCtrl', params);
     };
-    $httpBackend.when('GET', UserApiService.ENDPOINT + '/users?userId=456&userToken=123').respond({redditName: 'jack'});
+    $httpBackend.when('GET', UserApiService.ENDPOINT + '?token=123&userId=456').respond({redditName: 'jack'});
+    $httpBackend.when('GET', UserApiService.ENDPOINT + '/clusters/own?token=123&userId=456').respond([{ name: 'foo' }]);
+    $httpBackend.when('GET', UserApiService.ENDPOINT + '/clusters/admin?token=123&userId=456').respond([{ name: 'bar' }]);
+    $httpBackend.when('GET', UserApiService.ENDPOINT + '/clusters/subscribed?token=123&userId=456').respond([{ name: 'baz' }]);
   }));
 
 
@@ -20,26 +24,48 @@ describe('IndexCtrl Spec', function() {
     $httpBackend.verifyNoOutstandingRequest();
   });
 
-  // it('sets the cookies if they are in route params', function() {
-  //   var ctrl = createController({
-  //     $scope: scope,
-  //     $cookies: cookies,
-  //     $routeParams: { token: '123', user_id: '456', user_name: 'jack' }
-  //   });
-  //   expect(cookies).toEqual({
-  //     userToken: '123',
-  //     userId: '456',
-  //     userName: 'jack'
-  //   });
-  //   $httpBackend.flush();
-  // });
+  var ctrl;
+  beforeEach(function() {
+    ctrl = createController({
+      $scope: scope,
+      $cookies: cookies,
+      $routeParams: { token: '123', user_id: '456', user_name: 'jack' }
+    });
+  });
 
-  // it('does not set cookies if no route params', function() {
-  //   var ctrl = createController({
-  //     $scope: scope,
-  //     $cookies: cookies,
-  //     $routeParams: {}
-  //   });
-  //   expect(cookies).toEqual({});
-  // });
+  it('sets the user it got in the request to the scope', function() {
+    $httpBackend.flush();
+    expect(scope.user).toEqual({ redditName: 'jack' });
+  });
+
+  it('fetches the users own clusters', function() {
+    $httpBackend.flush();
+    expect(scope.clusters.own).toEqual([ {name: 'foo'} ]);
+  });
+
+  it('fetches the users admin clusters', function() {
+    $httpBackend.flush();
+    expect(scope.clusters.admin).toEqual([ {name: 'bar'} ]);
+  });
+
+  it('fetches the users subscribed clusters', function() {
+    $httpBackend.flush();
+    expect(scope.clusters.subscribed).toEqual([ {name: 'baz'} ]);
+  });
+
+  it('calls the CookieStore.save method', function() {
+    spyOn(CookieStore, 'save').andCallThrough();
+    // have to call controller here because it needs to be done after the spy
+    ctrl = createController({
+      $scope: scope,
+      $cookies: cookies,
+      $routeParams: { token: '123', user_id: '456', user_name: 'jack' }
+    });
+    $httpBackend.flush();
+    expect(CookieStore.save).toHaveBeenCalledWith({
+      token: '123',
+      user_id: '456',
+      user_name: 'jack'
+    });
+  });
 });
