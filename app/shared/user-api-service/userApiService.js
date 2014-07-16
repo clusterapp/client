@@ -1,38 +1,23 @@
 angular.module('app')
-.service('UserApiService', function ($cookies, $http) {
+.service('UserApiService', function (ApiHelperService) {
 
   var endpoint = "http://0.0.0.0:3000/users";
 
   this.ENDPOINT = endpoint;
 
-  var get = function(url, params) {
-    var defaultParams = {
-      userId: $cookies.userId,
-      token: $cookies.userToken
-    };
-    for(var key in params) {
-      defaultParams[key] = params[key];
-    }
-    return $http.get(endpoint + (url || ''), {
-      params: defaultParams
-    }).then(function(result) {
-      return result.data;
-    });
-  };
-
   this.getUser = function() {
-    return get();
+    return ApiHelperService.get(endpoint);
   };
 
   this.getUserOwnClusters = function() {
-    return get('/clusters/own');
+    return ApiHelperService.get(endpoint, '/clusters/own');
   };
 
   this.getUserAdminClusters = function() {
-    return get('/clusters/admin');
+    return ApiHelperService.get(endpoint, '/clusters/admin');
   };
 
   this.getUserSubscribedClusters = function() {
-    return get('/clusters/subscribed');
+    return ApiHelperService.get(endpoint, '/clusters/subscribed');
   };
 });

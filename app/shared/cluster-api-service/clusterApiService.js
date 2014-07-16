@@ -1,5 +1,5 @@
 angular.module('app')
-.service('ClusterApiService', function ($cookies, $http) {
+.service('ClusterApiService', function ($cookies, $http, ApiHelperService) {
 
   var endpoint = "http://0.0.0.0:3000/clusters/";
 
@@ -13,34 +13,15 @@ angular.module('app')
     });
   };
 
-  var get = function(url, params) {
-    var defaultParams = {
-      userId: $cookies.userId,
-      token: $cookies.userToken
-    };
-    for(var key in params) {
-      defaultParams[key] = params[key];
-    }
-    return $http.get(endpoint + (url || ''), {
-      params: defaultParams
-    }).then(function(result) {
-      return result.data;
-    });
-  };
-
-
   this.getPrivateCluster = function (clusterRoute) {
-    return get('name', {
+    return ApiHelperService.get(endpoint, 'name', {
       'clusterRoute': clusterRoute
     });
   };
 
-
   this.getListings = function (clusterid) {
-    return get('listing', {
+    return ApiHelperService.get(endpoint, 'listing', {
       clusterId: clusterid
     });
   };
-
-
 });
