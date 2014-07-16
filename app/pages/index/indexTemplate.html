@@ -3,7 +3,7 @@
 <h3>Own clusters</h3>
 <ul>
   <li ng-repeat="cluster in clusters.own">
-    {{ cluster.name }}
+    <a href="/{{cluster.owner.redditName}}/{{cluster.name}}">{{ cluster.name }}</a>
   </li>
 </ul>
 
