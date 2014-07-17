@@ -7,20 +7,6 @@ angular.module('app')
     controller: 'IndexCtrl',
     reloadOnSearch: false
   })
-  .when('/logout', {
-    controller: 'LogoutCtrl',
-    template: ''
-  })
-  .when('/:username', {
-    templateUrl: '/pages/user-profile/userProfileTemplate.html',
-    controller: 'UserProfileCtrl',
-    reloadOnSearch: false
-  })
-  .when('/:username/create', {
-    templateUrl: '/pages/create/createTemplate.html',
-    controller: 'CreateCtrl',
-    reloadOnSearch: false
-  })
   .when('/:username/:clusterName', {
     templateUrl: '/pages/cluster/clusterTemplate.html',
     controller: 'ClusterCtrl',
@@ -31,5 +17,4 @@ angular.module('app')
   });
 
   $locationProvider.html5Mode(true);
-
 });

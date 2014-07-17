@@ -21,13 +21,24 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 
 
-app.get('/logout', function (req, res) {
+app.get('/_logout', function (req, res) {
+  
+  req.session.destroy();
+
+  console.log(req.session);
+
+  res.json(200, {});
+});
+
+
+app.get('/login', function (req, res) {
   var sess = req.session
 
   if (sess.user) {
-    sess.destroy();
+    res.sendfile('./app/app.html');
+  } else {
+    res.sendfile('./app/login.html');
   }
-  res.redirect('http://0.0.0.0:3002');
 });
 
 
@@ -36,6 +47,7 @@ app.get('/logout', function (req, res) {
 // When user hits server ================
 app.get('*', function (req, res) {
   // must check if route has parameters of token and user etc... (if so then this is logging a user in)
+  console.log(req.session);
   var sess = req.session;
   var params = req.query;
 
@@ -53,7 +65,7 @@ app.get('*', function (req, res) {
   if (sess.user && sess.user.token && sess.user.user_id) {
     res.sendfile('./app/app.html');
   } else {
-    res.sendfile('./app/login.html');
+    res.sendfile('./app/guest.html');
   }
 });
 
