@@ -3,16 +3,13 @@ angular.module('app')
 
   CookieStore.save($routeParams);
 
-  ClusterApiService.getPrivateCluster($routeParams.username + '/' + $routeParams.clusterName)
+  ClusterApiService.getCluster($routeParams.username + '/' + $routeParams.clusterName)
   .then(function(cluster) {
-    console.log(cluster);
     $scope.cluster = cluster;
 
 
     // now get the listings
-    ClusterApiService.getListings(cluster.id)
-    .then(function(listings) {
-      console.log(listings);
+    ClusterApiService.getListings(cluster.id).then(function(listings) {
       $scope.listings = listings;
     });
   });
