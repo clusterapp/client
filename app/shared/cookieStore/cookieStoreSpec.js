@@ -9,19 +9,20 @@ describe('CookieStore Spec', function () {
     $provide.value('$cookies', cookies);
   }));
 
+  var $cookieStore;
   beforeEach(inject(function($injector) {
     CookieStore = $injector.get('CookieStore');
+    $cookieStore = $injector.get('$cookieStore');
+
   }));
 
   describe('#save()', function () {
     it('should store token into cookie', function () {
       CookieStore.save({token: '456', user_id: '123', user_name: 'oj206', last_active: 'foo' });
-      expect(cookies).toEqual({
-        userToken: '456',
-        userId: '123',
-        redditName: 'oj206',
-        lastActive: 'foo'
-      });
+      expect($cookieStore.get('userToken')).toEqual('456');
+      expect($cookieStore.get('userId')).toEqual('123');
+      expect($cookieStore.get('redditName')).toEqual('oj206');
+      expect($cookieStore.get('lastActive')).toEqual('foo');
     });
   });
 

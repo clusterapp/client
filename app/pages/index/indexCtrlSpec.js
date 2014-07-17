@@ -38,13 +38,13 @@ describe('IndexCtrl Spec', function() {
     $httpBackend.flush();
     expect(scope.user).toEqual({
       redditName: 'jack',
-      token: '123',
       id: '456',
-      lastActive: 'Thu Jul 17 2014 22:49:26 GMT+0100 (BST)'
+      lastActive: 'Thu Jul 17 2014 22:49:26 GMT+0100 (BST)',
+      token: '123'
     });
   });
 
-  it('sets loggedIn on the scope', function() {
+  it('sets loggedIn on the scope based on CookieStore.loggedIn()', function() {
     $httpBackend.flush();
     expect(scope.loggedIn).toEqual(true);
   });
