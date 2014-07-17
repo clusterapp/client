@@ -23,4 +23,25 @@ describe('CookieStore Spec', function () {
       });
     });
   });
+
+  describe('#loggedIn()', function() {
+    it('is false when cookies are not set', function() {
+      expect(CookieStore.loggedIn()).toEqual(false);
+    });
+
+    it('is true once the user has logged in ', function() {
+      CookieStore.save({token: '456', user_id: '123', user_name: 'oj206' });
+      expect(CookieStore.loggedIn()).toEqual(true);
+    });
+  });
+
+  describe('#delete()', function() {
+    it('deletes the cookies', function() {
+      CookieStore.save({token: '456', user_id: '123', user_name: 'oj206' });
+      CookieStore.delete();
+      expect(cookies.userToken).toEqual(undefined);
+      expect(cookies.userId).toEqual(undefined);
+      expect(cookies.userName).toEqual(undefined);
+    });
+  });
 });
