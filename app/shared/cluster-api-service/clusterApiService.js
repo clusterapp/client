@@ -14,6 +14,8 @@ angular.module('app')
   };
 
   this.getCluster = function (clusterRoute) {
+    console.log($cookies.userToken);
+    console.log(document.cookie);
     return ApiHelperService.get(endpoint, 'name', {
       'clusterRoute': clusterRoute
     });
