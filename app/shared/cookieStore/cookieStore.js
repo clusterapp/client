@@ -15,6 +15,10 @@ angular.module('app')
   };
 
 
+  cs.loggedIn = function() {
+    return !!($cookies.userToken && $cookies.userId && $cookies.userName);
+
+  };
   cs.delete = function () {
     delete $cookies['userToken'];
     delete $cookies['userId'];

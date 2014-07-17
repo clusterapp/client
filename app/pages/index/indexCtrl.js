@@ -1,5 +1,5 @@
 angular.module('app')
-.controller('IndexCtrl', function ($scope, $routeParams, CookieStore, UserApiService) {
+.controller('IndexCtrl', function ($scope, $routeParams, CookieStore, UserApiService, ClusterApiService) {
 
   CookieStore.save($routeParams);
 
@@ -10,6 +10,13 @@ angular.module('app')
       $scope.user = result;
     }
   });
+
+  $scope.loggedIn = CookieStore.loggedIn();
+
+  ClusterApiService.getPublic().then(function(result) {
+    $scope.publicClusters = result;
+  });
+
 
 
 });

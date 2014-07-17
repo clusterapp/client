@@ -7,12 +7,14 @@ describe('IndexCtrl Spec', function() {
     scope = $rootScope.$new();
     $httpBackend = $injector.get('$httpBackend');
     UserApiService = $injector.get('UserApiService');
+    ClusterApiService = $injector.get('ClusterApiService');
     CookieStore = $injector.get('CookieStore');
 
     createController = function(params) {
       return $controller('IndexCtrl', params);
     };
     $httpBackend.when('GET', UserApiService.ENDPOINT + '?token=123&userId=456').respond({redditName: 'jack'});
+    $httpBackend.when('GET', ClusterApiService.ENDPOINT + 'public').respond([]);
   }));
 
 
@@ -33,6 +35,16 @@ describe('IndexCtrl Spec', function() {
   it('sets the user it got in the request to the scope', function() {
     $httpBackend.flush();
     expect(scope.user).toEqual({ redditName: 'jack' });
+  });
+
+  it('sets loggedIn on the scope', function() {
+    $httpBackend.flush();
+    expect(scope.loggedIn).toEqual(true);
+  });
+
+  it('gets the public clusters', function() {
+    $httpBackend.flush();
+    expect(scope.publicClusters).toEqual([]);
   });
 
   it('calls the CookieStore.save method', function() {

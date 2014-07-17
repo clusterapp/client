@@ -24,4 +24,8 @@ angular.module('app')
       clusterId: clusterid
     });
   };
+
+  this.getPublic = function() {
+    return ApiHelperService.get(endpoint, 'public', {}, true);
+  };
 });
