@@ -33,7 +33,7 @@ describe('ClusterCtrl Spec', function() {
     ctrl = createController({
       $scope: scope,
       $routeParams: {
-        token: '123', user_id: '456', user_name: 'jack',
+        token: '123', user_id: '456', user_name: 'jack', last_active: 'some date',
         username: 'jack', clusterName: 'foo'
       }
     });
