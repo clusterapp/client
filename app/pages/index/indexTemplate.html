@@ -1,3 +1,24 @@
-<h2>Welcome to Cluster, {{ user.redditName }}</h2>
-<a href="/{{user.redditName}}"> go to your profile</a>
+<div ng-if="loggedIn">
+  <h2>Welcome to Cluster, {{ user.redditName }}</h2>
+  <a href="/{{user.redditName}}"> go to your profile</a>
+</div>
+
+<div ng-if="!loggedIn">
+  <h2>You are not logged in mate</h2>
+</div>
+
+<h2>Public Clusters</h2>
+<ul>
+  <li ng-repeat="cluster in publicClusters">
+    <br />
+    <h4>
+      <a href="{{cluster | clusterUrl}}">
+        {{cluster.owner.redditName}}/{{cluster.name}}
+      </a>
+    </h4>
+    <p>{{cluster.subreddits.join(', ')}}</p>
+    <br />
+  </li>
+</ul>
+
 
