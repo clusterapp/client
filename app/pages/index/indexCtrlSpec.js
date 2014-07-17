@@ -28,13 +28,20 @@ describe('IndexCtrl Spec', function() {
     ctrl = createController({
       $scope: scope,
       $cookies: cookies,
-      $routeParams: { token: '123', user_id: '456', user_name: 'jack' }
+      $routeParams: {
+        token: '123', user_id: '456',
+        user_name: 'jack', last_active: 'Thu Jul 17 2014 22:49:26 GMT+0100 (BST)' }
     });
   });
 
   it('sets the user it got in the request to the scope', function() {
     $httpBackend.flush();
-    expect(scope.user).toEqual({ redditName: 'jack' });
+    expect(scope.user).toEqual({
+      redditName: 'jack',
+      token: '123',
+      id: '456',
+      lastActive: 'Thu Jul 17 2014 22:49:26 GMT+0100 (BST)'
+    });
   });
 
   it('sets loggedIn on the scope', function() {
@@ -53,13 +60,16 @@ describe('IndexCtrl Spec', function() {
     ctrl = createController({
       $scope: scope,
       $cookies: cookies,
-      $routeParams: { token: '123', user_id: '456', user_name: 'jack' }
+      $routeParams: {
+        token: '123', user_id: '456',
+        user_name: 'jack', last_active: 'Thu Jul 17 2014 22:49:26 GMT+0100 (BST)' }
     });
     $httpBackend.flush();
     expect(CookieStore.save).toHaveBeenCalledWith({
       token: '123',
       user_id: '456',
-      user_name: 'jack'
+      user_name: 'jack',
+      last_active: 'Thu Jul 17 2014 22:49:26 GMT+0100 (BST)'
     });
   });
 });

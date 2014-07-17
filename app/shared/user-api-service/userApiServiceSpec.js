@@ -2,7 +2,7 @@ describe('UserApiService Spec', function() {
 
   beforeEach(module('app'));
 
-  var UserApiService, $httpBackend, cookies;
+  var UserApiService, $httpBackend, cookie, CookieStore;
   // this is how we can mock entire dependencies
   beforeEach(module(function($provide) {
     cookies = {
@@ -14,6 +14,7 @@ describe('UserApiService Spec', function() {
 
   beforeEach(inject(function($injector) {
     UserApiService = $injector.get('UserApiService');
+    CookieStore = $injector.get('CookieStore');
     $httpBackend = $injector.get('$httpBackend');
   }));
 
@@ -28,6 +29,12 @@ describe('UserApiService Spec', function() {
       $httpBackend.expectGET(UserApiService.ENDPOINT + '?token=456&userId=123').respond({});
       UserApiService.getUser();
       $httpBackend.flush();
+    });
+
+    it('does not hit the api if the user is already in cookies', function() {
+      CookieStore.loggedIn = function() { return true; };
+      UserApiService.getUser();
+      // this would error if a http req was made, so the fact that it doesnt means the test passes
     });
   });
 
