@@ -33,6 +33,13 @@ describe('CookieStore Spec', function () {
       CookieStore.save({token: '456', user_id: '123', user_name: 'oj206' });
       expect(CookieStore.loggedIn()).toEqual(true);
     });
+
+    it('is false once the user has logged in then out ', function() {
+      CookieStore.save({token: '456', user_id: '123', user_name: 'oj206' });
+      expect(CookieStore.loggedIn()).toEqual(true);
+      CookieStore.delete();
+      expect(CookieStore.loggedIn()).toEqual(false);
+    });
   });
 
   describe('#delete()', function() {
