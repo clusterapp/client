@@ -62,4 +62,12 @@ describe('ClusterApiService Spec', function () {
     });
   });
 
+  describe('#getPublic()', function() {
+    it('makes a get request', function() {
+      $httpBackend.expectGET(ClusterApiService.ENDPOINT + 'public').respond(200, {});
+      ClusterApiService.getPublic();
+      $httpBackend.flush();
+    });
+  });
+
 });
