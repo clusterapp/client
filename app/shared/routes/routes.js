@@ -11,6 +11,11 @@ angular.module('app')
     controller: 'LogoutCtrl',
     template: ''
   })
+  .when('/:username', {
+    templateUrl: '/pages/user-profile/userProfileTemplate.html',
+    controller: 'UserProfileCtrl',
+    reloadOnSearch: false
+  })
   .when('/:username/create', {
     templateUrl: '/pages/create/createTemplate.html',
     controller: 'CreateCtrl',
