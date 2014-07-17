@@ -34,6 +34,8 @@ gulp.task('guestjs', function () {
       '!app/shared/routes/*.js',
       '!app/shared/**/*Spec.js',
       'app/pages/**/*.js',
+      '!app/pages/logout/*.js',
+      '!app/pages/create/*.js',
       '!app/pages/**/*Spec.js'
   ])
   .pipe($.sourcemaps.init())
