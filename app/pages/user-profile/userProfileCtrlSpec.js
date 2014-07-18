@@ -2,19 +2,17 @@ describe('UserProfileCtrl Spec', function() {
 
   beforeEach(module('app'));
 
-  var IndexCtrl, scope, $httpBackend, UserApiService, createController, cookies;
-  beforeEach(module(function($provide) {
-    cookies = {
-      userId: '456',
-      userToken: '123'
-    }
-    $provide.value('$cookies', cookies);
-  }));
-
+  var IndexCtrl, scope, $httpBackend, UserApiService, createController, CookieStore;
   beforeEach(inject(function($injector, $controller, $rootScope) {
     scope = $rootScope.$new();
     $httpBackend = $injector.get('$httpBackend');
     UserApiService = $injector.get('UserApiService');
+    CookieStore = $injector.get('CookieStore');
+
+    CookieStore.get = function(param) {
+      if(param === 'userId') return '456';
+      if(param === 'userToken') return '123';
+    };
 
     createController = function(params) {
       return $controller('UserProfileCtrl', params);
@@ -36,7 +34,6 @@ describe('UserProfileCtrl Spec', function() {
   beforeEach(function() {
     ctrl = createController({
       $scope: scope,
-      $cookies: cookies
     });
   });
 

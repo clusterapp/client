@@ -4,25 +4,20 @@ describe('CookieStore Spec', function () {
 
   var CookieStore, cookies;
 
-  beforeEach(module(function($provide) {
-    cookies = {};
-    $provide.value('$cookies', cookies);
-  }));
-
-  var $cookieStore;
+  var localStorage;
   beforeEach(inject(function($injector) {
     CookieStore = $injector.get('CookieStore');
-    $cookieStore = $injector.get('$cookieStore');
-
+    localStorage = $injector.get('localStorageService');
+    localStorage.clearAll();
   }));
 
   describe('#save()', function () {
     it('should store token into cookie', function () {
       CookieStore.save({token: '456', user_id: '123', user_name: 'oj206', last_active: 'foo' });
-      expect($cookieStore.get('userToken')).toEqual('456');
-      expect($cookieStore.get('userId')).toEqual('123');
-      expect($cookieStore.get('redditName')).toEqual('oj206');
-      expect($cookieStore.get('lastActive')).toEqual('foo');
+      expect(localStorage.get('userToken')).toEqual('456');
+      expect(localStorage.get('userId')).toEqual('123');
+      expect(localStorage.get('redditName')).toEqual('oj206');
+      expect(localStorage.get('lastActive')).toEqual('foo');
     });
   });
 
@@ -48,10 +43,10 @@ describe('CookieStore Spec', function () {
     it('deletes the cookies', function() {
       CookieStore.save({token: '456', user_id: '123', user_name: 'oj206', last_active: 'foo' });
       CookieStore.delete();
-      expect(cookies.userToken).toEqual(undefined);
-      expect(cookies.userId).toEqual(undefined);
-      expect(cookies.userName).toEqual(undefined);
-      expect(cookies.lastActive).toEqual(undefined);
+      expect(localStorage.get('userToken')).toEqual(undefined);
+      expect(localStorage.get('userId')).toEqual(undefined);
+      expect(localStorage.get('userName')).toEqual(undefined);
+      expect(localStorage.get('lastActive')).toEqual(undefined);
     });
   });
 });

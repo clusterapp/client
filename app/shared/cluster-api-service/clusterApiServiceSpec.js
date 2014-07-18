@@ -1,22 +1,18 @@
 describe('ClusterApiService Spec', function () {
 
-
   beforeEach(module('app'));
 
-  var ClusterApiService, $httpBackend, cookies;
-
-  beforeEach(module(function($provide) {
-    cookies = {
-      userId: '123',
-      userToken: '456'
-    }
-    $provide.value('$cookies', cookies);
-  }));
+  var ClusterApiService, $httpBackend, CookieStore;
 
 
   beforeEach(inject(function($injector) {
     ClusterApiService = $injector.get('ClusterApiService');
     $httpBackend = $injector.get('$httpBackend');
+    CookieStore = $injector.get('CookieStore');
+    spyOn(CookieStore, 'get').andCallFake(function(arg) {
+      if(arg === 'userId') return '123';
+      if(arg === 'userToken') return '456';
+    });
   }));
 
 

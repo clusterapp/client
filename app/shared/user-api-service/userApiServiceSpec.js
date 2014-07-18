@@ -2,20 +2,16 @@ describe('UserApiService Spec', function() {
 
   beforeEach(module('app'));
 
-  var UserApiService, $httpBackend, cookie, CookieStore;
-  // this is how we can mock entire dependencies
-  beforeEach(module(function($provide) {
-    cookies = {
-      userId: '123',
-      userToken: '456'
-    }
-    $provide.value('$cookies', cookies);
-  }));
+  var UserApiService, $httpBackend, CookieStore;
 
   beforeEach(inject(function($injector) {
     UserApiService = $injector.get('UserApiService');
     CookieStore = $injector.get('CookieStore');
     $httpBackend = $injector.get('$httpBackend');
+    spyOn(CookieStore, 'get').andCallFake(function(arg) {
+      if(arg === 'userId') return '123';
+      if(arg === 'userToken') return '456';
+    });
   }));
 
 
