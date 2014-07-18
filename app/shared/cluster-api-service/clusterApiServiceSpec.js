@@ -9,7 +9,7 @@ describe('ClusterApiService Spec', function () {
     ClusterApiService = $injector.get('ClusterApiService');
     $httpBackend = $injector.get('$httpBackend');
     AuthService = $injector.get('AuthService');
-    spyOn(AuthService, 'get').andCallFake(function(arg) {
+    spyOn(AuthService, 'get').and.callFake(function(arg) {
       if(arg === 'userId') return '123';
       if(arg === 'userToken') return '456';
     });
