@@ -6,6 +6,7 @@ gulp.task('js', function () {
 
   gulp.src([
       'app/shared/vendor/angular.min.js',
+      'app/shared/vendor/moment.min.js',
       'app/shared/vendor/*.js',
       'app/modules.js',
       'app/shared/**/*.js',
@@ -28,6 +29,7 @@ gulp.task('guestjs', function () {
 
   gulp.src([
       'app/shared/vendor/angular.min.js',
+      'app/shared/vendor/moment.min.js',
       'app/shared/vendor/*.js',
       'app/modules.js',
       'app/shared/**/*.js',

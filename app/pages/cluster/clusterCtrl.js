@@ -9,8 +9,10 @@ angular.module('app')
 
 
     // now get the listings
-    ClusterApiService.getListings(cluster.id).then(function(listings) {
-      $scope.listings = listings;
+    ClusterApiService.getListings(cluster.id)
+    .then(function(listings) {
+      console.log(listings);
+      $scope.listings = listings.sorted
     });
   });
 
