@@ -12,6 +12,7 @@ angular.module('app')
   $scope.clusters = {};
 
   UserApiService.getUserOwnClusters().then(function(clusters) {
+    console.log(clusters);
     $scope.clusters.own = clusters;
   });
 

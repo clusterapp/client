@@ -1,40 +1,44 @@
 angular.module('app')
-.factory('CookieStore', function ($cookieStore, $location) {
+.factory('CookieStore', function (localStorageService, $location) {
 
   var cs = {};
 
   cs.save = function ($routeParams) {
-
     if ($routeParams.token && $routeParams.user_id && $routeParams.user_name && $routeParams.last_active) {
-      $cookieStore.put('userToken', $routeParams.token);
-      $cookieStore.put('userId', $routeParams.user_id);
-      $cookieStore.put('redditName', $routeParams.user_name);
-      $cookieStore.put('lastActive', $routeParams.last_active);
+      localStorageService.set('userToken', $routeParams.token);
+      localStorageService.set('userId', $routeParams.user_id);
+      localStorageService.set('redditName', $routeParams.user_name);
+      localStorageService.set('lastActive', $routeParams.last_active);
 
       $location.url($location.path());
     }
   };
 
 
+  cs.get = function (param) {
+    return localStorageService.get(param);
+  };
+
+
   cs.getUser = function() {
     return {
-      id: $cookieStore.get('userId'),
-      redditName: $cookieStore.get('redditName'),
-      lastActive: $cookieStore.get('lastActive'),
-      token: $cookieStore.get('userToken')
+      id: localStorageService.get('userId'),
+      redditName: localStorageService.get('redditName'),
+      lastActive: localStorageService.get('lastActive'),
+      token: localStorageService.get('userToken')
     };
   };
+
+
   cs.loggedIn = function() {
     return !!(
-      $cookieStore.get('userToken') && $cookieStore.get('userId') && $cookieStore.get('redditName') && $cookieStore.get('lastActive')
+      localStorageService.get('userToken') && localStorageService.get('userId') && localStorageService.get('redditName') && localStorageService.get('lastActive')
     );
   };
 
+
   cs.delete = function () {
-    $cookieStore.remove('userToken');
-    $cookieStore.remove('userId');
-    $cookieStore.remove('userName');
-    $cookieStore.remove('lastActive');
+    localStorageService.clearAll();
   };
 
   return cs;

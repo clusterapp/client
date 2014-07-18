@@ -1,1 +1,1 @@
-var app = angular.module('app', ['ngRoute', 'ngCookies'])
+var app = angular.module('app', ['ngRoute', 'LocalStorageModule'])
