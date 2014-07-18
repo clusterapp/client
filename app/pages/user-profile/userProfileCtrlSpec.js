@@ -2,14 +2,14 @@ describe('UserProfileCtrl Spec', function() {
 
   beforeEach(module('app'));
 
-  var IndexCtrl, scope, $httpBackend, UserApiService, createController, CookieStore;
+  var IndexCtrl, scope, $httpBackend, UserApiService, createController, AuthService;
   beforeEach(inject(function($injector, $controller, $rootScope) {
     scope = $rootScope.$new();
     $httpBackend = $injector.get('$httpBackend');
     UserApiService = $injector.get('UserApiService');
-    CookieStore = $injector.get('CookieStore');
+    AuthService = $injector.get('AuthService');
 
-    CookieStore.get = function(param) {
+    AuthService.get = function(param) {
       if(param === 'userId') return '456';
       if(param === 'userToken') return '123';
     };

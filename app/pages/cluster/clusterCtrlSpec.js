@@ -6,7 +6,7 @@ describe('ClusterCtrl Spec', function() {
   beforeEach(inject(function($injector, $controller, $rootScope) {
     scope = $rootScope.$new();
     $httpBackend = $injector.get('$httpBackend');
-    CookieStore = $injector.get('CookieStore');
+    AuthService = $injector.get('AuthService');
     ClusterApiService = $injector.get('ClusterApiService');
 
     createController = function(params) {

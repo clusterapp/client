@@ -1,13 +1,13 @@
 angular.module('app')
-.factory('ApiHelperService', function($http, CookieStore) {
+.factory('ApiHelperService', function($http, AuthService) {
   return {
     get: function(endpoint, url, params, noAuth) {
       if(noAuth !== true) {
         noAuth = false;
       }
       var defaultParams = {
-        userId: CookieStore.get('userId'),
-        token:  CookieStore.get('userToken')
+        userId: AuthService.get('userId'),
+        token:  AuthService.get('userToken')
       };
       for(var key in params) {
         defaultParams[key] = params[key];

@@ -1,13 +1,13 @@
 angular.module('app')
-.service('ClusterApiService', function (CookieStore, $http, ApiHelperService) {
+.service('ClusterApiService', function (AuthService, $http, ApiHelperService) {
 
   var endpoint = "http://0.0.0.0:3000/clusters/";
 
   this.ENDPOINT = endpoint;
 
   this.create = function(data) {
-    data.owner = CookieStore.get('userId');
-    return $http.post(endpoint + 'create?userId=' + CookieStore.get('userId') + '&token=' + CookieStore.get('userToken'), data)
+    data.owner = AuthService.get('userId');
+    return $http.post(endpoint + 'create?userId=' + AuthService.get('userId') + '&token=' + AuthService.get('userToken'), data)
     .then(function(result) {
       return result.data;
     });

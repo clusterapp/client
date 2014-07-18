@@ -1,5 +1,5 @@
 angular.module('app')
-.controller('UserProfileCtrl', function ($scope, $routeParams, CookieStore, UserApiService) {
+.controller('UserProfileCtrl', function ($scope, $routeParams, AuthService, UserApiService) {
 
   UserApiService.getUser().then(function(result) {
     if(result.errors && result.errors.length) {

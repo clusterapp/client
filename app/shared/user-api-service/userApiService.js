@@ -1,14 +1,14 @@
 angular.module('app')
-.service('UserApiService', function (ApiHelperService, CookieStore, $q) {
+.service('UserApiService', function (ApiHelperService, AuthService, $q) {
 
   var endpoint = "http://0.0.0.0:3000/users";
 
   this.ENDPOINT = endpoint;
 
   this.getUser = function() {
-    if(CookieStore.loggedIn()) {
+    if(AuthService.loggedIn()) {
       var def = $q.defer();
-      def.resolve(CookieStore.getUser());
+      def.resolve(AuthService.getUser());
       return def.promise;
     } else {
       return ApiHelperService.get(endpoint);

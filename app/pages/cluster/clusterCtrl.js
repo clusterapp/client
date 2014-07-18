@@ -1,7 +1,7 @@
 angular.module('app')
-.controller('ClusterCtrl', function ($scope, $routeParams, CookieStore, ClusterApiService) {
+.controller('ClusterCtrl', function ($scope, $routeParams, AuthService, ClusterApiService) {
 
-  CookieStore.save($routeParams);
+  AuthService.save($routeParams);
 
   ClusterApiService.getCluster($routeParams.username + '/' + $routeParams.clusterName)
   .then(function(cluster) {

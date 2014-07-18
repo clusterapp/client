@@ -1,7 +1,7 @@
 angular.module('app')
-.controller('IndexCtrl', function ($scope, $routeParams, CookieStore, UserApiService, ClusterApiService) {
+.controller('IndexCtrl', function ($scope, $routeParams, AuthService, UserApiService, ClusterApiService) {
 
-  CookieStore.save($routeParams);
+  AuthService.save($routeParams);
 
   UserApiService.getUser().then(function(result) {
     if(result.errors && result.errors.length) {
@@ -11,7 +11,7 @@ angular.module('app')
     }
   });
 
-  $scope.loggedIn = CookieStore.loggedIn();
+  $scope.loggedIn = AuthService.loggedIn();
 
   ClusterApiService.getPublic().then(function(result) {
     $scope.publicClusters = result;

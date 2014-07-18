@@ -2,13 +2,13 @@ describe('UserApiService Spec', function() {
 
   beforeEach(module('app'));
 
-  var UserApiService, $httpBackend, CookieStore;
+  var UserApiService, $httpBackend, AuthService;
 
   beforeEach(inject(function($injector) {
     UserApiService = $injector.get('UserApiService');
-    CookieStore = $injector.get('CookieStore');
+    AuthService = $injector.get('AuthService');
     $httpBackend = $injector.get('$httpBackend');
-    spyOn(CookieStore, 'get').andCallFake(function(arg) {
+    spyOn(AuthService, 'get').andCallFake(function(arg) {
       if(arg === 'userId') return '123';
       if(arg === 'userToken') return '456';
     });
@@ -28,7 +28,7 @@ describe('UserApiService Spec', function() {
     });
 
     it('does not hit the api if the user is already in cookies', function() {
-      CookieStore.loggedIn = function() { return true; };
+      AuthService.loggedIn = function() { return true; };
       UserApiService.getUser();
       // this would error if a http req was made, so the fact that it doesnt means the test passes
     });

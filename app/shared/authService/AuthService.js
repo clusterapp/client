@@ -1,5 +1,5 @@
 angular.module('app')
-.factory('CookieStore', function (localStorageService, $location) {
+.factory('AuthService', function (localStorageService, $location) {
 
   var cs = {};
 

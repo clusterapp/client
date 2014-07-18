@@ -8,7 +8,7 @@ describe('IndexCtrl Spec', function() {
     $httpBackend = $injector.get('$httpBackend');
     UserApiService = $injector.get('UserApiService');
     ClusterApiService = $injector.get('ClusterApiService');
-    CookieStore = $injector.get('CookieStore');
+    AuthService = $injector.get('AuthService');
 
     createController = function(params) {
       return $controller('IndexCtrl', params);
@@ -44,7 +44,7 @@ describe('IndexCtrl Spec', function() {
     });
   });
 
-  it('sets loggedIn on the scope based on CookieStore.loggedIn()', function() {
+  it('sets loggedIn on the scope based on AuthService.loggedIn()', function() {
     $httpBackend.flush();
     expect(scope.loggedIn).toEqual(true);
   });
@@ -54,8 +54,8 @@ describe('IndexCtrl Spec', function() {
     expect(scope.publicClusters).toEqual([]);
   });
 
-  it('calls the CookieStore.save method', function() {
-    spyOn(CookieStore, 'save').andCallThrough();
+  it('calls the AuthService.save method', function() {
+    spyOn(AuthService, 'save').andCallThrough();
     // have to call controller here because it needs to be done after the spy
     ctrl = createController({
       $scope: scope,
@@ -65,7 +65,7 @@ describe('IndexCtrl Spec', function() {
         user_name: 'jack', last_active: 'Thu Jul 17 2014 22:49:26 GMT+0100 (BST)' }
     });
     $httpBackend.flush();
-    expect(CookieStore.save).toHaveBeenCalledWith({
+    expect(AuthService.save).toHaveBeenCalledWith({
       token: '123',
       user_id: '456',
       user_name: 'jack',

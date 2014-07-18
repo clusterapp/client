@@ -1,8 +1,8 @@
 angular.module('app')
-.controller('LogoutCtrl', function ($scope, CookieStore, $location, $http, $window) {
+.controller('LogoutCtrl', function ($scope, AuthService, $location, $http, $window) {
   $http.get('/_logout')
   .then(function(result) {
-    CookieStore.delete();
+    AuthService.delete();
     $location.path('/');
     $window.location.reload();
   });
