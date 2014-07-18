@@ -2,11 +2,11 @@ describe('LogOutCtrl Spec', function() {
 
   beforeEach(module('app'));
 
-  var LogoutCtrl, $httpBackend, createController, CookieStore;
+  var LogoutCtrl, $httpBackend, createController, AuthService;
   beforeEach(inject(function($injector, $controller, $rootScope) {
     scope = $rootScope.$new();
     $httpBackend = $injector.get('$httpBackend');
-    CookieStore = $injector.get('CookieStore');
+    AuthService = $injector.get('AuthService');
 
     createController = function(params) {
       return $controller('LogoutCtrl', params);
@@ -32,14 +32,14 @@ describe('LogOutCtrl Spec', function() {
     $httpBackend.flush();
   });
 
-  it('calls the CookieStore.delete method', function() {
-    spyOn(CookieStore, 'delete');
+  it('calls the AuthService.delete method', function() {
+    spyOn(AuthService, 'delete');
     ctrl = createController({
       $scope: scope,
       // have to do this because the tests can't deal with a full page reload
       $window: { location: { reload: function() {} } }
     });
     $httpBackend.flush();
-    expect(CookieStore.delete).toHaveBeenCalled();
+    expect(AuthService.delete).toHaveBeenCalled();
   });
 });
