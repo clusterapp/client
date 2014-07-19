@@ -50,7 +50,7 @@ describe('ClusterCtrl Spec', function() {
 
   it('gets the cluster listings', function() {
     $httpBackend.expectGET(ClusterApiService.ENDPOINT +
-                           'listing?clusterId=ABC&token=123&userId=456').respond([1]);
+                           'listing?clusterId=ABC&token=123&userId=456').respond({ sorted: [1] });
     $httpBackend.flush();
     expect(scope.listings).toEqual([1]);
   });

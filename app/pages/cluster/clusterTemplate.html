@@ -1,4 +1,4 @@
-<section class="cls-contents">
+<section class="cls-contents" infinite-scroll="infiniteScroll()">
   
   <div class="panel cls-settings">
   
@@ -11,4 +11,19 @@
     </div>
   </div>
 
+
+
+  <div class="panel cls-post" ng-repeat="post in listings">
+    <div class="clsp-by">
+      Submitted <span am-time-ago="post.created_utc"></span>
+      by <a href="">{{post.author}}</a>
+      to <a href="">{{post.subreddit}}</a>
+
+      <span class="clsp-domain">{{post.domain}}</span>
+    </div>
+
+    <a href="" class="clsp-title">{{post.title}}</a>
+
+    <div class="clsp-options"></div>
+  </div>
 </section>

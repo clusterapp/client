@@ -5,7 +5,9 @@ var $ = require('gulp-load-plugins')()
 gulp.task('js', function () {
 
   gulp.src([
+      'app/shared/vendor/jquery.min.js',
       'app/shared/vendor/angular.min.js',
+      'app/shared/vendor/moment.min.js',
       'app/shared/vendor/*.js',
       'app/modules.js',
       'app/shared/**/*.js',
@@ -27,7 +29,9 @@ gulp.task('js', function () {
 gulp.task('guestjs', function () {
 
   gulp.src([
+      'app/shared/vendor/jquery.min.js',
       'app/shared/vendor/angular.min.js',
+      'app/shared/vendor/moment.min.js',
       'app/shared/vendor/*.js',
       'app/modules.js',
       'app/shared/**/*.js',

@@ -19,10 +19,16 @@ angular.module('app')
     });
   };
 
-  this.getListings = function (clusterid) {
-    return ApiHelperService.get(endpoint, 'listing', {
-      clusterId: clusterid
-    });
+  this.getListings = function (clusterid, after) {
+    var params = {
+      clusterId: clusterid,
+    };
+
+    for(var key in after) {
+      params['after_' + key] = after[key];
+    }
+
+    return ApiHelperService.get(endpoint, 'listing', params);
   };
 
   this.getPublic = function() {

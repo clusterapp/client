@@ -15,8 +15,10 @@ module.exports = function(config) {
 
     // list of files / patterns to load in the browser
     files: [
+      'app/shared/vendor/jquery.min.js',
       'app/shared/vendor/angular.min.js',
       'app/shared/vendor/angular-local-storage.js',
+      'app/shared/vendor/ng-infinite-scroll.min.js',
       'app/shared/vendor/angular-route.min.js',
       'app/shared/vendor/angular-mocks.js',
       'app/modules.js',
