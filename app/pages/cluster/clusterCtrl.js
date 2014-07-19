@@ -12,8 +12,19 @@ angular.module('app')
     ClusterApiService.getListings(cluster.id)
     .then(function(listings) {
       console.log(listings);
+      $scope.after = listings.after;
       $scope.listings = listings.sorted
     });
   });
+
+  $scope.infiniteScroll = function() {
+    if(!$scope.cluster || !$scope.listings || !$scope.after) return;
+    if(Object.keys($scope.after).length === 0) return;
+    ClusterApiService.getListings($scope.cluster.id, $scope.after).then(function(listings) {
+      listings.sorted.forEach(function(l) {
+        $scope.listings.push(l);
+      });
+    });
+  };
 
 });
