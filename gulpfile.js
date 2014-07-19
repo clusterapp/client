@@ -2,38 +2,36 @@ var gulp = require('gulp');
 var $ = require('gulp-load-plugins')()
 
 
+var commonFiles = [
+  'app/shared/vendor/jquery.min.js',
+  'app/shared/vendor/underscore.min.js',
+  'app/shared/vendor/angular.min.js',
+  'app/shared/vendor/moment.min.js',
+  'app/shared/vendor/*.js',
+  'app/modules.js'
+];
 gulp.task('js', function () {
 
-  gulp.src([
-      'app/shared/vendor/jquery.min.js',
-      'app/shared/vendor/angular.min.js',
-      'app/shared/vendor/moment.min.js',
-      'app/shared/vendor/*.js',
-      'app/modules.js',
+  gulp.src(commonFiles.concat([
       'app/shared/**/*.js',
       '!app/shared/**/*Spec.js',
       'app/pages/**/*.js',
       '!app/pages/guest/*.js',
       '!app/pages/**/*Spec.js'
-    ])
+    ]))
     .pipe($.sourcemaps.init())
     .pipe($.concat('cluster.js'))
     // .pipe($.ngAnnotate())
     // .pipe($.uglify())
     .pipe($.sourcemaps.write())
     .pipe(gulp.dest('app/assets/js'))
-})
+});
 
 
 
 gulp.task('guestjs', function () {
 
-  gulp.src([
-      'app/shared/vendor/jquery.min.js',
-      'app/shared/vendor/angular.min.js',
-      'app/shared/vendor/moment.min.js',
-      'app/shared/vendor/*.js',
-      'app/modules.js',
+  gulp.src(commonFiles.concat([
       'app/shared/**/*.js',
       '!app/shared/routes/*.js',
       '!app/shared/**/*Spec.js',
@@ -41,7 +39,7 @@ gulp.task('guestjs', function () {
       '!app/pages/logout/*.js',
       '!app/pages/create/*.js',
       '!app/pages/**/*Spec.js'
-  ])
+  ]))
   .pipe($.sourcemaps.init())
   .pipe($.concat('guest.js'))
   // .pipe($.ngAnnotate())
