@@ -1,7 +1,5 @@
 <section class="cls-contents" infinite-scroll="infiniteScroll()">
-  
   <div class="panel cls-settings">
-  
     <div class="cls-set-select">
       <div class="set-title">
         <strong>{{ cluster.name }}</strong>
@@ -24,7 +22,7 @@
 
     <a href="" class="clsp-title">{{post.title}}</a>
 
-    <div class="clsp-text" ng-if="post.selftext_html" ng-bind-html-unsafe='{{post.selftext_html | htmlGen}}'>
+    <div class="clsp-text" ng-if="post.selftext_html" ng-bind-html='post.selftext_html | redditHtmlCompile'>
     </div>
 
     <div class="clsp-options"></div>
