@@ -13,6 +13,7 @@ angular.module('app')
     .then(function(listings) {
       $scope.after = listings.after;
       $scope.listings = listings.sorted
+      console.log(listings.sorted);
     });
   });
 

@@ -2,5 +2,6 @@ var app = angular.module('app', [
   'ngRoute',
   'LocalStorageModule',
   'angularMoment',
-  'infinite-scroll'
+  'infinite-scroll',
+  'ngSanitize'
 ])
