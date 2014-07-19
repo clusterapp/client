@@ -4,8 +4,9 @@
   <label>Cluster Name</label>
   <input placeholder="Cluster Name" class="c-Name" ng-model="cName" required><br/>
 
+  <p>Chosen subreddits: {{ chosen.join(', ') }}</p>
   <label>Subreddits in the cluster E.g. swift, angularjs, gamedev</label>
-  <input placeholder="Subreddits" class="c-SR" ng-model="cSR" required><br/>
+  <autocomplete data="subreddits" on-select="updateChosen" placeholder="Subreddits" class="c-SR" ng-model="cSR" required></autocomplete>
 
   <label>Public</label>
   <input type="checkbox" ng-model="cPublic"><br/>

@@ -34,4 +34,8 @@ angular.module('app')
   this.getPublic = function() {
     return ApiHelperService.get(endpoint, 'public', {}, true);
   };
+
+  this.getPopularSubreddits = function() {
+    return ApiHelperService.get('http://0.0.0.0:3000/reddit/', 'popular');
+  }
 });
