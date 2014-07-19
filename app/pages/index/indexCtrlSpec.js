@@ -55,7 +55,7 @@ describe('IndexCtrl Spec', function() {
   });
 
   it('calls the AuthService.save method', function() {
-    spyOn(AuthService, 'save').andCallThrough();
+    spyOn(AuthService, 'save').and.callThrough();
     // have to call controller here because it needs to be done after the spy
     ctrl = createController({
       $scope: scope,

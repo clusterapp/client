@@ -43,10 +43,10 @@ describe('AuthService Spec', function () {
     it('deletes the cookies', function() {
       AuthService.save({token: '456', user_id: '123', user_name: 'oj206', last_active: 'foo' });
       AuthService.delete();
-      expect(localStorage.get('userToken')).toEqual(undefined);
-      expect(localStorage.get('userId')).toEqual(undefined);
-      expect(localStorage.get('userName')).toEqual(undefined);
-      expect(localStorage.get('lastActive')).toEqual(undefined);
+      expect(localStorage.get('userToken')).toEqual(null);
+      expect(localStorage.get('userId')).toEqual(null);
+      expect(localStorage.get('userName')).toEqual(null);
+      expect(localStorage.get('lastActive')).toEqual(null);
     });
   });
 });

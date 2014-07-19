@@ -8,7 +8,7 @@ describe('UserApiService Spec', function() {
     UserApiService = $injector.get('UserApiService');
     AuthService = $injector.get('AuthService');
     $httpBackend = $injector.get('$httpBackend');
-    spyOn(AuthService, 'get').andCallFake(function(arg) {
+    spyOn(AuthService, 'get').and.callFake(function(arg) {
       if(arg === 'userId') return '123';
       if(arg === 'userToken') return '456';
     });
