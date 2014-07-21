@@ -18,11 +18,13 @@ describe('ClusterCtrl Spec', function() {
   beforeEach(function() {
     $httpBackend.when('GET', ClusterApiService.ENDPOINT +
                            'name?clusterRoute=jack%2Ffoo&token=123&userId=456').respond({
-      id: 'ABC'
+      id: 'ABC',
+      owner: { id: '456' }
     });
     $httpBackend.when('GET', ClusterApiService.ENDPOINT +
                            'listing?clusterId=ABC&token=123&userId=456').respond({});
   });
+
   afterEach(function() {
     $httpBackend.verifyNoOutstandingExpectation();
     $httpBackend.verifyNoOutstandingRequest();
@@ -42,10 +44,41 @@ describe('ClusterCtrl Spec', function() {
   it('calls getCluster', function() {
     $httpBackend.expectGET(ClusterApiService.ENDPOINT +
                            'name?clusterRoute=jack%2Ffoo&token=123&userId=456').respond({
-      id: 'ABC'
+      id: 'ABC',
+      owner: { id: '456' }
     });
     $httpBackend.flush();
-    expect(scope.cluster).toEqual({ id: 'ABC' });
+    expect(scope.cluster.id).toEqual('ABC');
+  });
+
+  it('sets canEdit to true if the cluster\'s owner is the logged in user', function() {
+    $httpBackend.when('GET', ClusterApiService.ENDPOINT +
+                           'name?clusterRoute=jack%2Ffoo&token=123&userId=456').respond({
+      id: 'ABC',
+      owner: { id: '456' }
+    });
+    $httpBackend.flush();
+    expect(scope.canEdit).toEqual(true);
+  });
+
+  it('sets canEdit to true if the owner is an admin', function() {
+    ctrl = createController({
+      $scope: scope,
+      $routeParams: {
+        token: '123', user_id: '987', user_name: 'jack', last_active: 'some date',
+        username: 'olly', clusterName: 'foo'
+      }
+    });
+    $httpBackend.when('GET', ClusterApiService.ENDPOINT +
+                           'name?clusterRoute=olly%2Ffoo&token=123&userId=987').respond({
+      id: 'ABC',
+      owner: { id: '456' },
+      admins: [ { id: '987' } ]
+    });
+    $httpBackend.when('GET', ClusterApiService.ENDPOINT +
+                           'listing?clusterId=ABC&token=123&userId=987').respond({ sorted: [1] });
+    $httpBackend.flush();
+    expect(scope.canEdit).toEqual(true);
   });
 
   it('gets the cluster listings', function() {

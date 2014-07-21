@@ -3,9 +3,17 @@ angular.module('app')
 
   AuthService.save($routeParams);
 
+  $scope.loggedIn = AuthService.loggedIn();
+  $scope.canEdit = false;
+
   ClusterApiService.getCluster($routeParams.username + '/' + $routeParams.clusterName)
   .then(function(cluster) {
     $scope.cluster = cluster;
+    if(AuthService.get('userId') == cluster.owner.id ||
+       cluster.admins && cluster.admins.map(function(a) { return a.id }).indexOf(AuthService.get('userId')) > -1
+      ) {
+      $scope.canEdit = true;
+    }
 
 
     // now get the listings

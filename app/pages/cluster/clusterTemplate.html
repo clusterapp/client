@@ -1,13 +1,12 @@
 <section class="cls-contents" infinite-scroll="infiniteScroll()">
-  
   <div class="panel cls-settings">
-  
     <div class="cls-set-select">
       <div class="set-title">
         <strong>{{ cluster.name }}</strong>
         {{ cluster.subreddits }}
       </div>
       <div class="set-button"></div>
+      <div class="set-edit-button" ng-if="canEdit">EDIT</div>
     </div>
   </div>
 
