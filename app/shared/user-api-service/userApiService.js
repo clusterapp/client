@@ -15,6 +15,12 @@ angular.module('app')
     }
   };
 
+  this.getUserByName = function(name) {
+    return ApiHelperService.get(endpoint, '/name', {
+      name: name
+    });
+  };
+
   this.getUserOwnClusters = function() {
     return ApiHelperService.get(endpoint, '/clusters/own');
   };

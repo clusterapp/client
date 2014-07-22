@@ -1,16 +1,22 @@
 <section class="cls-contents" infinite-scroll="infiniteScroll()">
-  <div class="panel cls-settings">
+  <div class="panel cls-settings" ng-class="{show: isEditing==true}">
     <div class="cls-set-select">
       <div class="set-title">
         <strong>{{ cluster.name }}</strong>
         {{ cluster.subreddits }}
       </div>
       <div class="set-button"></div>
-      <div class="set-edit-button" ng-if="canEdit">EDIT</div>
+      <div class="set-edit-button" ng-if="canEdit" ng-click="toggleEdit()">EDIT</div>
+    </div>
+
+    <div class="cls-edit-panel">
+      <form ng-submit="addAdmin()">
+        <label>Add an admin</label>
+        <input placeholder="username" class="c-Name" ng-model="edit.admin" required><input type="submit" value="Save">
+        <p class="form-error" ng-show="addAdminError">{{addAdminError}}</p>
+      </form>
     </div>
   </div>
-
-
 
   <div class="panel cls-post" ng-repeat="post in listings">
     <div class="clsp-by">

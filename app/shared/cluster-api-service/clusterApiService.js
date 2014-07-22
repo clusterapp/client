@@ -13,6 +13,15 @@ angular.module('app')
     });
   };
 
+  this.update = function(clusterId, data) {
+    return $http.post(endpoint + 'update?userId=' + AuthService.get('userId')
+                      + '&token=' + AuthService.get('userToken')
+                      + '&clusterId=' + clusterId, data)
+    .then(function(result) {
+      return result.data;
+    });
+  };
+
   this.getCluster = function (clusterRoute) {
     return ApiHelperService.get(endpoint, 'name', {
       'clusterRoute': clusterRoute
