@@ -15,8 +15,6 @@ angular.module('app')
   $scope.addAdmin = function() {
     $scope.addAdminError = null;
     UserApiService.getUserByName($scope.edit.admin).then(function(user) {
-      console.log(user.id);
-      //TODO: proper error handling here
       if(user.errors) {
         $scope.addAdminError = 'No user with that name exists';
         return;
@@ -34,7 +32,6 @@ angular.module('app')
   ClusterApiService.getCluster($routeParams.username + '/' + $routeParams.clusterName)
   .then(function(cluster) {
     $scope.cluster = cluster;
-      console.log($scope.cluster.admins);
     if(AuthService.get('userId') == cluster.owner.id ||
        cluster.admins && cluster.admins.map(function(a) { return a.id }).indexOf(AuthService.get('userId')) > -1
       ) {

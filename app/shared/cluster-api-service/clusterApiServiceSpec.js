@@ -42,6 +42,20 @@ describe('ClusterApiService Spec', function () {
     });
   });
 
+  describe('#update()', function() {
+    it('calls update endpoint', function() {
+      $httpBackend.expectPOST(ClusterApiService.ENDPOINT + 'update?userId=123&token=456&clusterId=123', {
+        admins: ['ABC123']
+      }).respond(200, {});
+
+      ClusterApiService.update('123', {
+        admins: ['ABC123']
+      });
+
+      $httpBackend.flush();
+    });
+  });
+
   describe('#getCluster()', function() {
     it('makes a get request', function() {
       $httpBackend.expectGET(ClusterApiService.ENDPOINT + 'name?clusterRoute=foo&token=456&userId=123').respond(200, {});
