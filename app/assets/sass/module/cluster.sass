@@ -17,6 +17,10 @@
 .cls-settings
   font-family: $pFont
   height: 50px
+  +transition(height, 0.5s, ease-in-out)
+
+.cls-settings.show
+  height: 200px
 
 .cls-set-select
   height: 50px
@@ -39,6 +43,15 @@
   color: #121210
   font-size: 18px
 
+// Edit button, @olliejennings is totally going to want to edit this
+
+.set-edit-button
+  float: right
+  display: block
+  padding: 10px
+  border: 1px solid red
+  z-index: 999
+  position: relative
 
 
 
