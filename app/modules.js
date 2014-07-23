@@ -3,5 +3,7 @@ var app = angular.module('app', [
   'LocalStorageModule',
   'angularMoment',
   'infinite-scroll',
-  'ngProgress'
+  'ngProgress',
+  'ngAnimate',
+  'toaster'
 ])
