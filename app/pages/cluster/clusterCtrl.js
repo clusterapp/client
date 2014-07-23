@@ -40,25 +40,44 @@ angular.module('app')
     });
   };
 
-  $scope.addAdmin = function() {
-    ngProgressLite.start();
-    $scope.addAdminError = null;
-    UserApiService.getUserByName($scope.edit.admin).then(function(user) {
-      if(user.errors) {
-        $scope.addAdminError = 'No user with that name exists';
-        ngProgressLite.done();
-        return;
-      }
-      $scope.cluster.admins.push(user.id);
+  $scope.editAdmin = function() {
+    var adminNames = $scope.tagAdmins.map(function(a) {
+      return a.text;
+    });
+
+    // for each admin, we need to use their name to find their ID
+
+    async.map(adminNames, function(admin, callback) {
+      UserApiService.getUserByName(admin).then(function(user) {
+        callback(null, user.id);
+      });
+    }, function(err, adminIds) {
       ClusterApiService.update($scope.cluster.id, {
-        admins: $scope.cluster.admins
+        admins: adminIds
       }).then(function(d) {
-        $scope.edit.admin = '';
-        $scope.cluster = d;
-        ngProgressLite.done();
-        toaster.pop('success', 'Admin added', '');
+        console.log(d);
       });
     });
+
+    console.log(async);
+    // ngProgressLite.start();
+    // $scope.editAdminError = null;
+    // UserApiService.getUserByName($scope.edit.admin).then(function(user) {
+    //   if(user.errors) {
+    //     $scope.editAdminError = 'No user with that name exists';
+    //     ngProgressLite.done();
+    //     return;
+    //   }
+    //   $scope.cluster.admins.push(user.id);
+    //   ClusterApiService.update($scope.cluster.id, {
+    //     admins: $scope.cluster.admins
+    //   }).then(function(d) {
+    //     $scope.edit.admin = '';
+    //     $scope.cluster = d;
+    //     ngProgressLite.done();
+    //     toaster.pop('success', 'Admin added', '');
+    //   });
+    // });
   };
 
   var loadClusterAndListings = function() {
@@ -69,6 +88,10 @@ angular.module('app')
       $scope.edit.subreddits = cluster.subreddits.join(', ');
       $scope.tagSubreddits = cluster.subreddits.map(function(s) {
         return { text: s };
+      });
+
+      $scope.tagAdmins = cluster.admins.map(function(a) {
+        return { text: a.redditName }
       });
 
       if(AuthService.get('userId') == cluster.owner.id ||

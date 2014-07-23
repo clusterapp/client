@@ -13,10 +13,11 @@
     </div>
 
     <div class="cls-edit-panel">
-      <form ng-submit="addAdmin()">
-        <label>Add an admin</label>
-        <input placeholder="username" class="c-Name" ng-model="edit.admin"><input type="submit" value="Save">
-        <p class="form-error" ng-show="addAdminError">{{addAdminError}}</p>
+      <form ng-submit="editAdmin()">
+        <label>Edit Admin</label>
+        <tags-input ng-model="tagAdmins"></tags-input>
+        <input type="submit" value="Save">
+        <p class="form-error" ng-show="editAdminError">{{editAdminError}}</p>
       </form>
       <form ng-submit="editSubreddits()">
         <label>Edit the subreddits in this cluster</label>

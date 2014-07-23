@@ -5,6 +5,7 @@ var $ = require('gulp-load-plugins')()
 gulp.task('js', function () {
 
   gulp.src([
+      'app/shared/vendor/async.js',
       'app/shared/vendor/jquery.min.js',
       'app/shared/vendor/angular.min.js',
       'app/shared/vendor/moment.min.js',
