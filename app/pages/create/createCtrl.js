@@ -1,6 +1,6 @@
 angular.module('app')
-.controller('CreateCtrl', function ($scope, $routeParams, CookieStore) {
+.controller('CreateCtrl', function ($scope, $routeParams, AuthService) {
 
-  CookieStore.save($routeParams);
+  AuthService.save($routeParams);
 
 });
