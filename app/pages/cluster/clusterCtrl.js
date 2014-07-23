@@ -12,10 +12,15 @@ angular.module('app')
   $scope.loggedIn = AuthService.loggedIn();
   $scope.canEdit = false;
   $scope.isEditing = false;
+  $scope.postView = false;
   $scope.edit = {}
 
   $scope.toggleEdit = function() {
     if($scope.canEdit) $scope.isEditing = !$scope.isEditing;
+  };
+
+  $scope.togglePostView = function () {
+    $scope.postView = !$scope.postView;
   };
 
 
@@ -44,6 +49,7 @@ angular.module('app')
   ClusterApiService.getCluster($routeParams.username + '/' + $routeParams.clusterName)
   .then(function(cluster) {
     $scope.cluster = cluster;
+    console.log(cluster);
     if(AuthService.get('userId') == cluster.owner.id ||
        cluster.admins && cluster.admins.map(function(a) { return a.id }).indexOf(AuthService.get('userId')) > -1
       ) {

@@ -78,8 +78,8 @@
   visibility: visible
 
 //TODO: @olliejennings what is this bit for?
-.cs-select:hover .cssb-cog,
-.cs-select:hover .cssb-close
+.cls-set-select:hover .cssb-cog,
+.cls-set-select:hover .cssb-close
   color: #121210
 
 .clsp-options .fa
@@ -121,9 +121,38 @@
   word-break:break-all
 
 
+// TODO, put the tags into respecitive files like state etc.. ============================
+
+.clsp-text-inner .md
+  margin: -1px 10px 0 30px
+  height: 20px
+  overflow: hidden
+  text-overflow: ellipsis
+  +transition(height, 0.5s, ease-in-out)
+  font-family: $pFont
+
+.clsp-text-inner.expand .md
+  height: auto
+  min-height: 20px
+  border: 1px solid rgba(28, 28, 29, 0.1)
+  background-color: rgba(28, 28, 28, 0.1)
+
+.clsp-text-inner.expand .md a
+  color: darken($Blue, 30%)
+
+.clsp-text-inner.expand .md a:hover
+  color: darken($Blue, 10%)
+
+
 .clsp-text-fa
   width: 25px
   float: left
+  display: none
+
+.clsp-text-fa.show
+  display: block
+  cursor: pointer
+
 
 .clsp-options
   box-sizing: border-box
