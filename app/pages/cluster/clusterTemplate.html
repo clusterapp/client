@@ -20,8 +20,10 @@
       </form>
       <form ng-submit="editSubreddits()">
         <label>Edit the subreddits in this cluster</label>
-        <input class="c-Name" ng-model="edit.subreddits"><input type="submit" value="Save">
+        <tags-input ng-model="tagSubreddits"></tags-input>
+        <input type="submit" value="Save">
         <p class="form-error" ng-show="editSubredditsError">{{editSubredditsError}}</p>
+
       </form>
     </div>
   </div>

@@ -5,8 +5,9 @@ var app = angular.module('app', [
   'infinite-scroll',
   'ngProgressLite',
   'ngAnimate',
-  'toaster'
-])
+  'toaster',
+  'ngTagsInput'
+]);
 
 app.factory('APIURLS', function($location) {
   return function() {

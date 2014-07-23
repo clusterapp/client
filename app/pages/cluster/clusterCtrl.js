@@ -20,20 +20,18 @@ angular.module('app')
 
 
   $scope.editSubreddits = function() {
-    var subredditList = $scope.edit.subreddits.split(',').map(function(s) {
-      return s.trim();
-    }).filter(function(s) {
-      return !!s;
-    });
-
-    if(subredditList.length === 0) {
+    if($scope.tagSubreddits.length === 0) {
       $scope.editSubredditsError = 'Need to add a list of subreddits';
       return;
     }
 
+    var newSubreddits = $scope.tagSubreddits.map(function(s) {
+      return s.text;
+    });
+
     ngProgressLite.start();
     ClusterApiService.update($scope.cluster.id, {
-      subreddits: subredditList
+      subreddits: newSubreddits
     }).then(function(d) {
       ClusterApiService.bustCache($scope.cluster.id).then(function(d) {
         ngProgressLite.done();
@@ -69,6 +67,10 @@ angular.module('app')
     .then(function(cluster) {
       $scope.cluster = cluster;
       $scope.edit.subreddits = cluster.subreddits.join(', ');
+      $scope.tagSubreddits = cluster.subreddits.map(function(s) {
+        return { text: s };
+      });
+
       if(AuthService.get('userId') == cluster.owner.id ||
          cluster.admins && cluster.admins.map(function(a) { return a.id }).indexOf(AuthService.get('userId')) > -1
         ) {
