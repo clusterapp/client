@@ -61,13 +61,25 @@ angular.module('app')
       });
   });
 
+  var noPermErrorSent = false;
   $scope.infiniteScroll = function() {
     if(!$scope.cluster || !$scope.listings || !$scope.after) return;
-    if(Object.keys($scope.after).length === 0) return;
+
+    if(Object.keys($scope.after).length === 0) {
+      if(!noPermErrorSent) {
+        toaster.pop('error', 'No permission', 'To see more than one page of content, you need to sign in.');
+        noPermErrorSent = true;
+      }
+      return;
+    }
+
+    console.log('got here');
+    ngProgress.start();
     ClusterApiService.getListings($scope.cluster.id, $scope.after).then(function(listings) {
       listings.sorted.forEach(function(l) {
-        $scope.listings.push(l);
+        $scope.listings.sorted.push(l);
       });
+      ngProgress.complete();
     });
   };
 });
