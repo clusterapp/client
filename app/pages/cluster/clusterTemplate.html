@@ -6,7 +6,10 @@
         {{ cluster.subreddits }}
       </div>
       <div class="set-button"></div>
-      <div class="set-edit-button" ng-if="canEdit" ng-click="toggleEdit()">EDIT</div>
+      <div class="css-button" ng-if="canEdit" ng-click="toggleEdit()">
+        <i class="cssb-close fa fa-times fa-lg"></i>
+        <i class="cssb-cog fa fa-cog fa-lg"></i>
+      </div>
     </div>
 
     <div class="cls-edit-panel">

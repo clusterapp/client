@@ -54,7 +54,33 @@
   z-index: 999
   position: relative
 
+.css-button
+  position: absolute
+  right: 0
+  top: 0
+  width: 60px
+  height: inherit
 
+.cssb-cog
+  @extend .css-button
+  text-align: center
+  line-height: 50px
+  color: rgba(48, 48, 49, 0.8)
+
+.cls-settings.show .cssb-cog
+  visibility: hidden
+
+.cssb-close
+  @extend .cssb-cog
+  visibility: hidden
+
+.cls-settings.show .cssb-close
+  visibility: visible
+
+//TODO: @olliejennings what is this bit for?
+.cs-select:hover .cssb-cog,
+.cs-select:hover .cssb-close
+  color: #121210
 
 
 // Individual Posts ===============
