@@ -1,7 +1,7 @@
 angular.module('app')
-.service('ClusterApiService', function (AuthService, $http, ApiHelperService) {
+.service('ClusterApiService', function (AuthService, $http, ApiHelperService, APIURLS) {
 
-  var endpoint = "http://0.0.0.0:3000/clusters/";
+  var endpoint = APIURLS() + "/clusters/";
 
   this.ENDPOINT = endpoint;
 
