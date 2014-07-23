@@ -17,14 +17,11 @@
         <label>Edit Admin</label>
         <tags-input ng-model="tagAdmins"></tags-input>
         <input type="submit" value="Save">
-        <p class="form-error" ng-show="editAdminError">{{editAdminError}}</p>
       </form>
       <form ng-submit="editSubreddits()">
         <label>Edit the subreddits in this cluster</label>
         <tags-input ng-model="tagSubreddits"></tags-input>
         <input type="submit" value="Save">
-        <p class="form-error" ng-show="editSubredditsError">{{editSubredditsError}}</p>
-
       </form>
     </div>
   </div>

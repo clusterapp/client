@@ -20,11 +20,6 @@ angular.module('app')
 
 
   $scope.editSubreddits = function() {
-    if($scope.tagSubreddits.length === 0) {
-      $scope.editSubredditsError = 'Need to add a list of subreddits';
-      return;
-    }
-
     var newSubreddits = $scope.tagSubreddits.map(function(s) {
       return s.text;
     });
@@ -44,9 +39,7 @@ angular.module('app')
     var adminNames = $scope.tagAdmins.map(function(a) {
       return a.text;
     });
-
-    // for each admin, we need to use their name to find their ID
-
+    ngProgressLite.start();
     async.map(adminNames, function(admin, callback) {
       UserApiService.getUserByName(admin).then(function(user) {
         callback(null, user.id);
@@ -55,29 +48,10 @@ angular.module('app')
       ClusterApiService.update($scope.cluster.id, {
         admins: adminIds
       }).then(function(d) {
-        console.log(d);
+        ngProgressLite.done();
+        toaster.pop('success', 'Admins updated', '');
       });
     });
-
-    console.log(async);
-    // ngProgressLite.start();
-    // $scope.editAdminError = null;
-    // UserApiService.getUserByName($scope.edit.admin).then(function(user) {
-    //   if(user.errors) {
-    //     $scope.editAdminError = 'No user with that name exists';
-    //     ngProgressLite.done();
-    //     return;
-    //   }
-    //   $scope.cluster.admins.push(user.id);
-    //   ClusterApiService.update($scope.cluster.id, {
-    //     admins: $scope.cluster.admins
-    //   }).then(function(d) {
-    //     $scope.edit.admin = '';
-    //     $scope.cluster = d;
-    //     ngProgressLite.done();
-    //     toaster.pop('success', 'Admin added', '');
-    //   });
-    // });
   };
 
   var loadClusterAndListings = function() {

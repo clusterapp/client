@@ -20,7 +20,9 @@ describe('ClusterCtrl Spec', function() {
     $httpBackend.when('GET', ClusterApiService.ENDPOINT +
                            'name?clusterRoute=jack%2Ffoo&token=123&userId=456').respond({
       id: 'ABC',
-      owner: { id: '456' }
+      owner: { id: '456' },
+      subreddits: [],
+      admins: []
     });
     $httpBackend.when('GET', ClusterApiService.ENDPOINT +
                            'listing?clusterId=ABC&token=123&userId=456').respond({});
@@ -46,7 +48,9 @@ describe('ClusterCtrl Spec', function() {
     $httpBackend.expectGET(ClusterApiService.ENDPOINT +
                            'name?clusterRoute=jack%2Ffoo&token=123&userId=456').respond({
       id: 'ABC',
-      owner: { id: '456' }
+      owner: { id: '456' },
+      subreddits: [],
+      admins: []
     });
     $httpBackend.flush();
     expect(scope.cluster.id).toEqual('ABC');
@@ -74,7 +78,8 @@ describe('ClusterCtrl Spec', function() {
                            'name?clusterRoute=olly%2Ffoo&token=123&userId=987').respond({
       id: 'ABC',
       owner: { id: '456' },
-      admins: [ { id: '987' } ]
+      admins: [ { id: '987' } ],
+      subreddits: []
     });
     $httpBackend.when('GET', ClusterApiService.ENDPOINT +
                            'listing?clusterId=ABC&token=123&userId=987').respond({ sorted: [1] });
@@ -87,29 +92,6 @@ describe('ClusterCtrl Spec', function() {
                            'listing?clusterId=ABC&token=123&userId=456').respond({ sorted: [1] });
     $httpBackend.flush();
     expect(scope.listings.sorted).toEqual([1]);
-  });
-
-  describe('adding a new admin', function() {
-    it('errors if the user is not real', function() {
-      $httpBackend.when('GET', UserApiService.ENDPOINT + '/name?name=foo&token=123&userId=456').respond({ errors: ['no user'] });
-      scope.edit.admin = 'foo';
-      scope.addAdmin();
-      $httpBackend.flush();
-      expect(scope.addAdminError).toEqual('No user with that name exists');
-    });
-
-    it('hits the cluster update endpoint', function() {
-      $httpBackend.when('GET', UserApiService.ENDPOINT + '/name?name=foo&token=123&userId=456').respond({ id: '987' });
-      $httpBackend.expectGET(ClusterApiService.ENDPOINT + 'name?clusterRoute=jack%2Ffoo&token=123&userId=456').respond({
-        id: 'ABC', owner: { id: '456' }, admins: []
-      });
-      scope.edit.admin = 'foo';
-      scope.addAdmin();
-      $httpBackend.expectPOST(ClusterApiService.ENDPOINT + 'update?userId=456&token=123&clusterId=ABC', {
-        admins: ['987']
-      }).respond({});
-      $httpBackend.flush();
-    });
   });
 
 });
