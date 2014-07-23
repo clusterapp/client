@@ -55,7 +55,8 @@ angular.module('app')
       ClusterApiService.getListings(cluster.id)
       .then(function(listings) {
         $scope.after = listings.after;
-        $scope.listings = listings.sorted
+        $scope.listings = listings;
+        console.log(listings.sorted[0]);
         ngProgress.complete();
       });
   });
