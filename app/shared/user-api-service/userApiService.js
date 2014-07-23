@@ -1,7 +1,7 @@
 angular.module('app')
-.service('UserApiService', function (ApiHelperService, AuthService, $q) {
+.service('UserApiService', function (ApiHelperService, AuthService, $q, APIURLS) {
 
-  var endpoint = "http://0.0.0.0:3000/users";
+  var endpoint = APIURLS() + "/users/";
 
   this.ENDPOINT = endpoint;
 
@@ -13,6 +13,12 @@ angular.module('app')
     } else {
       return ApiHelperService.get(endpoint);
     }
+  };
+
+  this.getUserByName = function(name) {
+    return ApiHelperService.get(endpoint, '/name', {
+      name: name
+    });
   };
 
   this.getUserOwnClusters = function() {

@@ -1,21 +1,32 @@
 <section class="cls-contents" infinite-scroll="infiniteScroll()">
-  <div class="panel cls-settings">
+  <div class="panel cls-settings" ng-class="{show: isEditing==true}">
     <div class="cls-set-select">
       <div class="set-title">
         <strong>{{ cluster.name }}</strong>
-        {{ cluster.subreddits }}
+        ({{ cluster.subreddits.join(', ') }})
       </div>
       <div class="set-button"></div>
+      <div class="css-button" ng-if="canEdit" ng-click="toggleEdit()">
+        <i class="cssb-close fa fa-times fa-lg"></i>
+        <i class="cssb-cog fa fa-cog fa-lg"></i>
+      </div>
+    </div>
+
+    <div class="cls-edit-panel">
+      <form ng-submit="addAdmin()">
+        <label>Add an admin</label>
+        <input placeholder="username" class="c-Name" ng-model="edit.admin"><input type="submit" value="Save">
+        <p class="form-error" ng-show="addAdminError">{{addAdminError}}</p>
+      </form>
     </div>
   </div>
 
-
-
-  <div class="panel cls-post" ng-repeat="post in listings">
+  <div class="panel cls-post" ng-repeat="post in listings.sorted">
     <div class="clsp-by">
       Submitted <span am-time-ago="post.created_utc"></span>
       by <a href="">{{post.author}}</a>
-      to <a href="">{{post.subreddit}}</a>
+      to <a href="http://reddit.com/r/{{post.subreddit}}">{{post.subreddit}}</a>
+      <span ng-if="post.stickied">stickied</span>
 
       <span class="clsp-domain">{{post.domain}}</span>
     </div>
@@ -27,6 +38,12 @@
       <div class="clsp-text-inner" ng-bind-html='post.selftext_html | redditHtmlCompile'></div>
     </div>
 
-    <div class="clsp-options"></div>
+    <div class="clsp-options">
+      <span>
+        <i class="fa fa-star-o fa-lg first"></i><span class="clsp-options-text">{{ post.score }}</span>
+        <i class="fa fa-comment-o fa-lg"></i><span class="clsp-options-text">{{ post.num_comments }}</span>
+        <a href="http://reddit.com{{post.permalink}}" class="clsp-options-text"><i class="fa fa-share-square-o fa-lg"></i></a>
+      </span>
+    </div>
   </div>
 </section>
