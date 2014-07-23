@@ -31,11 +31,13 @@ angular.module('app')
       return;
     }
 
+    console.log('edit subreddits starting bar');
     ngProgress.start();
     ClusterApiService.update($scope.cluster.id, {
       subreddits: subredditList
     }).then(function(d) {
       ClusterApiService.bustCache($scope.cluster.id).then(function(d) {
+        console.log('edit subreddits stopping bar');
         ngProgress.complete();
         loadClusterAndListings();
       });
@@ -43,6 +45,7 @@ angular.module('app')
   };
 
   $scope.addAdmin = function() {
+    console.log('addAdmin starting progress bar');
     ngProgress.start();
     $scope.addAdminError = null;
     UserApiService.getUserByName($scope.edit.admin).then(function(user) {
@@ -57,6 +60,7 @@ angular.module('app')
       }).then(function(d) {
         $scope.edit.admin = '';
         $scope.cluster = d;
+        console.log('addAdmin stopping progress bar');
         ngProgress.complete();
         toaster.pop('success', 'Admin added', '');
       });
@@ -64,6 +68,7 @@ angular.module('app')
   };
 
   var loadClusterAndListings = function() {
+    console.log('loadCluster starting ngprogress');
     ngProgress.start();
     ClusterApiService.getCluster($routeParams.username + '/' + $routeParams.clusterName)
     .then(function(cluster) {
@@ -80,6 +85,7 @@ angular.module('app')
         .then(function(listings) {
           $scope.after = listings.after;
           $scope.listings = listings;
+          console.log('loadCluster stopping ngprogress');
           ngProgress.complete();
         });
     });
@@ -99,11 +105,13 @@ angular.module('app')
       return;
     }
 
+    console.log('kicked off ngprogess infinitescroll');
     ngProgress.start();
     ClusterApiService.getListings($scope.cluster.id, $scope.after).then(function(listings) {
       listings.sorted.forEach(function(l) {
         $scope.listings.sorted.push(l);
       });
+      console.log('stopped ngprogess infinitescroll');
       ngProgress.complete();
     });
   };
