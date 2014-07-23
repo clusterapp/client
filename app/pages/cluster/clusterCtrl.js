@@ -19,6 +19,29 @@ angular.module('app')
   };
 
 
+  $scope.editSubreddits = function() {
+    var subredditList = $scope.edit.subreddits.split(',').map(function(s) {
+      return s.trim();
+    }).filter(function(s) {
+      return !!s;
+    });
+
+    if(subredditList.length === 0) {
+      $scope.editSubredditsError = 'Need to add a list of subreddits';
+      return;
+    }
+
+    ngProgress.start();
+    ClusterApiService.update($scope.cluster.id, {
+      subreddits: subredditList
+    }).then(function(d) {
+      ClusterApiService.bustCache($scope.cluster.id).then(function(d) {
+        ngProgress.complete();
+        loadClusterAndListings();
+      });
+    });
+  };
+
   $scope.addAdmin = function() {
     ngProgress.start();
     $scope.addAdminError = null;
@@ -40,25 +63,29 @@ angular.module('app')
     });
   };
 
-  ngProgress.start();
-  ClusterApiService.getCluster($routeParams.username + '/' + $routeParams.clusterName)
-  .then(function(cluster) {
-    $scope.cluster = cluster;
-    if(AuthService.get('userId') == cluster.owner.id ||
-       cluster.admins && cluster.admins.map(function(a) { return a.id }).indexOf(AuthService.get('userId')) > -1
-      ) {
-        $scope.canEdit = true;
-      }
+  var loadClusterAndListings = function() {
+    ngProgress.start();
+    ClusterApiService.getCluster($routeParams.username + '/' + $routeParams.clusterName)
+    .then(function(cluster) {
+      $scope.cluster = cluster;
+      $scope.edit.subreddits = cluster.subreddits.join(', ');
+      if(AuthService.get('userId') == cluster.owner.id ||
+         cluster.admins && cluster.admins.map(function(a) { return a.id }).indexOf(AuthService.get('userId')) > -1
+        ) {
+          $scope.canEdit = true;
+        }
 
+        // now get the listings
+        ClusterApiService.getListings(cluster.id)
+        .then(function(listings) {
+          $scope.after = listings.after;
+          $scope.listings = listings;
+          ngProgress.complete();
+        });
+    });
+  };
 
-      // now get the listings
-      ClusterApiService.getListings(cluster.id)
-      .then(function(listings) {
-        $scope.after = listings.after;
-        $scope.listings = listings;
-        ngProgress.complete();
-      });
-  });
+  loadClusterAndListings();
 
   var noPermErrorSent = false;
   $scope.infiniteScroll = function() {
@@ -72,7 +99,6 @@ angular.module('app')
       return;
     }
 
-    console.log('got here');
     ngProgress.start();
     ClusterApiService.getListings($scope.cluster.id, $scope.after).then(function(listings) {
       listings.sorted.forEach(function(l) {

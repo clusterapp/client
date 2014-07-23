@@ -18,6 +18,11 @@
         <input placeholder="username" class="c-Name" ng-model="edit.admin"><input type="submit" value="Save">
         <p class="form-error" ng-show="addAdminError">{{addAdminError}}</p>
       </form>
+      <form ng-submit="editSubreddits()">
+        <label>Edit the subreddits in this cluster</label>
+        <input class="c-Name" ng-model="edit.subreddits"><input type="submit" value="Save">
+        <p class="form-error" ng-show="editSubredditsError">{{editSubredditsError}}</p>
+      </form>
     </div>
   </div>
 
@@ -31,7 +36,7 @@
       <span class="clsp-domain">{{post.domain}}</span>
     </div>
 
-    <a href="" class="clsp-title">{{post.title}}</a>
+    <a href="http://reddit.com{{post.permalink}}" class="clsp-title">{{post.title}}</a>
 
     <div class="clsp-options">
       <span>
