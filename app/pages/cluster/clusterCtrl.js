@@ -1,5 +1,10 @@
 angular.module('app')
-.controller('ClusterCtrl', function ($scope, $routeParams, AuthService, ClusterApiService, UserApiService) {
+.controller('ClusterCtrl', function($scope,
+                                    $routeParams,
+                                    AuthService,
+                                    ClusterApiService,
+                                    UserApiService,
+                                    ngProgress) {
 
   AuthService.save($routeParams);
 
@@ -13,10 +18,12 @@ angular.module('app')
   };
 
   $scope.addAdmin = function() {
+    ngProgress.start();
     $scope.addAdminError = null;
     UserApiService.getUserByName($scope.edit.admin).then(function(user) {
       if(user.errors) {
         $scope.addAdminError = 'No user with that name exists';
+        ngProgress.complete();
         return;
       }
       $scope.cluster.admins.push(user.id);
@@ -25,10 +32,12 @@ angular.module('app')
       }).then(function(d) {
         $scope.edit.admin = '';
         $scope.cluster = d;
+        ngProgress.complete();
       });
     });
   };
 
+  ngProgress.start();
   ClusterApiService.getCluster($routeParams.username + '/' + $routeParams.clusterName)
   .then(function(cluster) {
     $scope.cluster = cluster;
@@ -44,6 +53,7 @@ angular.module('app')
     .then(function(listings) {
       $scope.after = listings.after;
       $scope.listings = listings.sorted
+      ngProgress.complete();
     });
   });
 
