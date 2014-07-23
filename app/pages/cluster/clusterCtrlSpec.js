@@ -86,7 +86,7 @@ describe('ClusterCtrl Spec', function() {
     $httpBackend.expectGET(ClusterApiService.ENDPOINT +
                            'listing?clusterId=ABC&token=123&userId=456').respond({ sorted: [1] });
     $httpBackend.flush();
-    expect(scope.listings).toEqual([1]);
+    expect(scope.listings.sorted).toEqual([1]);
   });
 
   describe('adding a new admin', function() {
