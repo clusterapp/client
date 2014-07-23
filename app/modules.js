@@ -2,7 +2,10 @@ var app = angular.module('app', [
   'ngRoute',
   'LocalStorageModule',
   'angularMoment',
-  'infinite-scroll'
+  'infinite-scroll',
+  'ngProgress',
+  'ngAnimate',
+  'toaster'
 ])
 
 app.factory('APIURLS', function($location) {

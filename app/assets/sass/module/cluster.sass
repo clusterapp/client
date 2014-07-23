@@ -17,6 +17,11 @@
 .cls-settings
   font-family: $pFont
   height: 50px
+  +transition(height, 0.5s, ease-in-out)
+  overflow: hidden
+
+.cls-settings.show
+  height: 200px
 
 .cls-set-select
   height: 50px
@@ -39,8 +44,52 @@
   color: #121210
   font-size: 18px
 
+// Edit button, @olliejennings is totally going to want to edit this
 
+.set-edit-button
+  float: right
+  display: block
+  padding: 10px
+  border: 1px solid red
+  z-index: 999
+  position: relative
 
+.css-button
+  position: absolute
+  right: 0
+  top: 0
+  width: 60px
+  height: inherit
+
+.cssb-cog
+  @extend .css-button
+  text-align: center
+  line-height: 50px
+  color: rgba(48, 48, 49, 0.8)
+
+.cls-settings.show .cssb-cog
+  visibility: hidden
+
+.cssb-close
+  @extend .cssb-cog
+  visibility: hidden
+
+.cls-settings.show .cssb-close
+  visibility: visible
+
+//TODO: @olliejennings what is this bit for?
+.cs-select:hover .cssb-cog,
+.cs-select:hover .cssb-close
+  color: #121210
+
+.clsp-options .fa
+  margin-right: 5px
+
+.clsp-options .fa
+  margin-left: 10px
+
+.clsp-options .fa.first
+  margin-left: 0
 
 
 // Individual Posts ===============
@@ -62,6 +111,7 @@
   width: inherit
   padding: 0 60px 0 15px
   height: auto
+  display: block
 
 .clsp-options
   box-sizing: border-box
