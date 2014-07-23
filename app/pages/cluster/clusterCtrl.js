@@ -4,7 +4,7 @@ angular.module('app')
                                     AuthService,
                                     ClusterApiService,
                                     UserApiService,
-                                    ngProgress,
+                                    ngProgressLite,
                                     toaster) {
 
   AuthService.save($routeParams);
@@ -31,27 +31,24 @@ angular.module('app')
       return;
     }
 
-    console.log('edit subreddits starting bar');
-    ngProgress.start();
+    ngProgressLite.start();
     ClusterApiService.update($scope.cluster.id, {
       subreddits: subredditList
     }).then(function(d) {
       ClusterApiService.bustCache($scope.cluster.id).then(function(d) {
-        console.log('edit subreddits stopping bar');
-        ngProgress.complete();
+        ngProgressLite.done();
         loadClusterAndListings();
       });
     });
   };
 
   $scope.addAdmin = function() {
-    console.log('addAdmin starting progress bar');
-    ngProgress.start();
+    ngProgressLite.start();
     $scope.addAdminError = null;
     UserApiService.getUserByName($scope.edit.admin).then(function(user) {
       if(user.errors) {
         $scope.addAdminError = 'No user with that name exists';
-        ngProgress.complete();
+        ngProgressLite.done();
         return;
       }
       $scope.cluster.admins.push(user.id);
@@ -60,16 +57,14 @@ angular.module('app')
       }).then(function(d) {
         $scope.edit.admin = '';
         $scope.cluster = d;
-        console.log('addAdmin stopping progress bar');
-        ngProgress.complete();
+        ngProgressLite.done();
         toaster.pop('success', 'Admin added', '');
       });
     });
   };
 
   var loadClusterAndListings = function() {
-    console.log('loadCluster starting ngprogress');
-    ngProgress.start();
+    ngProgressLite.start();
     ClusterApiService.getCluster($routeParams.username + '/' + $routeParams.clusterName)
     .then(function(cluster) {
       $scope.cluster = cluster;
@@ -85,8 +80,7 @@ angular.module('app')
         .then(function(listings) {
           $scope.after = listings.after;
           $scope.listings = listings;
-          console.log('loadCluster stopping ngprogress');
-          ngProgress.complete();
+          ngProgressLite.done();
         });
     });
   };
@@ -105,14 +99,12 @@ angular.module('app')
       return;
     }
 
-    console.log('kicked off ngprogess infinitescroll');
-    ngProgress.start();
+    ngProgressLite.start();
     ClusterApiService.getListings($scope.cluster.id, $scope.after).then(function(listings) {
       listings.sorted.forEach(function(l) {
         $scope.listings.sorted.push(l);
       });
-      console.log('stopped ngprogess infinitescroll');
-      ngProgress.complete();
+      ngProgressLite.done();
     });
   };
 });
