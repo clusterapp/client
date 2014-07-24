@@ -96,13 +96,25 @@ describe('ClusterCtrl Spec', function() {
 
   describe('editing the list of admins', function() {
     it('makes an update request with the right details', function() {
-      $httpBackend.flush();
       scope.tagAdmins = [ { text: 'oj206' } ];
       $httpBackend.expectGET(UserApiService.ENDPOINT + '/name?name=oj206&token=123&userId=456').respond({ id: '987' });
       $httpBackend.expectPOST(ClusterApiService.ENDPOINT + 'update?userId=456&token=123&clusterId=ABC', {
         admins: ['987']
       }).respond({});
       scope.editAdmin();
+      $httpBackend.flush();
+    });
+  });
+
+  describe('editing the list of subreddits', function() {
+    it('makes an update with the right details and busts the cache', function() {
+      $httpBackend.flush();
+      scope.tagSubreddits = [ { text: 'vim' } ];
+      $httpBackend.expectPOST(ClusterApiService.ENDPOINT + 'update?userId=456&token=123&clusterId=ABC', {
+        subreddits: ['vim']
+      }).respond({});
+      $httpBackend.expectGET(ClusterApiService.ENDPOINT + 'cache_bust?clusterId=ABC&token=123&userId=456').respond({});
+      scope.editSubreddits();
       $httpBackend.flush();
     });
   });
