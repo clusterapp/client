@@ -16,7 +16,7 @@ app.factory('APIURLS', function($location) {
        $location.absUrl().indexOf('0.0.0.0') > -1 ||
        $location.absUrl().indexOf('127.0.0.1') > -1 ||
        $location.absUrl().indexOf('http://server/') > -1) { // karma
-      return 'http://0.0.0.0:3000';
+      return 'http://127.0.0.0:3000';
     } else {
       return 'PROD_URL_HERE';
     }

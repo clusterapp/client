@@ -6,7 +6,8 @@ angular.module('app')
                                     UserApiService,
                                     ngProgressLite,
                                     toaster,
-                                    $q) {
+                                    $q,
+                                    EditClusterService) {
 
   AuthService.save($routeParams);
 
@@ -18,8 +19,6 @@ angular.module('app')
   $scope.toggleEdit = function() {
     if($scope.canEdit) $scope.isEditing = !$scope.isEditing;
   };
-
-
 
   $scope.editSubreddits = function() {
     var newSubreddits = $scope.tagSubreddits.map(function(s) {
@@ -39,14 +38,15 @@ angular.module('app')
   };
 
   $scope.allUserNamesAutocomplete = function() {
-    var def = $q.defer();
-    UserApiService.allUserNames().then(function(names) {
-      var owner = $scope.cluster.owner.redditName;
-      var ownerLoc = names.indexOf(owner);
-      names.splice(ownerLoc, 1);
-      def.resolve(names);
-    });
-    return def.promise;
+    EditClusterService.editAdmin.userNamesForAutocomplete($scope.cluster.owner);
+    // var def = $q.defer();
+    // UserApiService.allUserNames().then(function(names) {
+    //   var owner = $scope.cluster.owner.redditName;
+    //   var ownerLoc = names.indexOf(owner);
+    //   names.splice(ownerLoc, 1);
+    //   def.resolve(names);
+    // });
+    // return def.promise;
   };
 
   $scope.editAdmin = function() {
