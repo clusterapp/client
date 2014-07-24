@@ -5,7 +5,8 @@ angular.module('app')
                                     ClusterApiService,
                                     UserApiService,
                                     ngProgressLite,
-                                    toaster) {
+                                    toaster,
+                                    $q) {
 
   AuthService.save($routeParams);
 
@@ -35,6 +36,17 @@ angular.module('app')
         loadClusterAndListings();
       });
     });
+  };
+
+  $scope.allUserNamesAutocomplete = function() {
+    var def = $q.defer();
+    UserApiService.allUserNames().then(function(names) {
+      var owner = $scope.cluster.owner.redditName;
+      var ownerLoc = names.indexOf(owner);
+      names.splice(ownerLoc, 1);
+      def.resolve(names);
+    });
+    return def.promise;
   };
 
   $scope.editAdmin = function() {

@@ -15,6 +15,10 @@ angular.module('app')
     }
   };
 
+  this.allUserNames = function() {
+    return ApiHelperService.get(endpoint, '/all_names');
+  };
+
   this.getUserByName = function(name) {
     return ApiHelperService.get(endpoint, '/name', {
       name: name
