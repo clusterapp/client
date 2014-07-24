@@ -15,7 +15,9 @@
     <div class="cls-edit-panel">
       <form ng-submit="editAdmin()">
         <label>Edit Admin</label>
-        <tags-input ng-model="tagAdmins"></tags-input>
+        <tags-input ng-model="tagAdmins">
+          <auto-complete source="allUserNamesAutocomplete()"></auto-complete>
+        </tags-input>
         <input type="submit" value="Save">
       </form>
       <form ng-submit="editSubreddits()">
