@@ -13,10 +13,15 @@
     </div>
 
     <div class="cls-edit-panel">
-      <form ng-submit="addAdmin()">
-        <label>Add an admin</label>
-        <input placeholder="username" class="c-Name" ng-model="edit.admin"><input type="submit" value="Save">
-        <p class="form-error" ng-show="addAdminError">{{addAdminError}}</p>
+      <form ng-submit="editAdmin()">
+        <label>Edit Admin</label>
+        <tags-input ng-model="tagAdmins"></tags-input>
+        <input type="submit" value="Save">
+      </form>
+      <form ng-submit="editSubreddits()">
+        <label>Edit the subreddits in this cluster</label>
+        <tags-input ng-model="tagSubreddits"></tags-input>
+        <input type="submit" value="Save">
       </form>
     </div>
   </div>
@@ -31,7 +36,7 @@
       <span class="clsp-domain">{{post.domain}}</span>
     </div>
 
-    <a href="" class="clsp-title">{{post.title}}</a>
+    <a href="http://reddit.com{{post.permalink}}" class="clsp-title">{{post.title}}</a>
 
     <div class="clsp-options">
       <span>
