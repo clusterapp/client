@@ -19,6 +19,7 @@ angular.module('app')
   };
 
 
+
   $scope.editSubreddits = function() {
     var newSubreddits = $scope.tagSubreddits.map(function(s) {
       return s.text;
@@ -54,6 +55,7 @@ angular.module('app')
       });
     });
   };
+
 
   var loadClusterAndListings = function() {
     ngProgressLite.start();

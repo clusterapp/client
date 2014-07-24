@@ -28,7 +28,6 @@ gulp.task('js', function () {
 })
 
 
-
 gulp.task('guestjs', function () {
 
   gulp.src(commonFiles.concat([
