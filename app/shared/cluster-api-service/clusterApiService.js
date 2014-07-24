@@ -28,9 +28,13 @@ angular.module('app')
     });
   };
 
-  this.getListings = function (clusterid, after) {
+  this.bustCache = function(clusterId) {
+    return ApiHelperService.get(endpoint, 'cache_bust', { clusterId: clusterId });
+  };
+
+  this.getListings = function (clusterId, after) {
     var params = {
-      clusterId: clusterid,
+      clusterId: clusterId,
     };
 
     for(var key in after) {

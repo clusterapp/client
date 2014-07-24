@@ -1,7 +1,7 @@
 angular.module('app')
 .service('UserApiService', function (ApiHelperService, AuthService, $q, APIURLS) {
 
-  var endpoint = APIURLS() + "/users/";
+  var endpoint = APIURLS() + "/users";
 
   this.ENDPOINT = endpoint;
 

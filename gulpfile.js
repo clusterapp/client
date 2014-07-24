@@ -12,13 +12,19 @@ var commonFiles = [
 ];
 gulp.task('js', function () {
 
-  gulp.src(commonFiles.concat([
+  gulp.src([
+      'app/shared/vendor/async.js',
+      'app/shared/vendor/jquery.min.js',
+      'app/shared/vendor/angular.min.js',
+      'app/shared/vendor/moment.min.js',
+      'app/shared/vendor/*.js',
+      'app/modules.js',
       'app/shared/**/*.js',
       '!app/shared/**/*Spec.js',
       'app/pages/**/*.js',
       '!app/pages/guest/*.js',
       '!app/pages/**/*Spec.js'
-    ]))
+    ])
     .pipe($.sourcemaps.init())
     .pipe($.concat('cluster.js'))
     // .pipe($.ngAnnotate())

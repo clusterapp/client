@@ -4,15 +4,18 @@ var app = angular.module('app', [
   'angularMoment',
   'infinite-scroll',
   'ngSanitize',
-  'ngProgress',
+  'ngProgressLite',
   'ngAnimate',
-  'toaster'
+  'toaster',
+  'ngTagsInput'
 ]);
 
 app.factory('APIURLS', function($location) {
   return function() {
-    if($location.absUrl().indexOf('localhost') > -1 || $location.absUrl().indexOf('0.0.0.0') > -1) {
-      return 'http://127.0.0.1:3000';
+    if($location.absUrl().indexOf('localhost') > -1 ||
+       $location.absUrl().indexOf('0.0.0.0') > -1 ||
+       $location.absUrl().indexOf('http://server/') > -1) { // karma
+      return 'http://0.0.0.0:3000';
     } else {
       return 'PROD_URL_HERE';
     }
