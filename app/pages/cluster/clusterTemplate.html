@@ -39,8 +39,8 @@
     <a href="http://reddit.com{{post.permalink}}" class="clsp-title">{{post.title}}</a>
 
     <div class="clsp-text" ng-if="post.selftext_html">
-      <i class="clsp-text-fa fa fa-plus-square-o fa-lg" ng-click="togglePostView()" ng-class="{show: postView==false}"></i>
-      <i class="clsp-text-fa fa fa-minus-square-o fa-lg" ng-click="togglePostView()" ng-class="{show: postView==true}"></i>
+      <i class="clsp-text-fa fa fa-plus-square-o fa-lg" ng-init="postView=false" ng-click="postView=!postView" ng-class="{show: postView==false}"></i>
+      <i class="clsp-text-fa fa fa-minus-square-o fa-lg" ng-click="postView=!postView" ng-class="{show: postView==true}"></i>
       <div class="clsp-text-inner" ng-class="{expand: postView==true}" ng-bind-html='post.selftext_html | redditHtmlCompile'></div>
     </div>
 

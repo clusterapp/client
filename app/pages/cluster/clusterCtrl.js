@@ -12,16 +12,12 @@ angular.module('app')
   $scope.loggedIn = AuthService.loggedIn();
   $scope.canEdit = false;
   $scope.isEditing = false;
-  $scope.postView = false;
   $scope.edit = {}
 
   $scope.toggleEdit = function() {
     if($scope.canEdit) $scope.isEditing = !$scope.isEditing;
   };
 
-  $scope.togglePostView = function () {
-    $scope.postView = !$scope.postView;
-  };
 
 
   $scope.editSubreddits = function() {
