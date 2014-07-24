@@ -30,6 +30,7 @@ angular.module('app')
     }).then(function(d) {
       ClusterApiService.bustCache($scope.cluster.id).then(function(d) {
         ngProgressLite.done();
+        toaster.pop('success', 'Subreddits updated', '');
         loadClusterAndListings();
       });
     });

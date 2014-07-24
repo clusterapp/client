@@ -2,13 +2,16 @@ describe('ClusterCtrl Spec', function() {
 
   beforeEach(module('app'));
 
-  var ClusterCtrl, scope, $httpBackend, createController, ClusterApiService, UserApiService;
+  var ClusterCtrl, scope, $httpBackend, createController,
+      ClusterApiService, UserApiService, toaster;
+
   beforeEach(inject(function($injector, $controller, $rootScope) {
     scope = $rootScope.$new();
     $httpBackend = $injector.get('$httpBackend');
     AuthService = $injector.get('AuthService');
     ClusterApiService = $injector.get('ClusterApiService');
     UserApiService = $injector.get('UserApiService');
+    toaster = $injector.get('toaster');
 
     createController = function(params) {
       return $controller('ClusterCtrl', params);
@@ -104,6 +107,18 @@ describe('ClusterCtrl Spec', function() {
       scope.editAdmin();
       $httpBackend.flush();
     });
+
+    it('notifies on success', function() {
+      spyOn(toaster, 'pop');
+      scope.tagAdmins = [ { text: 'oj206' } ];
+      $httpBackend.whenGET(UserApiService.ENDPOINT + '/name?name=oj206&token=123&userId=456').respond({ id: '987' });
+      $httpBackend.whenPOST(ClusterApiService.ENDPOINT + 'update?userId=456&token=123&clusterId=ABC', {
+        admins: ['987']
+      }).respond({});
+      scope.editAdmin();
+      $httpBackend.flush();
+      expect(toaster.pop).toHaveBeenCalledWith('success', 'Admins updated', '');
+    });
   });
 
   describe('editing the list of subreddits', function() {
@@ -116,6 +131,18 @@ describe('ClusterCtrl Spec', function() {
       $httpBackend.expectGET(ClusterApiService.ENDPOINT + 'cache_bust?clusterId=ABC&token=123&userId=456').respond({});
       scope.editSubreddits();
       $httpBackend.flush();
+    });
+    it('notifies with toaster', function() {
+      spyOn(toaster, 'pop');
+      $httpBackend.flush();
+      scope.tagSubreddits = [ { text: 'vim' } ];
+      $httpBackend.whenPOST(ClusterApiService.ENDPOINT + 'update?userId=456&token=123&clusterId=ABC', {
+        subreddits: ['vim']
+      }).respond({});
+      $httpBackend.whenGET(ClusterApiService.ENDPOINT + 'cache_bust?clusterId=ABC&token=123&userId=456').respond({});
+      scope.editSubreddits();
+      $httpBackend.flush();
+      expect(toaster.pop).toHaveBeenCalledWith('success', 'Subreddits updated', '');
     });
   });
 });
