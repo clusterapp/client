@@ -70,12 +70,28 @@ describe('ClusterApiService Spec', function () {
       ClusterApiService.getListings('abc');
       $httpBackend.flush();
     });
+
+    it('adds in the after parameters correctly', function() {
+      $httpBackend.expectGET(ClusterApiService.ENDPOINT + 'listing?after_vim=foo&clusterId=abc&token=456&userId=123').respond(200, {});
+      ClusterApiService.getListings('abc', {
+        vim: 'foo'
+      });
+      $httpBackend.flush();
+    });
   });
 
   describe('#getPublic()', function() {
     it('makes a get request', function() {
       $httpBackend.expectGET(ClusterApiService.ENDPOINT + 'public').respond(200, {});
       ClusterApiService.getPublic();
+      $httpBackend.flush();
+    });
+  });
+
+  describe('#bustCAche()', function() {
+    it('hits the cache bust end point', function() {
+      $httpBackend.expectGET(ClusterApiService.ENDPOINT + 'cache_bust?clusterId=987&token=456&userId=123').respond(200, {});
+      ClusterApiService.bustCache('987');
       $httpBackend.flush();
     });
   });
