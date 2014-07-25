@@ -121,17 +121,5 @@ describe('ClusterCtrl Spec', function() {
       scope.editSubreddits();
       $httpBackend.flush();
     });
-    it('notifies with toaster', function() {
-      spyOn(toaster, 'pop');
-      $httpBackend.flush();
-      scope.tagSubreddits = [ { text: 'vim' } ];
-      $httpBackend.whenPOST(ClusterApiService.ENDPOINT + 'update?userId=456&token=123&clusterId=ABC', {
-        subreddits: ['vim']
-      }).respond({});
-      $httpBackend.whenGET(ClusterApiService.ENDPOINT + 'cache_bust?clusterId=ABC&token=123&userId=456').respond({});
-      scope.editSubreddits();
-      $httpBackend.flush();
-      expect(toaster.pop).toHaveBeenCalledWith('success', 'Subreddits updated', '');
-    });
   });
 });
