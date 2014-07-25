@@ -4,8 +4,7 @@ angular.module('app')
     userNamesForAutocomplete: function(owner) {
       var def = $q.defer();
       UserApiService.allUserNames().then(function(names) {
-        var owner = owner.redditName;
-        var ownerLoc = names.indexOf(owner);
+        var ownerLoc = names.indexOf(owner.redditName);
         names.splice(ownerLoc, 1);
         def.resolve(names);
       });

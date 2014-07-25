@@ -38,7 +38,7 @@ angular.module('app')
   };
 
   $scope.allUserNamesAutocomplete = function() {
-    EditClusterService.editAdmin.userNamesForAutocomplete($scope.cluster.owner);
+    return EditClusterService.editAdmin.userNamesForAutocomplete($scope.cluster.owner);
     // var def = $q.defer();
     // UserApiService.allUserNames().then(function(names) {
     //   var owner = $scope.cluster.owner.redditName;
