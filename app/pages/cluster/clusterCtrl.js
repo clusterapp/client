@@ -39,32 +39,14 @@ angular.module('app')
 
   $scope.allUserNamesAutocomplete = function() {
     return EditClusterService.editAdmin.userNamesForAutocomplete($scope.cluster.owner);
-    // var def = $q.defer();
-    // UserApiService.allUserNames().then(function(names) {
-    //   var owner = $scope.cluster.owner.redditName;
-    //   var ownerLoc = names.indexOf(owner);
-    //   names.splice(ownerLoc, 1);
-    //   def.resolve(names);
-    // });
-    // return def.promise;
   };
 
   $scope.editAdmin = function() {
-    var adminNames = $scope.tagAdmins.map(function(a) {
-      return a.text;
-    });
-    ngProgressLite.start();
-    async.map(adminNames, function(admin, callback) {
-      UserApiService.getUserByName(admin).then(function(user) {
-        callback(null, user.id);
-      });
-    }, function(err, adminIds) {
-      ClusterApiService.update($scope.cluster.id, {
-        admins: adminIds
-      }).then(function(d) {
-        ngProgressLite.done();
-        toaster.pop('success', 'Admins updated', '');
-      });
+    EditClusterService.editAdmin.update({
+      adminNames: $scope.tagAdmins.map(function(a) { return a.text; }),
+      cluster: $scope.cluster,
+      progressBar: ngProgressLite,
+      notifier: toaster
     });
   };
 

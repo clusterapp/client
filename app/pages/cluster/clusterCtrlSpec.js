@@ -99,6 +99,7 @@ describe('ClusterCtrl Spec', function() {
 
   describe('editing the list of admins', function() {
     it('makes an update request with the right details', function() {
+      $httpBackend.flush();
       scope.tagAdmins = [ { text: 'oj206' } ];
       $httpBackend.expectGET(UserApiService.ENDPOINT + '/name?name=oj206&token=123&userId=456').respond({ id: '987' });
       $httpBackend.expectPOST(ClusterApiService.ENDPOINT + 'update?userId=456&token=123&clusterId=ABC', {
@@ -109,6 +110,7 @@ describe('ClusterCtrl Spec', function() {
     });
 
     it('notifies on success', function() {
+      $httpBackend.flush();
       spyOn(toaster, 'pop');
       scope.tagAdmins = [ { text: 'oj206' } ];
       $httpBackend.whenGET(UserApiService.ENDPOINT + '/name?name=oj206&token=123&userId=456').respond({ id: '987' });
