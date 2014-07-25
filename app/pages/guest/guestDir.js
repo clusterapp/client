@@ -16,9 +16,7 @@ angular.module('app')
 angular.module('app')
 .directive('closeBtn', function () {
   function closeClicked(scope, elem, attrs) {
-    console.log(elem.parent()[0]);
     elem.on('click', function () {
-      console.log('i got here');
       elem.parent().addClass('hide');
     });
   }
