@@ -55,9 +55,14 @@ angular.module('app')
       return ClusterApiService.update(options.cluster.id, {
         name: options.name
       }).then(function(d) {
-        progressBar.done();
-        options.notifier.pop('success', 'Cluster name updated', '');
-        (options.afterComplete || function() {})();
+        if(d.errors && d.errors.length) {
+          progressBar.done();
+          options.notifier.pop('error', 'You already have a cluster with that name', '');
+        } else {
+          progressBar.done();
+          options.notifier.pop('success', 'Cluster name updated', '');
+          (options.afterComplete || function() {})();
+        }
       });
     }
   }

@@ -37,9 +37,10 @@ angular.module('app')
       name: $scope.editClusterName,
       cluster: $scope.cluster,
       notifier: toaster,
-      progressBar: ngProgressLite
-    }).then(function() {
-      $location.path('/' + $scope.cluster.owner.redditName + '/' + $scope.editClusterName);
+      progressBar: ngProgressLite,
+      afterComplete: function() {
+        $location.path('/' + $scope.cluster.owner.redditName + '/' + $scope.editClusterName);
+      }
     });
   };
 
