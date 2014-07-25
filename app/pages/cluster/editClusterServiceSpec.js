@@ -79,6 +79,20 @@ describe('EditClusterService Spec', function() {
     });
   });
 
+  describe('editClusterName', function() {
+    it('makes the expected request to update', function() {
+        $httpBackend.expectPOST(ClusterApiService.ENDPOINT + 'update?userId=456&token=123&clusterId=ABC', {
+          name: 'foo'
+        }).respond({});
+        EditClusterService.editClusterName.update({
+          progressBar: { start: function() {}, done: function() {} },
+          cluster: { id: 'ABC' },
+          notifier: { pop: function() {} },
+          name: 'foo'
+        });
+        $httpBackend.flush();
+    });
+  });
   describe('editSubreddits', function() {
     describe('update', function() {
       it('shows a notification on success', function() {

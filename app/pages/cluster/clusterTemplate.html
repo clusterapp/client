@@ -25,6 +25,11 @@
         <tags-input ng-model="tagSubreddits"></tags-input>
         <input type="submit" value="Save">
       </form>
+      <form ng-submit="editName()">
+        <label>Edit the Cluster name</label>
+        <input type="text" placeholder="{{cluster.name}}" ng-model="editClusterName" />
+        <input type="submit" value="Save">
+      </form>
     </div>
   </div>
 
