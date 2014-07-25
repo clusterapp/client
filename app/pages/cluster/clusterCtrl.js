@@ -6,7 +6,8 @@ angular.module('app')
                                     UserApiService,
                                     ngProgressLite,
                                     toaster,
-                                    $q) {
+                                    $q,
+                                    EditClusterService) {
 
   AuthService.save($routeParams);
 
@@ -19,55 +20,30 @@ angular.module('app')
     if($scope.canEdit) $scope.isEditing = !$scope.isEditing;
   };
 
-
-
   $scope.editSubreddits = function() {
-    var newSubreddits = $scope.tagSubreddits.map(function(s) {
-      return s.text;
-    });
-
-    ngProgressLite.start();
-    ClusterApiService.update($scope.cluster.id, {
-      subreddits: newSubreddits
-    }).then(function(d) {
-      ClusterApiService.bustCache($scope.cluster.id).then(function(d) {
-        ngProgressLite.done();
-        toaster.pop('success', 'Subreddits updated', '');
-        loadClusterAndListings();
-      });
+    EditClusterService.editSubreddits.update({
+      subreddits: $scope.tagSubreddits.map(function(s) {
+        return s.text;
+      }),
+      notifier: toaster,
+      progressBar: ngProgressLite,
+      afterComplete: loadClusterAndListings,
+      cluster: $scope.cluster
     });
   };
 
   $scope.allUserNamesAutocomplete = function() {
-    var def = $q.defer();
-    UserApiService.allUserNames().then(function(names) {
-      var owner = $scope.cluster.owner.redditName;
-      var ownerLoc = names.indexOf(owner);
-      names.splice(ownerLoc, 1);
-      def.resolve(names);
-    });
-    return def.promise;
+    return EditClusterService.editAdmin.userNamesForAutocomplete($scope.cluster.owner);
   };
 
   $scope.editAdmin = function() {
-    var adminNames = $scope.tagAdmins.map(function(a) {
-      return a.text;
-    });
-    ngProgressLite.start();
-    async.map(adminNames, function(admin, callback) {
-      UserApiService.getUserByName(admin).then(function(user) {
-        callback(null, user.id);
-      });
-    }, function(err, adminIds) {
-      ClusterApiService.update($scope.cluster.id, {
-        admins: adminIds
-      }).then(function(d) {
-        ngProgressLite.done();
-        toaster.pop('success', 'Admins updated', '');
-      });
+    EditClusterService.editAdmin.update({
+      adminNames: $scope.tagAdmins.map(function(a) { return a.text; }),
+      cluster: $scope.cluster,
+      progressBar: ngProgressLite,
+      notifier: toaster
     });
   };
-
 
   var loadClusterAndListings = function() {
     ngProgressLite.start();
