@@ -79,6 +79,52 @@ describe('EditClusterService Spec', function() {
     });
   });
 
+  describe('editClusterName', function() {
+    it('notifies with success if everything went well', function() {
+      $httpBackend.expectPOST(ClusterApiService.ENDPOINT + 'update?userId=456&token=123&clusterId=ABC', {
+        name: 'foo'
+      }).respond({});
+      var notifier = { pop: function() {} };
+      spyOn(notifier, 'pop');
+      EditClusterService.editClusterName.update({
+        progressBar: { start: function() {}, done: function() {} },
+        cluster: { id: 'ABC' },
+        notifier: notifier,
+        name: 'foo'
+      });
+      $httpBackend.flush();
+      expect(notifier.pop).toHaveBeenCalledWith('success', 'Cluster name updated', '');
+    });
+
+    it('notifies with error if there was a problem', function() {
+      $httpBackend.expectPOST(ClusterApiService.ENDPOINT + 'update?userId=456&token=123&clusterId=ABC', {
+        name: 'foo'
+      }).respond({errors: [ 'name not unique '] });
+      var notifier = { pop: function() {} };
+      spyOn(notifier, 'pop');
+      EditClusterService.editClusterName.update({
+        progressBar: { start: function() {}, done: function() {} },
+        cluster: { id: 'ABC' },
+        notifier: notifier,
+        name: 'foo'
+      });
+      $httpBackend.flush();
+      expect(notifier.pop).toHaveBeenCalledWith('error', 'You already have a cluster with that name', '');
+    });
+
+    it('makes the expected request to update', function() {
+      $httpBackend.expectPOST(ClusterApiService.ENDPOINT + 'update?userId=456&token=123&clusterId=ABC', {
+        name: 'foo'
+      }).respond({});
+      EditClusterService.editClusterName.update({
+        progressBar: { start: function() {}, done: function() {} },
+        cluster: { id: 'ABC' },
+        notifier: { pop: function() {} },
+        name: 'foo'
+      });
+      $httpBackend.flush();
+    });
+  });
   describe('editSubreddits', function() {
     describe('update', function() {
       it('shows a notification on success', function() {
@@ -127,10 +173,7 @@ describe('EditClusterService Spec', function() {
           subreddits: [ 'vim' ]
         });
         $httpBackend.flush();
-
-
       });
     });
-
   });
 });

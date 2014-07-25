@@ -6,7 +6,7 @@ angular.module('app')
                                     UserApiService,
                                     ngProgressLite,
                                     toaster,
-                                    $q,
+                                    $location,
                                     EditClusterService) {
 
   AuthService.save($routeParams);
@@ -29,6 +29,18 @@ angular.module('app')
       progressBar: ngProgressLite,
       afterComplete: loadClusterAndListings,
       cluster: $scope.cluster
+    });
+  };
+
+  $scope.editName = function() {
+    EditClusterService.editClusterName.update({
+      name: $scope.editClusterName,
+      cluster: $scope.cluster,
+      notifier: toaster,
+      progressBar: ngProgressLite,
+      afterComplete: function() {
+        $location.path('/' + $scope.cluster.owner.redditName + '/' + $scope.editClusterName);
+      }
     });
   };
 

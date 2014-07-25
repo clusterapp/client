@@ -3,7 +3,7 @@ describe('ClusterCtrl Spec', function() {
   beforeEach(module('app'));
 
   var ClusterCtrl, scope, $httpBackend, createController,
-      ClusterApiService, UserApiService, toaster;
+  ClusterApiService, UserApiService, toaster, $location;
 
   beforeEach(inject(function($injector, $controller, $rootScope) {
     scope = $rootScope.$new();
@@ -12,6 +12,7 @@ describe('ClusterCtrl Spec', function() {
     ClusterApiService = $injector.get('ClusterApiService');
     UserApiService = $injector.get('UserApiService');
     toaster = $injector.get('toaster');
+    $location = $injector.get('$location');
 
     createController = function(params) {
       return $controller('ClusterCtrl', params);
@@ -21,14 +22,14 @@ describe('ClusterCtrl Spec', function() {
 
   beforeEach(function() {
     $httpBackend.when('GET', ClusterApiService.ENDPOINT +
-                           'name?clusterRoute=jack%2Ffoo&token=123&userId=456').respond({
+                      'name?clusterRoute=jack%2Ffoo&token=123&userId=456').respond({
       id: 'ABC',
-      owner: { id: '456' },
+      owner: { id: '456', redditName: 'jack' },
       subreddits: [],
       admins: []
     });
     $httpBackend.when('GET', ClusterApiService.ENDPOINT +
-                           'listing?clusterId=ABC&token=123&userId=456').respond({});
+                      'listing?clusterId=ABC&token=123&userId=456').respond({});
   });
 
   afterEach(function() {
@@ -61,7 +62,7 @@ describe('ClusterCtrl Spec', function() {
 
   it('sets canEdit to true if the cluster\'s owner is the logged in user', function() {
     $httpBackend.when('GET', ClusterApiService.ENDPOINT +
-                           'name?clusterRoute=jack%2Ffoo&token=123&userId=456').respond({
+                      'name?clusterRoute=jack%2Ffoo&token=123&userId=456').respond({
       id: 'ABC',
       owner: { id: '456' }
     });
@@ -78,14 +79,14 @@ describe('ClusterCtrl Spec', function() {
       }
     });
     $httpBackend.when('GET', ClusterApiService.ENDPOINT +
-                           'name?clusterRoute=olly%2Ffoo&token=123&userId=987').respond({
+                      'name?clusterRoute=olly%2Ffoo&token=123&userId=987').respond({
       id: 'ABC',
       owner: { id: '456' },
       admins: [ { id: '987' } ],
       subreddits: []
     });
     $httpBackend.when('GET', ClusterApiService.ENDPOINT +
-                           'listing?clusterId=ABC&token=123&userId=987').respond({ sorted: [1] });
+                      'listing?clusterId=ABC&token=123&userId=987').respond({ sorted: [1] });
     $httpBackend.flush();
     expect(scope.canEdit).toEqual(true);
   });
@@ -120,6 +121,19 @@ describe('ClusterCtrl Spec', function() {
       $httpBackend.expectGET(ClusterApiService.ENDPOINT + 'cache_bust?clusterId=ABC&token=123&userId=456').respond({});
       scope.editSubreddits();
       $httpBackend.flush();
+    });
+  });
+  describe('editing the cluster name', function() {
+    it('updates and then redirects', function() {
+      spyOn($location, 'path');
+      $httpBackend.flush();
+      scope.editClusterName = 'foo';
+      $httpBackend.expectPOST(ClusterApiService.ENDPOINT + 'update?userId=456&token=123&clusterId=ABC', {
+        name: 'foo'
+      }).respond({});
+      scope.editName();
+      $httpBackend.flush();
+      expect($location.path).toHaveBeenCalledWith('/jack/foo');
     });
   });
 });
