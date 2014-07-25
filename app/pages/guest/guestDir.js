@@ -12,3 +12,18 @@ angular.module('app')
     link: loginClicked
   };
 });
+
+angular.module('app')
+.directive('closeBtn', function () {
+  function closeClicked(scope, elem, attrs) {
+    elem.on('click', function () {
+      elem.parent().addClass('hide');
+    });
+  }
+  
+  
+  return {
+    restrict: 'C',
+    link: closeClicked
+  };
+});

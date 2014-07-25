@@ -9,18 +9,19 @@
   </head>
   <body ng-app="app">
     <toaster-container></toaster-container>
-    <section class="g-msg">
-      You are not logged in, so you will only have limited functionality, such as viewing public clusters, and profiles (color and style still WIP), please <a class="LoginBtn" href="">login</a>.
-    </section>
-
-
     <section class="sidebar"></section>
-    <section class="mw" style="padding-top: 0;">
-      <header class="hd">
+    <section class="mw">
+      <header class="hd sticky">
         <div class="hd-search">
           <input type="text" name="search" autocomplete="off" spellcheck="false" placeholder="Search for a cluster, subreddit or a user..." class="hds-input">
+          <a class="hd-login LoginBtn" href="">Login</a>
         </div>
       </header>
+      <section class="g-msg sticky">
+        You are not logged in, so you will only have limited functionality, such as viewing public clusters, and profiles, please <a class="LoginBtn" href="">login</a> to see more.
+        <i class="g-msg-close fa fa-times closeBtn"></i>
+      </section>
+
       <div class="" ng-view style="overflow: auto; height: 100%;"></div>
     </section>
     <script>
