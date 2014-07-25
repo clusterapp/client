@@ -30,4 +30,21 @@ angular.module('app')
       });
     }
   };
+  this.editSubreddits = {
+    update: function(options) {
+      var progressBar = options.progressBar;
+      var cluster = options.cluster;
+
+      progressBar.start();
+      ClusterApiService.update(cluster.id, {
+        subreddits: options.subreddits
+      }).then(function(d) {
+        ClusterApiService.bustCache(cluster.id).then(function(d) {
+          progressBar.done();
+          options.notifier.pop('success', 'Subreddits updated', '');
+          (options.afterComplete || function() {})();
+        });
+      });
+    }
+  };
 });

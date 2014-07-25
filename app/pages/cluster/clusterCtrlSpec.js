@@ -108,19 +108,6 @@ describe('ClusterCtrl Spec', function() {
       scope.editAdmin();
       $httpBackend.flush();
     });
-
-    it('notifies on success', function() {
-      $httpBackend.flush();
-      spyOn(toaster, 'pop');
-      scope.tagAdmins = [ { text: 'oj206' } ];
-      $httpBackend.whenGET(UserApiService.ENDPOINT + '/name?name=oj206&token=123&userId=456').respond({ id: '987' });
-      $httpBackend.whenPOST(ClusterApiService.ENDPOINT + 'update?userId=456&token=123&clusterId=ABC', {
-        admins: ['987']
-      }).respond({});
-      scope.editAdmin();
-      $httpBackend.flush();
-      expect(toaster.pop).toHaveBeenCalledWith('success', 'Admins updated', '');
-    });
   });
 
   describe('editing the list of subreddits', function() {

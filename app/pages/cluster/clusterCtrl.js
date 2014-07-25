@@ -21,19 +21,14 @@ angular.module('app')
   };
 
   $scope.editSubreddits = function() {
-    var newSubreddits = $scope.tagSubreddits.map(function(s) {
-      return s.text;
-    });
-
-    ngProgressLite.start();
-    ClusterApiService.update($scope.cluster.id, {
-      subreddits: newSubreddits
-    }).then(function(d) {
-      ClusterApiService.bustCache($scope.cluster.id).then(function(d) {
-        ngProgressLite.done();
-        toaster.pop('success', 'Subreddits updated', '');
-        loadClusterAndListings();
-      });
+    EditClusterService.editSubreddits.update({
+      subreddits: $scope.tagSubreddits.map(function(s) {
+        return s.text;
+      }),
+      notifier: toaster,
+      progressBar: ngProgressLite,
+      afterComplete: loadClusterAndListings,
+      cluster: $scope.cluster
     });
   };
 
@@ -49,7 +44,6 @@ angular.module('app')
       notifier: toaster
     });
   };
-
 
   var loadClusterAndListings = function() {
     ngProgressLite.start();
