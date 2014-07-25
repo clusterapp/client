@@ -20,6 +20,22 @@ describe('UserApiService Spec', function() {
     $httpBackend.verifyNoOutstandingRequest();
   });
 
+  describe('#allUserNames', function() {
+    it('hits the /all_names endpoint', function() {
+      $httpBackend.expectGET(UserApiService.ENDPOINT + '/all_names?token=456&userId=123').respond();
+      UserApiService.allUserNames();
+      $httpBackend.flush();
+    });
+  });
+
+  describe('#getUserByName', function() {
+    it('hits the /name endpoint with the name param', function() {
+      $httpBackend.expectGET(UserApiService.ENDPOINT + '/name?name=jack&token=456&userId=123').respond();
+      UserApiService.getUserByName('jack');
+      $httpBackend.flush();
+    });
+  });
+
   describe('#getUser()', function() {
     it('should get the users details from the api', function() {
       $httpBackend.expectGET(UserApiService.ENDPOINT + '?token=456&userId=123').respond({});
