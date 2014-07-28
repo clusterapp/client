@@ -7,7 +7,8 @@ angular.module('app')
                                     ngProgressLite,
                                     toaster,
                                     $location,
-                                    EditClusterService) {
+                                    EditClusterService,
+                                    UserCanSubscribeService) {
 
   AuthService.save($routeParams);
 
@@ -62,6 +63,11 @@ angular.module('app')
     ClusterApiService.getCluster($routeParams.username + '/' + $routeParams.clusterName)
     .then(function(cluster) {
       $scope.cluster = cluster;
+
+      $scope.userIsSubscribed = $scope.cluster.subscribers.indexOf(AuthService.getUser().id) > -1;
+
+      $scope.userCanSubscribe = UserCanSubscribeService.canSubscribe(AuthService.getUser(), $scope.cluster);
+
       $scope.edit.subreddits = cluster.subreddits.join(', ');
       $scope.tagSubreddits = cluster.subreddits.map(function(s) {
         return { text: s };

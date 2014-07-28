@@ -3,13 +3,25 @@ describe('ClusterCtrl Spec', function() {
   beforeEach(module('app'));
 
   var ClusterCtrl, scope, $httpBackend, createController,
-  ClusterApiService, UserApiService, toaster, $location;
+  ClusterApiService, UserApiService, toaster, $location,
+  UserCanSubscribeService;
+
+  var fakeCluster = function(opts) {
+    return {
+      subscribers: opts.subscribers || [],
+      subreddits: opts.subreddits || [],
+      admins: opts.admins || [],
+      id: opts.id,
+      owner: opts.owner
+    };
+  };
 
   beforeEach(inject(function($injector, $controller, $rootScope) {
     scope = $rootScope.$new();
     $httpBackend = $injector.get('$httpBackend');
     AuthService = $injector.get('AuthService');
     ClusterApiService = $injector.get('ClusterApiService');
+    UserCanSubscribeService = $injector.get('UserCanSubscribeService');
     UserApiService = $injector.get('UserApiService');
     toaster = $injector.get('toaster');
     $location = $injector.get('$location');
@@ -20,16 +32,16 @@ describe('ClusterCtrl Spec', function() {
   }));
 
 
-  beforeEach(function() {
+  var stubEndpoints = function() {
     $httpBackend.when('GET', ClusterApiService.ENDPOINT +
-                      'name?clusterRoute=jack%2Ffoo&token=123&userId=456').respond({
+                      'name?clusterRoute=jack%2Ffoo&token=123&userId=456').respond(fakeCluster({
       id: 'ABC',
-      owner: { id: '456', redditName: 'jack' },
-      subreddits: [],
-      admins: []
-    });
+      owner: { id: '456', redditName: 'jack' } }));
     $httpBackend.when('GET', ClusterApiService.ENDPOINT +
                       'listing?clusterId=ABC&token=123&userId=456').respond({});
+  };
+  beforeEach(function() {
+    stubEndpoints();
   });
 
   afterEach(function() {
@@ -50,22 +62,20 @@ describe('ClusterCtrl Spec', function() {
 
   it('calls getCluster', function() {
     $httpBackend.expectGET(ClusterApiService.ENDPOINT +
-                           'name?clusterRoute=jack%2Ffoo&token=123&userId=456').respond({
+                           'name?clusterRoute=jack%2Ffoo&token=123&userId=456').respond(fakeCluster({
       id: 'ABC',
       owner: { id: '456' },
-      subreddits: [],
-      admins: []
-    });
+    }));
     $httpBackend.flush();
     expect(scope.cluster.id).toEqual('ABC');
   });
 
   it('sets canEdit to true if the cluster\'s owner is the logged in user', function() {
     $httpBackend.when('GET', ClusterApiService.ENDPOINT +
-                      'name?clusterRoute=jack%2Ffoo&token=123&userId=456').respond({
+                      'name?clusterRoute=jack%2Ffoo&token=123&userId=456').respond(fakeCluster({
       id: 'ABC',
       owner: { id: '456' }
-    });
+    }));
     $httpBackend.flush();
     expect(scope.canEdit).toEqual(true);
   });
@@ -79,12 +89,11 @@ describe('ClusterCtrl Spec', function() {
       }
     });
     $httpBackend.when('GET', ClusterApiService.ENDPOINT +
-                      'name?clusterRoute=olly%2Ffoo&token=123&userId=987').respond({
+                      'name?clusterRoute=olly%2Ffoo&token=123&userId=987').respond(fakeCluster({
       id: 'ABC',
       owner: { id: '456' },
       admins: [ { id: '987' } ],
-      subreddits: []
-    });
+    }));
     $httpBackend.when('GET', ClusterApiService.ENDPOINT +
                       'listing?clusterId=ABC&token=123&userId=987').respond({ sorted: [1] });
     $httpBackend.flush();
@@ -134,6 +143,31 @@ describe('ClusterCtrl Spec', function() {
       scope.editName();
       $httpBackend.flush();
       expect($location.path).toHaveBeenCalledWith('/jack/foo');
+    });
+  });
+
+  describe('subscribing to a cluster', function() {
+    it('does not let the user subscribe if they cannot', function() {
+      spyOn(UserCanSubscribeService, 'canSubscribe').and.returnValue(false);
+      $httpBackend.flush();
+      expect(scope.userCanSubscribe).toEqual(false);
+    });
+
+    it('does let the user subscribe if they can', function() {
+      spyOn(UserCanSubscribeService, 'canSubscribe').and.returnValue(true);
+      $httpBackend.flush();
+      expect(scope.userCanSubscribe).toEqual(true);
+    });
+
+    it('sets userIsSubscribed to true if the user is subscribed', function() {
+      $httpBackend.expectGET(ClusterApiService.ENDPOINT +
+                        'name?clusterRoute=jack%2Ffoo&token=123&userId=456').respond(fakeCluster({
+        id: 'ABC',
+        owner: { id: '987', redditName: 'jack' },
+        subscribers: ['456']
+      }));
+      $httpBackend.flush();
+      expect(scope.userIsSubscribed).toEqual(true);
     });
   });
 });
