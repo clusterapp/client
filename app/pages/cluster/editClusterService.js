@@ -87,6 +87,7 @@ angular.module('app')
         subscribers: options.subscribers
       }).then(function(d) {
         if(d.errors && d.errors.length) {
+          console.log('update errors', d);
           progressBar.done();
           options.notifier.pop('error', 'An error occured when subscribing', '');
         } else {

@@ -164,7 +164,7 @@ describe('ClusterCtrl Spec', function() {
                         'name?clusterRoute=jack%2Ffoo&token=123&userId=456').respond(fakeCluster({
         id: 'ABC',
         owner: { id: '987', redditName: 'jack' },
-        subscribers: ['456']
+        subscribers: [{ id: '456' }]
       }));
       $httpBackend.flush();
       expect(scope.userIsSubscribed).toEqual(true);

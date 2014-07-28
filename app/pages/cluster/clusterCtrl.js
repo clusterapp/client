@@ -51,6 +51,15 @@ angular.module('app')
   $scope.editSubscriber = function() {
     if($scope.userIsSubscribed) {
     } else if($scope.userCanSubscribe) {
+      return EditClusterService.editSubscribers.addSubscriber({
+        newSubscriberId: AuthService.getUser().id,
+        notifier: toaster,
+        cluster: $scope.cluster,
+        progressBar: ngProgressLite,
+        afterComplete: function() {
+          $scope.userIsSubscribed = true;
+        }
+      });
     }
   };
 
@@ -73,7 +82,9 @@ angular.module('app')
     .then(function(cluster) {
       $scope.cluster = cluster;
 
-      $scope.userIsSubscribed = $scope.cluster.subscribers.indexOf(AuthService.getUser().id) > -1;
+      $scope.userIsSubscribed = $scope.cluster.subscribers.some(function(subs) {
+        return subs.id == AuthService.getUser().id;
+      });
 
       $scope.userCanSubscribe = UserCanSubscribeService.canSubscribe(AuthService.getUser(), $scope.cluster);
 

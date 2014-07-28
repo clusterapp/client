@@ -28,7 +28,9 @@ describe('UserCanSubscribeService Spec', function () {
         admins: [],
         owner: '456',
         public: true,
-        subscribers: ['abcd']
+        subscribers: [{
+          id: 'abcd'
+        }]
       })).toEqual(false);
 
     });
@@ -37,7 +39,9 @@ describe('UserCanSubscribeService Spec', function () {
       expect(UserCanSubscribeService.canSubscribe({
         id: 'abcd'
       }, {
-        admins: ['abcd'],
+        admins: [{
+          id: 'abcd'
+        }],
         public: true
       })).toEqual(false);
     });
