@@ -50,6 +50,15 @@ angular.module('app')
   // - they are not subscribed and want to subscribe
   $scope.editSubscriber = function() {
     if($scope.userIsSubscribed) {
+      return EditClusterService.editSubscribers.removeSubscriber({
+        subscriberToRemove: AuthService.getUser().id,
+        notifier: toaster,
+        cluster: $scope.cluster,
+        progressBar: ngProgressLite,
+        afterComplete: function() {
+          $scope.userIsSubscribed = false;
+        }
+      });
     } else if($scope.userCanSubscribe) {
       return EditClusterService.editSubscribers.addSubscriber({
         newSubscriberId: AuthService.getUser().id,
