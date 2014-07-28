@@ -45,6 +45,15 @@ angular.module('app')
     });
   };
 
+  // user will only get here if either:
+  // - they are subscribed and want to unsubscribe
+  // - they are not subscribed and want to subscribe
+  $scope.editSubscriber = function() {
+    if($scope.userIsSubscribed) {
+    } else if($scope.userCanSubscribe) {
+    }
+  };
+
   $scope.allUserNamesAutocomplete = function() {
     return EditClusterService.editAdmin.userNamesForAutocomplete($scope.cluster.owner);
   };

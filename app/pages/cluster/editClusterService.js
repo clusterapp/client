@@ -65,6 +65,38 @@ angular.module('app')
         }
       });
     }
-  }
+  };
+  this.editSubscribers = {
+    addSubscriber: function(options) {
+      var newSubscribers = options.cluster.subscribers.slice(0);
+      newSubscribers.push(options.newSubscriberId);
+      return this.update(_.extend(options, { subscribers: newSubscribers }));
+    },
+    removeSubscriber: function(options) {
+      var subscriberIndex = options.cluster.subscribers.indexOf(options.subscriberToRemove);
+      var newSubscribers = options.cluster.subscribers.slice(0);
+      newSubscribers.splice(subscriberIndex, 1);
+      return this.update(_.extend(options, { subscribers: newSubscribers }));
+    },
+
+    update: function(options) {
+      var progressBar = options.progressBar;
+
+      progressBar.start();
+      return ClusterApiService.update(options.cluster.id, {
+        subscribers: options.subscribers
+      }).then(function(d) {
+        if(d.errors && d.errors.length) {
+          progressBar.done();
+          options.notifier.pop('error', 'An error occured when subscribing', '');
+        } else {
+          progressBar.done();
+          options.notifier.pop('success', 'Subscription to this cluster updated', '');
+          (options.afterComplete || function() {})();
+        }
+      });
+
+    }
+  };
 });
 

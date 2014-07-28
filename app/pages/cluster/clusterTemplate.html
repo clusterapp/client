@@ -5,7 +5,7 @@
         <strong>{{ cluster.name }}</strong>
         ({{ cluster.subreddits.join(', ') }})
       </div>
-      <div class="css-button cls-subscribe" ng-click="addSubscriber()">
+      <div class="css-button cls-subscribe" ng-click="editSubscriber()" ng-show="userIsSubscribed || userCanSubscribe">
         <i class="fa fa-star fa-lg" ng-show="userIsSubscribed"></i>
         <i class="fa fa-star-o fa-lg" ng-show="userCanSubscribe"></i>
       </div>

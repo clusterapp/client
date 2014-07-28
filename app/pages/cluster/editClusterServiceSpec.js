@@ -176,4 +176,37 @@ describe('EditClusterService Spec', function() {
       });
     });
   });
+
+  describe('editSubscribers', function() {
+    describe('addSubscriber', function() {
+      it('makes the right request', function() {
+        $httpBackend.expectPOST(ClusterApiService.ENDPOINT + 'update?userId=456&token=123&clusterId=ABC', {
+          subscribers: ['654']
+        }).respond({});
+        EditClusterService.editSubscribers.addSubscriber({
+          progressBar: { start: function() {}, done: function() {} },
+          cluster: { id: 'ABC', subscribers: [] },
+          notifier: { pop: function() {} },
+          newSubscriberId: '654'
+        });
+        $httpBackend.flush();
+      });
+    });
+    describe('unsubscribing', function() {
+      it('makes the right request', function() {
+        $httpBackend.expectPOST(ClusterApiService.ENDPOINT + 'update?userId=456&token=123&clusterId=ABC', {
+          subscribers: []
+        }).respond({});
+        EditClusterService.editSubscribers.removeSubscriber({
+          progressBar: { start: function() {}, done: function() {} },
+          cluster: { id: 'ABC', subscribers: ['654'] },
+          notifier: { pop: function() {} },
+          subscriberToRemove: '654'
+        });
+        $httpBackend.flush();
+      });
+
+
+    });
+  });
 });
