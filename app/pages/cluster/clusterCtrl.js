@@ -57,6 +57,7 @@ angular.module('app')
         progressBar: ngProgressLite,
         afterComplete: function() {
           $scope.userIsSubscribed = false;
+          $scope.userCanSubscribe = true;
         }
       });
     } else if($scope.userCanSubscribe) {
@@ -67,6 +68,7 @@ angular.module('app')
         progressBar: ngProgressLite,
         afterComplete: function() {
           $scope.userIsSubscribed = true;
+          $scope.userCanSubscribe = false;
         }
       });
     }
