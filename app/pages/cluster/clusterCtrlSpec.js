@@ -159,7 +159,7 @@ describe('ClusterCtrl Spec', function() {
       expect(scope.userCanSubscribe).toEqual(true);
     });
 
-    it('sets userIsSubscribed to true if the user is subscribed', function() {
+    it('sets the right properties on the scope', function() {
       $httpBackend.expectGET(ClusterApiService.ENDPOINT +
                         'name?clusterRoute=jack%2Ffoo&token=123&userId=456').respond(fakeCluster({
         id: 'ABC',
@@ -168,6 +168,26 @@ describe('ClusterCtrl Spec', function() {
       }));
       $httpBackend.flush();
       expect(scope.userIsSubscribed).toEqual(true);
+      expect(scope.userCanSubscribe).toEqual(false);
+    });
+
+    it('updates the scope properly when the user unsubscribes', function() {
+      $httpBackend.expectGET(ClusterApiService.ENDPOINT +
+                        'name?clusterRoute=jack%2Ffoo&token=123&userId=456').respond(fakeCluster({
+        id: 'ABC',
+        owner: { id: '987', redditName: 'jack' },
+        subscribers: [{ id: '456' }]
+      }));
+      $httpBackend.flush();
+      $httpBackend.expectPOST(ClusterApiService.ENDPOINT +
+                              'update?userId=456&token=123&clusterId=ABC', {
+        subscribers: []
+      }).respond({});
+      scope.editSubscriber();
+      $httpBackend.flush();
+      expect(scope.userIsSubscribed).toEqual(false);
+      expect(scope.userCanSubscribe).toEqual(true);
     });
   });
+
 });
