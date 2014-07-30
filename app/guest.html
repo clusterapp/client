@@ -17,28 +17,27 @@
         <div class="sbl-text">Cluster</div>
       </a>
 
-      <a class="sb-logout" href="">
-        <i class="fa fa-power-off fa-2x"></i>
-        <div class="">Logout</div>
+      <a class="sb-logout LoginBtn" href="">
+        <i class="fa fa-sign-in fa-2x"></i>
+        <div class="">Login</div>
       </a>
     </section>
     
     
     
-    <!-- <section class="mw"> -->
-    <!--   <header class="hd sticky"> -->
-    <!--     <div class="hd-search"> -->
-    <!--       <input type="text" name="search" autocomplete="off" spellcheck="false" placeholder="Search for a cluster, subreddit or a user..." class="hds-input"> -->
-    <!--       <a class="hd-login LoginBtn" href="">Login</a> -->
-    <!--     </div> -->
-    <!--   </header> -->
-    <!--   <section class="g-msg sticky"> -->
-    <!--     You are not logged in, so you will only have limited functionality, such as viewing public clusters, and profiles, please <a class="LoginBtn" href="">login</a> to see more. -->
-    <!--     <i class="g-msg-close fa fa-times closeBtn"></i> -->
-    <!--   </section> -->
+    <section class="mw">
+      <header class="hd sticky">
+        <div class="hd-search">
+          <input type="text" name="search" autocomplete="off" spellcheck="false" placeholder="Search for a cluster, subreddit or a user..." class="hds-input">
+        </div>
+      </header>
+      <section class="g-msg sticky">
+        You are not logged in, so you will only have limited functionality, such as viewing public clusters, and profiles, please <a class="LoginBtn" href="">login</a> to see more.
+        <i class="g-msg-close fa fa-times closeBtn"></i>
+      </section>
 
-    <!--   <div class="" ng-view style="overflow: auto; height: 100%;"></div> -->
-    <!-- </section> -->
+      <div class="" ng-view style="overflow: auto; height: 100%;"></div>
+    </section>
     <script>
       localStorage.clear();
     </script>
