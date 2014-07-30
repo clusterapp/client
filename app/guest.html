@@ -9,12 +9,26 @@
   </head>
   <body ng-app="app">
     <toaster-container></toaster-container>
-    <section class="sidebar"></section>
+    
+    
+    <section class="sidebar">
+      <a class="sb-logo" href="/">
+        <div class="sbl-img"></div>
+        <div class="sbl-text">Cluster</div>
+      </a>
+
+      <a class="sb-logout LoginBtn" href="">
+        <i class="fa fa-sign-in fa-2x"></i>
+        <div class="">Login</div>
+      </a>
+    </section>
+    
+    
+    
     <section class="mw">
       <header class="hd sticky">
         <div class="hd-search">
           <input type="text" name="search" autocomplete="off" spellcheck="false" placeholder="Search for a cluster, subreddit or a user..." class="hds-input">
-          <a class="hd-login LoginBtn" href="">Login</a>
         </div>
       </header>
       <section class="g-msg sticky">
