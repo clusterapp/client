@@ -1,7 +1,6 @@
 var gulp = require('gulp');
 var $ = require('gulp-load-plugins')()
 
-
 var commonFiles = [
   'app/shared/vendor/async.js',
   'app/shared/vendor/jquery.min.js',
@@ -12,6 +11,7 @@ var commonFiles = [
   'app/shared/**/*.js',
 ];
 
+//TODO: figure out a way to fix duplication in this file
 gulp.task('js', function () {
   gulp.src(commonFiles.concat([
     '!app/shared/**/*Spec.js',
@@ -21,8 +21,6 @@ gulp.task('js', function () {
   ]))
   .pipe($.sourcemaps.init())
   .pipe($.concat('cluster.js'))
-  // .pipe($.ngAnnotate())
-  // .pipe($.uglify())
   .pipe($.sourcemaps.write())
   .pipe(gulp.dest('app/assets/js'))
 })
