@@ -1,5 +1,8 @@
 {
   "name": "Cluster_Frontend",
+  "engines": {
+    "node": "0.10.x"
+  },
   "version": "0.0.1",
   "description": "fontend =======",
   "main": "app.js",
