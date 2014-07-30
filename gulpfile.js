@@ -63,3 +63,4 @@ gulp.task('dev', ['js', 'guestjs', 'sass'], function () {
 
 
 gulp.task('build', ['js'])
+gulp.task('heroku', ['js', 'guestjs', 'sass'])
