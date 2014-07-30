@@ -5,6 +5,11 @@
         <strong>{{ cluster.name }}</strong>
         ({{ cluster.subreddits.join(', ') }})
       </div>
+      <div class="css-button cls-subscribe" ng-click="editSubscriber()">
+        <i class="fa fa-star fa-lg" ng-show="userIsSubscribed"></i>
+        <i class="fa fa-star-o fa-lg" ng-show="userCanSubscribe"></i>
+      </div>
+
       <div class="set-button"></div>
       <div class="css-button" ng-if="canEdit" ng-click="toggleEdit()">
         <i class="cssb-close fa fa-times fa-lg"></i>

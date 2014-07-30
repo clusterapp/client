@@ -7,7 +7,8 @@ angular.module('app')
                                     ngProgressLite,
                                     toaster,
                                     $location,
-                                    EditClusterService) {
+                                    EditClusterService,
+                                    UserCanSubscribeService) {
 
   AuthService.save($routeParams);
 
@@ -44,6 +45,35 @@ angular.module('app')
     });
   };
 
+  // user will only get here if either:
+  // - they are subscribed and want to unsubscribe
+  // - they are not subscribed and want to subscribe
+  $scope.editSubscriber = function() {
+    if($scope.userIsSubscribed) {
+      return EditClusterService.editSubscribers.removeSubscriber({
+        subscriberToRemove: AuthService.getUser().id,
+        notifier: toaster,
+        cluster: $scope.cluster,
+        progressBar: ngProgressLite,
+        afterComplete: function() {
+          $scope.userIsSubscribed = false;
+          $scope.userCanSubscribe = true;
+        }
+      });
+    } else if($scope.userCanSubscribe) {
+      return EditClusterService.editSubscribers.addSubscriber({
+        newSubscriberId: AuthService.getUser().id,
+        notifier: toaster,
+        cluster: $scope.cluster,
+        progressBar: ngProgressLite,
+        afterComplete: function() {
+          $scope.userIsSubscribed = true;
+          $scope.userCanSubscribe = false;
+        }
+      });
+    }
+  };
+
   $scope.allUserNamesAutocomplete = function() {
     return EditClusterService.editAdmin.userNamesForAutocomplete($scope.cluster.owner);
   };
@@ -62,6 +92,13 @@ angular.module('app')
     ClusterApiService.getCluster($routeParams.username + '/' + $routeParams.clusterName)
     .then(function(cluster) {
       $scope.cluster = cluster;
+
+      $scope.userIsSubscribed = $scope.cluster.subscribers.some(function(subs) {
+        return subs.id == AuthService.getUser().id;
+      });
+
+      $scope.userCanSubscribe = UserCanSubscribeService.canSubscribe(AuthService.getUser(), $scope.cluster);
+
       $scope.edit.subreddits = cluster.subreddits.join(', ');
       $scope.tagSubreddits = cluster.subreddits.map(function(s) {
         return { text: s };
