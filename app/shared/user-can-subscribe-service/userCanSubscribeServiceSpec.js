@@ -58,7 +58,7 @@ describe('UserCanSubscribeService Spec', function () {
        expect(UserCanSubscribeService.canSubscribe({
         id: 'abcd'
       }, {
-        owner: 'abcd',
+        owner: { id: 'abcd' },
         public: true,
         admins: [],
       })).toEqual(false);

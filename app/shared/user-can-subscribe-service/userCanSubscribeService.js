@@ -9,7 +9,7 @@ angular.module('app')
     if(cluster.public === false) return false;
     if(containsId(cluster.admins, user.id)) return false;
     if(cluster.admins.indexOf(user.id) > -1) return false;
-    if(cluster.owner == user.id) return false;
+    if(cluster.owner.id == user.id) return false;
     if(containsId(cluster.subscribers, user.id)) return false;
     return true;
   };
