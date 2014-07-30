@@ -1,7 +1,6 @@
 var gulp = require('gulp');
 var $ = require('gulp-load-plugins')()
 
-
 var commonFiles = [
   'app/shared/vendor/async.js',
   'app/shared/vendor/jquery.min.js',
@@ -12,6 +11,7 @@ var commonFiles = [
   'app/shared/**/*.js',
 ];
 
+//TODO: figure out a way to fix duplication in this file
 gulp.task('js', function () {
   gulp.src(commonFiles.concat([
     '!app/shared/**/*Spec.js',
@@ -21,9 +21,21 @@ gulp.task('js', function () {
   ]))
   .pipe($.sourcemaps.init())
   .pipe($.concat('cluster.js'))
-  // .pipe($.ngAnnotate())
-  // .pipe($.uglify())
   .pipe($.sourcemaps.write())
+  .pipe(gulp.dest('app/assets/js'))
+})
+
+gulp.task('jspro', function () {
+  gulp.src(commonFiles.concat([
+    '!app/shared/**/*Spec.js',
+    'app/pages/**/*.js',
+    '!app/pages/guest/*.js',
+    '!app/pages/**/*Spec.js'
+  ]))
+  .pipe($.sourcemaps.init())
+  .pipe($.concat('cluster.js'))
+  .pipe($.ngAnnotate())
+  .pipe($.uglify())
   .pipe(gulp.dest('app/assets/js'))
 })
 
@@ -46,6 +58,23 @@ gulp.task('guestjs', function () {
   .pipe(gulp.dest('app/assets/js'))
 
 })
+gulp.task('guestjspro', function () {
+
+  gulp.src(commonFiles.concat([
+    '!app/shared/routes/*.js',
+    '!app/shared/**/*Spec.js',
+    'app/pages/**/*.js',
+    '!app/pages/logout/*.js',
+    '!app/pages/create/*.js',
+    '!app/pages/**/*Spec.js'
+  ]))
+  .pipe($.sourcemaps.init())
+  .pipe($.concat('guest.js'))
+  .pipe($.ngAnnotate())
+  .pipe($.uglify())
+  .pipe(gulp.dest('app/assets/js'))
+
+})
 
 
 
@@ -63,3 +92,4 @@ gulp.task('dev', ['js', 'guestjs', 'sass'], function () {
 
 
 gulp.task('build', ['js'])
+gulp.task('heroku', ['jspro', 'guestjspro', 'sass'])
