@@ -34,7 +34,6 @@ app.get('*', function (req, res, next) {
   var params = req.query;
 
   if (params.token && params.user_name && params.user_id && !req.session.userId) {
-    console.log('setting new session data');
     req.session.userId = params.user_id;
     req.session.token = params.token;
     req.session.userName = params.user_name;
@@ -57,7 +56,6 @@ app.get('*', function (req, res, next) {
 
 // When user hits server ================
 app.all('/api/*', function(req, res) {
-  console.log(req.method);
   var urlForRequest = req.url.replace('/api', 'http://127.0.0.1:3000');
   if(req.session.userId) {
     urlForRequest += ( urlForRequest.indexOf('?') > -1 ? '&' : '?' );
@@ -67,7 +65,6 @@ app.all('/api/*', function(req, res) {
   if(req.method == 'GET') {
     return request(urlForRequest).pipe(res)
   } else {
-    console.log(req);
     console.log('POST', JSON.stringify(req.body));
     return request({
       method: 'POST',
