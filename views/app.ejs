@@ -8,7 +8,11 @@
     <link rel="stylesheet" href="/assets/css/ng-tags-input.min.css">
     <title>ClusterApp</title>
   </head>
-  <body ng-app="app" data-loggedin="<%= loggedIn %>">
+  <body ng-app="app"
+    data-user-name="<%= userName %>"
+    data-loggedin="<%= loggedIn %>"
+    data-user-id="<%= userId %>"
+  >
     <toaster-container></toaster-container>
 
 

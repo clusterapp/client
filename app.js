@@ -6,7 +6,7 @@ var http = require('http');
 var bodyParser = require('body-parser');
 var logger = require('morgan');
 var compress = require('compression');
-var session = require('express-session');
+var session = require('cookie-session')
 var app = express();
 var request = require('request');
 var ejs = require('ejs')
@@ -18,75 +18,61 @@ app.set('view engine', 'ejs');
 // configuration =================
 app.use(express.static(__dirname + '/app/'));
 app.use(logger('dev'));
-app.use(compress());
-app.use(session({secret: 'keyboard cat', saveUninitialized: true, resave:true}));
+app.use(session({ secret: 'foobar' }));
 app.use(bodyParser.urlencoded({ extended: true }));
-
-
-
-
-
 app.get('/_logout', function (req, res) {
-  
   req.session.destroy();
-
-  console.log(req.session);
-
+  console.log('DESTROYED SESSION');
   res.json(200, {});
 });
 
 
-app.get('/login', function (req, res) {
-  var sess = req.session
+app.get('*', function (req, res, next) {
+  if(req.url.indexOf('/api') > -1) return next();
+  var params = req.query;
 
-  if (sess.user) {
-    // res.sendfile('./app/app.html');
-    res.render('app', { loggedIn: true });
+  if (params.token && params.user_name && params.user_id && !req.session.userId) {
+    console.log('setting new session data');
+    req.session.userId = params.user_id;
+    req.session.token = params.token;
+    req.session.userName = params.user_name;
+  }
+
+  if(req.session.userId) {
+    res.render('app', {
+      loggedIn: true,
+      userName: req.session.userName,
+      userId: req.session.userId
+    });
   } else {
-    res.render('app', { loggedIn: false });
+    res.render('app', {
+      userName: '',
+      userId: '',
+      loggedIn: false
+    });
   }
 });
-
-
-
 
 // When user hits server ================
 app.all('/api/*', function(req, res) {
+  console.log(req.method);
   var urlForRequest = req.url.replace('/api', 'http://127.0.0.1:3000');
-  if(req.session.user) {
+  if(req.session.userId) {
     urlForRequest += ( urlForRequest.indexOf('?') > -1 ? '&' : '?' );
-    urlForRequest += 'userId=' + req.session.user.user_id + '&token=' + req.session.user.token;
+    urlForRequest += 'userId=' + req.session.userId + '&token=' + req.session.token;
   }
-  console.log('making api request', urlForRequest);
-  request(urlForRequest).pipe(res)
-});
-
-app.get('*', function (req, res) {
-  // must check if route has parameters of token and user etc... (if so then this is logging a user in)
-  console.log(req.session);
-  var sess = req.session;
-  var params = req.query;
-
-  if (params.token && params.user_name && params.user_id && !sess.user) {
-    // then they have logged in
-    sess.user = {
-      token: params.token,
-      user_id: params.user_id,
-      user_name: params.user_name
-    };
-  }
-
-  console.log('This is a session:', sess);
-
-  if (sess.user) {
-    res.render('app', { loggedIn: true });
+  console.log('API REQUEST', urlForRequest);
+  if(req.method == 'GET') {
+    return request(urlForRequest).pipe(res)
   } else {
-    res.render('app', { loggedIn: false });
+    console.log('POST', req.body);
+    return request({
+      method: 'POST',
+      url: urlForRequest,
+      body: req.body
+    }).pipe(res);
   }
 });
-
-
-
 
 // listen (start app with node server.js) ======================================
 app.listen(process.env.PORT || 3002);
