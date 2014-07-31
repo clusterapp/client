@@ -1,5 +1,6 @@
 angular.module('app')
-.controller('IndexCtrl', function ($scope, $routeParams, AuthService, UserApiService, ClusterApiService) {
+.controller('IndexCtrl', function ($scope, $location, AuthService, UserApiService, ClusterApiService) {
+  $location.url($location.path());
 
   UserApiService.getUser().then(function(user) {
     $scope.user = user;

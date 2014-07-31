@@ -15,6 +15,8 @@ angular.module('app')
   $scope.isEditing = false;
   $scope.edit = {}
 
+  $location.url($location.path());
+
   $scope.toggleEdit = function() {
     if($scope.canEdit) $scope.isEditing = !$scope.isEditing;
   };
