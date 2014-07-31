@@ -8,6 +8,11 @@ var logger = require('morgan');
 var compress = require('compression');
 var session = require('express-session');
 var app = express();
+var request = require('request');
+var ejs = require('ejs')
+
+app.set('view engine', 'ejs');
+
 
 
 // configuration =================
@@ -35,9 +40,10 @@ app.get('/login', function (req, res) {
   var sess = req.session
 
   if (sess.user) {
-    res.sendfile('./app/app.html');
+    // res.sendfile('./app/app.html');
+    res.render('app', { loggedIn: true });
   } else {
-    res.sendfile('./app/login.html');
+    res.render('app', { loggedIn: false });
   }
 });
 
@@ -45,6 +51,16 @@ app.get('/login', function (req, res) {
 
 
 // When user hits server ================
+app.all('/api/*', function(req, res) {
+  var urlForRequest = req.url.replace('/api', 'http://127.0.0.1:3000');
+  if(req.session.user) {
+    urlForRequest += ( urlForRequest.indexOf('?') > -1 ? '&' : '?' );
+    urlForRequest += 'userId=' + req.session.user.user_id + '&token=' + req.session.user.token;
+  }
+  console.log('making api request', urlForRequest);
+  request(urlForRequest).pipe(res)
+});
+
 app.get('*', function (req, res) {
   // must check if route has parameters of token and user etc... (if so then this is logging a user in)
   console.log(req.session);
@@ -62,10 +78,10 @@ app.get('*', function (req, res) {
 
   console.log('This is a session:', sess);
 
-  if (sess.user && sess.user.token && sess.user.user_id) {
-    res.sendfile('./app/app.html');
+  if (sess.user) {
+    res.render('app', { loggedIn: true });
   } else {
-    res.sendfile('./app/guest.html');
+    res.render('app', { loggedIn: false });
   }
 });
 
