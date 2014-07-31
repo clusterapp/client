@@ -2,12 +2,13 @@ describe('UserProfileCtrl Spec', function() {
 
   beforeEach(module('app'));
 
-  var IndexCtrl, scope, $httpBackend, UserApiService, createController, AuthService;
+  var IndexCtrl, scope, $httpBackend, UserApiService, createController, AuthService, $q;
   beforeEach(inject(function($injector, $controller, $rootScope) {
     scope = $rootScope.$new();
     $httpBackend = $injector.get('$httpBackend');
     UserApiService = $injector.get('UserApiService');
     AuthService = $injector.get('AuthService');
+    $q = $injector.get('$q');
 
     AuthService.get = function(param) {
       if(param === 'userId') return '456';
@@ -18,10 +19,14 @@ describe('UserProfileCtrl Spec', function() {
       return $controller('UserProfileCtrl', params);
     };
 
-    $httpBackend.when('GET', UserApiService.ENDPOINT + '?token=123&userId=456').respond({redditName: 'jack'});
-    $httpBackend.when('GET', UserApiService.ENDPOINT + '/clusters/own?token=123&userId=456').respond([{ name: 'foo' }]);
-    $httpBackend.when('GET', UserApiService.ENDPOINT + '/clusters/admin?token=123&userId=456').respond([{ name: 'bar' }]);
-    $httpBackend.when('GET', UserApiService.ENDPOINT + '/clusters/subscribed?token=123&userId=456').respond([{ name: 'baz' }]);
+    $httpBackend.when('GET', UserApiService.ENDPOINT + '/clusters/own').respond([{ name: 'foo' }]);
+    $httpBackend.when('GET', UserApiService.ENDPOINT + '/clusters/admin').respond([{ name: 'bar' }]);
+    $httpBackend.when('GET', UserApiService.ENDPOINT + '/clusters/subscribed').respond([{ name: 'baz' }]);
+    spyOn(UserApiService, 'getUser').and.callFake(function() {
+      var def = $q.defer();
+      def.resolve({ redditName: 'jack' });
+      return def.promise;
+    });
   }));
 
 

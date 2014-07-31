@@ -31,15 +31,4 @@ describe('LogOutCtrl Spec', function() {
     });
     $httpBackend.flush();
   });
-
-  it('calls the AuthService.delete method', function() {
-    spyOn(AuthService, 'delete');
-    ctrl = createController({
-      $scope: scope,
-      // have to do this because the tests can't deal with a full page reload
-      $window: { location: { reload: function() {} } }
-    });
-    $httpBackend.flush();
-    expect(AuthService.delete).toHaveBeenCalled();
-  });
 });

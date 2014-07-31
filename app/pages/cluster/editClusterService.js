@@ -86,7 +86,7 @@ angular.module('app')
     removeSubscriber: function(options) {
       var subscriberIndex = options.cluster.subscribers.indexOf(options.subscriberToRemove);
       var newSubscribers = options.cluster.subscribers.slice(0);
-      newSubscribers.splice(subscriberIndex, 1);
+       newSubscribers.splice(subscriberIndex, 1);
       return _updateCluster(_.extend(options, {
         changeData: { subscribers: newSubscribers },
         cacheBust: false

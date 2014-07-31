@@ -10,8 +10,7 @@ describe('ClusterApiService Spec', function () {
     $httpBackend = $injector.get('$httpBackend');
     AuthService = $injector.get('AuthService');
     spyOn(AuthService, 'get').and.callFake(function(arg) {
-      if(arg === 'userId') return '123';
-      if(arg === 'userToken') return '456';
+      if(arg === 'id') return '123';
     });
   }));
 
@@ -25,7 +24,7 @@ describe('ClusterApiService Spec', function () {
   describe('#create()', function() {
     it('should create a cluster, and return the new created cluster', function() {
 
-      $httpBackend.expectPOST(ClusterApiService.ENDPOINT + 'create?userId=123&token=456', {
+      $httpBackend.expectPOST(ClusterApiService.ENDPOINT + 'create', {
         owner: '123',
         name: 'testcluster',
         subreddits: ['vim', 'angularjs'],
@@ -44,7 +43,7 @@ describe('ClusterApiService Spec', function () {
 
   describe('#update()', function() {
     it('calls update endpoint', function() {
-      $httpBackend.expectPOST(ClusterApiService.ENDPOINT + 'update?userId=123&token=456&clusterId=123', {
+      $httpBackend.expectPOST(ClusterApiService.ENDPOINT + 'update?clusterId=123', {
         admins: ['ABC123']
       }).respond(200, {});
 
@@ -58,7 +57,7 @@ describe('ClusterApiService Spec', function () {
 
   describe('#getCluster()', function() {
     it('makes a get request', function() {
-      $httpBackend.expectGET(ClusterApiService.ENDPOINT + 'name?clusterRoute=foo&token=456&userId=123').respond(200, {});
+      $httpBackend.expectGET(ClusterApiService.ENDPOINT + 'name?clusterRoute=foo').respond(200, {});
       ClusterApiService.getCluster('foo');
       $httpBackend.flush();
     });
@@ -66,13 +65,13 @@ describe('ClusterApiService Spec', function () {
 
   describe('#getListings()', function() {
     it('makes a get request', function() {
-      $httpBackend.expectGET(ClusterApiService.ENDPOINT + 'listing?clusterId=abc&token=456&userId=123').respond(200, {});
+      $httpBackend.expectGET(ClusterApiService.ENDPOINT + 'listing?clusterId=abc').respond(200, {});
       ClusterApiService.getListings('abc');
       $httpBackend.flush();
     });
 
     it('adds in the after parameters correctly', function() {
-      $httpBackend.expectGET(ClusterApiService.ENDPOINT + 'listing?after_vim=foo&clusterId=abc&token=456&userId=123').respond(200, {});
+      $httpBackend.expectGET(ClusterApiService.ENDPOINT + 'listing?after_vim=foo&clusterId=abc').respond(200, {});
       ClusterApiService.getListings('abc', {
         vim: 'foo'
       });
@@ -90,7 +89,7 @@ describe('ClusterApiService Spec', function () {
 
   describe('#bustCAche()', function() {
     it('hits the cache bust end point', function() {
-      $httpBackend.expectGET(ClusterApiService.ENDPOINT + 'cache_bust?clusterId=987&token=456&userId=123').respond(200, {});
+      $httpBackend.expectGET(ClusterApiService.ENDPOINT + 'cache_bust?clusterId=987').respond(200, {});
       ClusterApiService.bustCache('987');
       $httpBackend.flush();
     });

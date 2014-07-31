@@ -1,15 +1,11 @@
 angular.module('app')
 .controller('IndexCtrl', function ($scope, $routeParams, AuthService, UserApiService, ClusterApiService) {
 
-  UserApiService.getUser().then(function(result) {
-    if(result.errors && result.errors.length) {
-      // something went wrong
-    } else {
-      $scope.user = result;
-    }
+  UserApiService.getUser().then(function(user) {
+    $scope.user = user;
   });
 
-  $scope.loggedIn = $('body').data('loggedin');
+  $scope.loggedIn = AuthService.loggedIn();
 
   ClusterApiService.getPublic().then(function(result) {
     $scope.publicClusters = result;
