@@ -16,10 +16,11 @@ app.set('view engine', 'ejs');
 
 
 // configuration =================
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static(__dirname + '/app/'));
 app.use(logger('dev'));
 app.use(session({ secret: 'foobar' }));
-app.use(bodyParser.urlencoded({ extended: true }));
 app.get('/_logout', function (req, res) {
   req.session.destroy();
   console.log('DESTROYED SESSION');
@@ -65,11 +66,12 @@ app.all('/api/*', function(req, res) {
   if(req.method == 'GET') {
     return request(urlForRequest).pipe(res)
   } else {
-    console.log('POST', req.body);
+    console.log(req);
+    console.log('POST', JSON.stringify(req.body));
     return request({
       method: 'POST',
       url: urlForRequest,
-      body: req.body
+      json: req.body
     }).pipe(res);
   }
 });
