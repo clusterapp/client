@@ -22,8 +22,9 @@ app.use(express.static(__dirname + '/app/'));
 app.use(logger('dev'));
 app.use(session({ secret: 'foobar' }));
 app.get('/_logout', function (req, res) {
-  req.session.destroy();
-  console.log('DESTROYED SESSION');
+  req.session.userId = undefined;
+  req.session.token = undefined;
+  req.session.userName = undefined;
   res.json(200, {});
 });
 
