@@ -1,14 +1,9 @@
 angular.module('app')
-.controller('IndexCtrl', function ($scope, $routeParams, AuthService, UserApiService, ClusterApiService) {
+.controller('IndexCtrl', function ($scope, $location, AuthService, UserApiService, ClusterApiService) {
+  $location.url($location.path());
 
-  AuthService.save($routeParams);
-
-  UserApiService.getUser().then(function(result) {
-    if(result.errors && result.errors.length) {
-      // something went wrong
-    } else {
-      $scope.user = result;
-    }
+  UserApiService.getUser().then(function(user) {
+    $scope.user = user;
   });
 
   $scope.loggedIn = AuthService.loggedIn();

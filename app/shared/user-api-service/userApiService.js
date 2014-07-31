@@ -1,18 +1,15 @@
 angular.module('app')
 .service('UserApiService', function (ApiHelperService, AuthService, $q, APIURLS) {
 
-  var endpoint = APIURLS() + "/users";
+  var endpoint = "/api/users";
 
   this.ENDPOINT = endpoint;
 
   this.getUser = function() {
-    if(AuthService.loggedIn()) {
-      var def = $q.defer();
-      def.resolve(AuthService.getUser());
-      return def.promise;
-    } else {
-      return ApiHelperService.get(endpoint);
-    }
+    // TODO: get rid of the fake async here - getUser() on the AuthService is sync
+    var def = $q.defer();
+    def.resolve(AuthService.getUser());
+    return def.promise;
   };
 
   this.allUserNames = function() {

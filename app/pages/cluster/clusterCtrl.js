@@ -10,12 +10,12 @@ angular.module('app')
                                     EditClusterService,
                                     UserCanSubscribeService) {
 
-  AuthService.save($routeParams);
-
   $scope.loggedIn = AuthService.loggedIn();
   $scope.canEdit = false;
   $scope.isEditing = false;
   $scope.edit = {}
+
+  $location.url($location.path());
 
   $scope.toggleEdit = function() {
     if($scope.canEdit) $scope.isEditing = !$scope.isEditing;
@@ -25,7 +25,7 @@ angular.module('app')
     EditClusterService.editSubreddits.update({
       subreddits: $scope.tagSubreddits.map(function(s) {
         return s.text;
-      }),
+     }),
       notifier: toaster,
       progressBar: ngProgressLite,
       afterComplete: loadClusterAndListings,
@@ -94,7 +94,7 @@ angular.module('app')
       $scope.cluster = cluster;
 
       $scope.userIsSubscribed = $scope.cluster.subscribers.some(function(subs) {
-        return subs.id == AuthService.getUser().id;
+        return subs.id == AuthService.get('id');
       });
 
       $scope.userCanSubscribe = UserCanSubscribeService.canSubscribe(AuthService.getUser(), $scope.cluster);
@@ -108,8 +108,8 @@ angular.module('app')
         return { text: a.redditName }
       });
 
-      if(AuthService.get('userId') == cluster.owner.id ||
-         cluster.admins && cluster.admins.map(function(a) { return a.id }).indexOf(AuthService.get('userId')) > -1
+      if(AuthService.get('id') == cluster.owner.id ||
+         cluster.admins && cluster.admins.map(function(a) { return a.id }).indexOf(AuthService.get('id')) > -1
         ) {
           $scope.canEdit = true;
         }

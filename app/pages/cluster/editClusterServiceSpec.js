@@ -17,8 +17,8 @@ describe('EditClusterService Spec', function() {
         var progressBar = { start: function() {}, done: function() {} };
         spyOn(progressBar, 'start');
         spyOn(progressBar, 'done');
-        $httpBackend.whenGET(UserApiService.ENDPOINT + '/name?name=oj206&token=123&userId=456').respond({ id: '987' });
-        $httpBackend.whenPOST(ClusterApiService.ENDPOINT + 'update?userId=456&token=123&clusterId=ABC', {
+        $httpBackend.whenGET(UserApiService.ENDPOINT + '/name?name=oj206').respond({ id: '987' });
+        $httpBackend.whenPOST(ClusterApiService.ENDPOINT + 'update?clusterId=ABC', {
           admins: ['987']
         }).respond({});
         EditClusterService.editAdmin.update({
@@ -34,8 +34,8 @@ describe('EditClusterService Spec', function() {
       it('calls the notifier when the admin has been updated', function() {
         var notifier = { pop: function() {} };
         spyOn(notifier, 'pop');
-        $httpBackend.whenGET(UserApiService.ENDPOINT + '/name?name=oj206&token=123&userId=456').respond({ id: '987' });
-        $httpBackend.whenPOST(ClusterApiService.ENDPOINT + 'update?userId=456&token=123&clusterId=ABC', {
+        $httpBackend.whenGET(UserApiService.ENDPOINT + '/name?name=oj206').respond({ id: '987' });
+        $httpBackend.whenPOST(ClusterApiService.ENDPOINT + 'update?clusterId=ABC', {
           admins: ['987']
         }).respond({});
         EditClusterService.editAdmin.update({
@@ -48,8 +48,8 @@ describe('EditClusterService Spec', function() {
         expect(notifier.pop).toHaveBeenCalled();
       });
       it('makes a POST to /cluster/update', function() {
-        $httpBackend.whenGET(UserApiService.ENDPOINT + '/name?name=oj206&token=123&userId=456').respond({ id: '987' });
-        $httpBackend.expectPOST(ClusterApiService.ENDPOINT + 'update?userId=456&token=123&clusterId=ABC', {
+        $httpBackend.whenGET(UserApiService.ENDPOINT + '/name?name=oj206').respond({ id: '987' });
+        $httpBackend.expectPOST(ClusterApiService.ENDPOINT + 'update?clusterId=ABC', {
           admins: ['987']
         }).respond({});
         EditClusterService.editAdmin.update({
@@ -64,7 +64,7 @@ describe('EditClusterService Spec', function() {
 
     describe('usernames for auto complete', function() {
       beforeEach(function() {
-        $httpBackend.expectGET(UserApiService.ENDPOINT + '/all_names?token=123&userId=456').respond(['jack', 'dave', 'ollie']);
+        $httpBackend.expectGET(UserApiService.ENDPOINT + '/all_names').respond(['jack', 'dave', 'ollie']);
       });
 
       it('does not include the owners name in the list', function(done) {
@@ -81,7 +81,7 @@ describe('EditClusterService Spec', function() {
 
   describe('editClusterName', function() {
     it('notifies with success if everything went well', function() {
-      $httpBackend.expectPOST(ClusterApiService.ENDPOINT + 'update?userId=456&token=123&clusterId=ABC', {
+      $httpBackend.expectPOST(ClusterApiService.ENDPOINT + 'update?clusterId=ABC', {
         name: 'foo'
       }).respond({});
       var notifier = { pop: function() {} };
@@ -97,7 +97,7 @@ describe('EditClusterService Spec', function() {
     });
 
     it('notifies with error if there was a problem', function() {
-      $httpBackend.expectPOST(ClusterApiService.ENDPOINT + 'update?userId=456&token=123&clusterId=ABC', {
+      $httpBackend.expectPOST(ClusterApiService.ENDPOINT + 'update?clusterId=ABC', {
         name: 'foo'
       }).respond({errors: [ 'name not unique '] });
       var notifier = { pop: function() {} };
@@ -113,7 +113,7 @@ describe('EditClusterService Spec', function() {
     });
 
     it('makes the expected request to update', function() {
-      $httpBackend.expectPOST(ClusterApiService.ENDPOINT + 'update?userId=456&token=123&clusterId=ABC', {
+      $httpBackend.expectPOST(ClusterApiService.ENDPOINT + 'update?clusterId=ABC', {
         name: 'foo'
       }).respond({});
       EditClusterService.editClusterName.update({
@@ -130,10 +130,10 @@ describe('EditClusterService Spec', function() {
       it('shows a notification on success', function() {
         var notifier = { pop: function() {} };
         spyOn(notifier, 'pop');
-        $httpBackend.expectPOST(ClusterApiService.ENDPOINT + 'update?userId=456&token=123&clusterId=ABC', {
+        $httpBackend.expectPOST(ClusterApiService.ENDPOINT + 'update?clusterId=ABC', {
           subreddits: ['vim']
         }).respond({});
-        $httpBackend.expectGET(ClusterApiService.ENDPOINT + 'cache_bust?clusterId=ABC&token=123&userId=456').respond({});
+        $httpBackend.expectGET(ClusterApiService.ENDPOINT + 'cache_bust?clusterId=ABC').respond({});
         EditClusterService.editSubreddits.update({
           progressBar: { start: function() {}, done: function() {} },
           cluster: { id: 'ABC' },
@@ -146,10 +146,10 @@ describe('EditClusterService Spec', function() {
 
       it('calls the afterComplete function if one is given', function() {
         var after = jasmine.createSpy('after');
-        $httpBackend.expectPOST(ClusterApiService.ENDPOINT + 'update?userId=456&token=123&clusterId=ABC', {
+        $httpBackend.expectPOST(ClusterApiService.ENDPOINT + 'update?clusterId=ABC', {
           subreddits: ['vim']
         }).respond({});
-        $httpBackend.expectGET(ClusterApiService.ENDPOINT + 'cache_bust?clusterId=ABC&token=123&userId=456').respond({});
+        $httpBackend.expectGET(ClusterApiService.ENDPOINT + 'cache_bust?clusterId=ABC').respond({});
         EditClusterService.editSubreddits.update({
           progressBar: { start: function() {}, done: function() {} },
           cluster: { id: 'ABC' },
@@ -162,10 +162,10 @@ describe('EditClusterService Spec', function() {
       });
 
       it('makes the request to the expected update endpoint and clears the cache', function() {
-        $httpBackend.expectPOST(ClusterApiService.ENDPOINT + 'update?userId=456&token=123&clusterId=ABC', {
+        $httpBackend.expectPOST(ClusterApiService.ENDPOINT + 'update?clusterId=ABC', {
           subreddits: ['vim']
         }).respond({});
-        $httpBackend.expectGET(ClusterApiService.ENDPOINT + 'cache_bust?clusterId=ABC&token=123&userId=456').respond({});
+        $httpBackend.expectGET(ClusterApiService.ENDPOINT + 'cache_bust?clusterId=ABC').respond({});
         EditClusterService.editSubreddits.update({
           progressBar: { start: function() {}, done: function() {} },
           cluster: { id: 'ABC' },
@@ -180,7 +180,7 @@ describe('EditClusterService Spec', function() {
   describe('editSubscribers', function() {
     describe('addSubscriber', function() {
       it('makes the right request', function() {
-        $httpBackend.expectPOST(ClusterApiService.ENDPOINT + 'update?userId=456&token=123&clusterId=ABC', {
+        $httpBackend.expectPOST(ClusterApiService.ENDPOINT + 'update?clusterId=ABC', {
           subscribers: ['654']
         }).respond({});
         EditClusterService.editSubscribers.addSubscriber({
@@ -194,7 +194,7 @@ describe('EditClusterService Spec', function() {
     });
     describe('unsubscribing', function() {
       it('makes the right request', function() {
-        $httpBackend.expectPOST(ClusterApiService.ENDPOINT + 'update?userId=456&token=123&clusterId=ABC', {
+        $httpBackend.expectPOST(ClusterApiService.ENDPOINT + 'update?clusterId=ABC', {
           subscribers: []
         }).respond({});
         EditClusterService.editSubscribers.removeSubscriber({
@@ -205,8 +205,6 @@ describe('EditClusterService Spec', function() {
         });
         $httpBackend.flush();
       });
-
-
     });
   });
 });

@@ -1,22 +1,20 @@
 angular.module('app')
 .service('ClusterApiService', function (AuthService, $http, ApiHelperService, APIURLS) {
 
-  var endpoint = APIURLS() + "/clusters/";
+  var endpoint = "/api/clusters/";
 
   this.ENDPOINT = endpoint;
 
   this.create = function(data) {
-    data.owner = AuthService.get('userId');
-    return $http.post(endpoint + 'create?userId=' + AuthService.get('userId') + '&token=' + AuthService.get('userToken'), data)
+    data.owner = AuthService.get('id');
+    return $http.post(endpoint + 'create', data)
     .then(function(result) {
       return result.data;
     });
   };
 
   this.update = function(clusterId, data) {
-    return $http.post(endpoint + 'update?userId=' + AuthService.get('userId')
-                      + '&token=' + AuthService.get('userToken')
-                      + '&clusterId=' + clusterId, data)
+    return $http.post(endpoint + 'update?clusterId=' + clusterId, data)
     .then(function(result) {
       return result.data;
     });

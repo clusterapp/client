@@ -80,15 +80,21 @@ angular.module('app')
       newSubscribers.push(options.newSubscriberId);
       return _updateCluster(_.extend(options, {
         changeData: { subscribers: newSubscribers },
-        cacheBust: false
+        cacheBust: false,
+        messages: {
+          successTitle: 'You have subscribed to this cluster'
+        }
       }));
     },
     removeSubscriber: function(options) {
       var subscriberIndex = options.cluster.subscribers.indexOf(options.subscriberToRemove);
       var newSubscribers = options.cluster.subscribers.slice(0);
-      newSubscribers.splice(subscriberIndex, 1);
+       newSubscribers.splice(subscriberIndex, 1);
       return _updateCluster(_.extend(options, {
         changeData: { subscribers: newSubscribers },
+        messages: {
+          successTitle: 'You have unsubscribed from this cluster'
+        },
         cacheBust: false
       }));
     },
