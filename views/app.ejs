@@ -37,24 +37,19 @@
 
 
     <section class="mw">
-      <header class="hd sticky">
+      <header class="hd">
         <div class="hd-search">
           <input type="text" name="search" autocomplete="off" spellcheck="false" placeholder="Search for a cluster, subreddit or a user..." class="hds-input">
         </div>
-        <% if(loggedIn) { %>
-          <div class="hd-button">
-            <i class="hdb-plus fa fa-plus fa-2x"></i>
-          </div>
-          <% } %>
       </header>
-      <% if(!loggedIn) { %>
-        <section class="g-msg sticky">
-          You are not logged in, so you will only have limited functionality, such as viewing public clusters, and profiles, please <a class="LoginBtn" href="">login</a> to see more.
-          <i class="g-msg-close fa fa-times closeBtn"></i>
-        </section>
-      <% } %>
+      <!-- <% if(!loggedIn) { %> -->
+      <!--   <section class="g-msg sticky"> -->
+      <!--     You are not logged in, so you will only have limited functionality, such as viewing public clusters, and profiles, please <a class="LoginBtn" href="">login</a> to see more. -->
+      <!--     <i class="g-msg-close fa fa-times closeBtn"></i> -->
+      <!--   </section> -->
+      <!-- <% } %> -->
 
-      <div class="" ng-view style="overflow: auto; height: 100%;"></div>
+      <!-- <div class="" ng-view style="overflow: auto; height: 100%;"></div> -->
     </section>
     <% if(loggedIn) { %>
       <script src="/assets/js/cluster.js"></script>
