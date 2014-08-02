@@ -1,3 +1,3 @@
 angular.module('app')
-.controller('CreateCtrl', function ($scope, $routeParams, AuthService) {
+.controller('CreateCtrl', function ($scope) {
 });

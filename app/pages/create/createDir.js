@@ -11,12 +11,11 @@ angular.module('app')
           'subreddits': scope.cSR.replace(/ /g, '').split(','),
           'public':  (scope.cPublic || false)
         }).then(function (result) {
-          if (result.errors && result.errors.lenth) {
+          if (result.errors && result.errors.length) {
             // something went wrong
+          } else {
+            $location.path('/' + result.owner.redditName + '/' + result.name);
           }
-
-          console.log(result);
-          $location.url($location.path());
         });
       }
     });
