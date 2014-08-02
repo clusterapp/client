@@ -45,7 +45,7 @@
       <% } else { %>
         <a class="sb-logout LoginBtn" href="">
           <i class="fa fa-sign-in fa-2x"></i>
-          <div class="" href="" >Login</div>
+          <div class="" href="">Login</div>
         </a>
       <% } %>
     </section>
@@ -58,8 +58,7 @@
           <i class="hds-icon fa fa-search fa-lg"></i>
         </div>
       </header>
-        <!--   You are not logged in, so you will only have limited functionality, such as viewing public clusters, and profiles, please <a class="LoginBtn" href="">login</a> to see more. -->
-           <div class="" ng-view></div>
+      <div class="" ng-view></div>
     </section>
     <% if(loggedIn) { %>
       <script src="/assets/js/cluster.js"></script>
