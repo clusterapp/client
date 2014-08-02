@@ -127,8 +127,10 @@ angular.module('app')
   loadClusterAndListings();
 
   var noPermErrorSent = false;
+  var scrollInProgess = false;
   $scope.infiniteScroll = function() {
-    if(!$scope.cluster || !$scope.listings || !$scope.after) return;
+    if(scrollInProgess || !$scope.cluster || !$scope.listings || !$scope.after) return;
+    scrollInProgess = true;
 
     if(Object.keys($scope.after).length === 0) {
       if(!noPermErrorSent) {
@@ -140,10 +142,12 @@ angular.module('app')
 
     ngProgressLite.start();
     ClusterApiService.getListings($scope.cluster.id, $scope.after).then(function(listings) {
+      $scope.after = listings.after;
       listings.sorted.forEach(function(l) {
         $scope.listings.sorted.push(l);
       });
       ngProgressLite.done();
+      scrollInProgess = false;
     });
   };
 });
