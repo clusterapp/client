@@ -2,12 +2,26 @@
 
 .g-msg
   font-family: $pFont
-  background-color: darken($Red, 0%)
+  background-color: $Red
   color: $White
 
-.g-msg a
-  color: $Black
+.g-msg-close
+  color: darken($Red, 35%)
 
 
-.g-msg a:hover
-  text-decoration: underline
+.gmc-title
+  font-size: 21px
+  margin-bottom: 10px
+
+.gmc-login
+  padding: 5px 8px
+  font-size: 16px
+  color: $White
+  border: 2px solid $White
+  +border-radius(5px)
+  margin-top: 20px
+  float: left
+
+.gmc-login:hover
+  color: $Red
+  background-color: $White
