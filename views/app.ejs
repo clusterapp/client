@@ -14,7 +14,22 @@
     data-user-id="<%= userId %>"
   >
     <toaster-container></toaster-container>
-
+    
+    <% if(!loggedIn) { %>
+      <div class="g-msg">
+        <i class="g-msg-close fa fa-times fa-lg closeBtn"></i>
+        <div class="gmsg-contents">
+          <h2 class="gmc-title">Hi Guest,</h2>
+          <p>You are not logged in, so go ahead and login with reddit, it takes two seconds, and you will be glad you did!</p>
+          <ul class="gmc-benefits">
+            <li class="gmcb-item">Create public/private clusters</li>
+            <li class="gmcb-item">Subscribe to clusters</li>
+            <li class="gmcb-item">Browse reddit in a modern way</li>
+          </ul>
+          <a class="gmc-login LoginBtn" href="">Login</a>
+        </div>
+      </div>
+     <% } %>
 
     <section class="sidebar">
       <a class="sb-logo" href="/">
@@ -30,7 +45,7 @@
       <% } else { %>
         <a class="sb-logout LoginBtn" href="">
           <i class="fa fa-sign-in fa-2x"></i>
-          <div class="">Login</div>
+          <div class="" href="" >Login</div>
         </a>
       <% } %>
     </section>
@@ -43,13 +58,8 @@
           <i class="hds-icon fa fa-search fa-lg"></i>
         </div>
       </header>
-      <% if(!loggedIn) { %>
-        <!-- <section class="g-msg sticky"> -->
         <!--   You are not logged in, so you will only have limited functionality, such as viewing public clusters, and profiles, please <a class="LoginBtn" href="">login</a> to see more. -->
-        <!--   <i class="g-msg-close fa fa-times closeBtn"></i> -->
-        <!-- </section> -->
-      <% } %>
-      <div class="" ng-view></div>
+           <div class="" ng-view></div>
     </section>
     <% if(loggedIn) { %>
       <script src="/assets/js/cluster.js"></script>
