@@ -1,20 +1,29 @@
 // Header State
 
-.hds-input:focus
+.hds-input
+  color: inherit
+  border-color: inherit
+  -webkit-transition: .3s
+  -moz-transition: .3s
+  transition: .3s
+
+
+.hds-input:hover,
+.hds-input:focus,
+.hds-input:hover::-webkit-input-placeholder,
+.hds-input:focus::-webkit-input-placeholder
   outline: none
+  color: $LightBlue
+  border-color: $LightBlue
+
+
+.hds-input:focus,
+.hd-search:focus .hds-icon,
+.hd-search:hover .hds-icon
+  color: $Black
 
 .hds-input::-webkit-input-placeholder
-  color: rgba(48, 48, 49, 0.7)
+  color: $Gray
 
 
-.sidebar:hover .mw
-  padding-left: 240px
 
-.hdb-plus:hover
-  cursor: pointer
-  background-color: rgba(48, 48, 49, 0.2)
-
-
-.hd-login:hover
-  color: $White
-  border-color: $White
