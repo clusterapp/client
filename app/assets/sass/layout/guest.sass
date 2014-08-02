@@ -1,11 +1,15 @@
 // Guest Layout
 
 .g-msg
-  width: 100%
+  width: 300px
+  height: 100%
+  top: 0
+  right: 0
+  position: absolute
   box-sizing: border-box
   padding: 10px 20px
-  text-align: center
-  z-index: 99
+  z-index: 101
+  +transition(width, 0.3s, ease-in-out)
 
 
 .g-msg-close
@@ -17,4 +21,21 @@
   color: $Black
 
 .g-msg.hide
-  opacity: 0
+  width: 0
+  padding: 0
+
+.hide .g-msg-close,
+.hide .gmsg-contents
+  display: none
+
+
+.gmc-benefits
+  margin-top: 10px
+  float: left
+
+.gmcb-item
+  box-sizing: border-box
+  padding: 5px
+  background: $transparent
+  margin-top: 10px
+  border-left: 4px solid darken($Red, 35%)
