@@ -8,7 +8,7 @@
   "main": "app.js",
   "scripts": {
     "test": "./node_modules/.bin/karma start --single-run --browsers PhantomJS",
-    "features": "./node_modules/.bin/mocha features"
+    "features": "./node_modules/.bin/mocha features -t 5000"
   },
   "repository": {
     "type": "git",

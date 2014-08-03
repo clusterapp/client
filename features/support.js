@@ -9,5 +9,11 @@ module.exports = {
   },
   containsText: function(text) {
     return this.browser.html().indexOf(text) > -1;
+  },
+  visit: function(url, cb) {
+    this.browser.visit(BASE_URL + url, cb);
+  },
+  html: function() {
+    return this.browser.html();
   }
 };
