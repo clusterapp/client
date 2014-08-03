@@ -7,7 +7,8 @@
   "description": "fontend =======",
   "main": "app.js",
   "scripts": {
-    "test": "./node_modules/.bin/karma start --single-run --browsers PhantomJS"
+    "test": "./node_modules/.bin/karma start --single-run --browsers PhantomJS",
+    "features": "./node_modules/.bin/mocha features"
   },
   "repository": {
     "type": "git",
@@ -31,7 +32,8 @@
     "karma": "^0.12.17",
     "karma-cli": "0.0.4",
     "karma-jasmine": "~0.2.0",
-    "karma-phantomjs-launcher": "^0.1.4"
+    "karma-phantomjs-launcher": "^0.1.4",
+    "mocha": "^1.21.3"
   },
   "dependencies": {
     "body-parser": "^1.5.2",
