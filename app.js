@@ -65,7 +65,6 @@ app.all('/api/*', function(req, res) {
   if(req.method == 'GET') {
     return request(urlForRequest).pipe(res)
   } else {
-    console.log('POST', JSON.stringify(req.body));
     return request({
       method: 'POST',
       url: urlForRequest,
