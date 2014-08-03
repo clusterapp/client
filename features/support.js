@@ -4,8 +4,9 @@ var shell = require('shelljs');
 var request = require('request');
 
 before(function() {
-  console.log('You need to have the API running with TEST_TOKEN set (to anything)');
+  console.log('You need to have the API running with TEST_TOKEN set (to anything) on Port 3000');
   console.log('These tests will mess with the DB, it\'s recommended to run `npm run seed` after running the tests');
+  console.log();
 });
 module.exports = {
   deleteClusters: function(cb) {
