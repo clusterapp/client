@@ -1,24 +1,41 @@
-<div ng-if="loggedIn">
-  <h2>Welcome to Cluster, {{ user.redditName }}</h2>
-  <a href="/{{user.redditName}}"> go to your profile</a>
+<div class="dashboard">
+  <div class="db-user" ng-if="loggedIn">
+    <h2>Welcome {{ user.redditName }},</h2>
+    <p>Cluster is a service that extends reddit by allowing users to create private and public clusters (similar to multi-reddits) which other users can subscribe to (if the cluster is public).</p>
+    <h3><a href="/{{ user.redditName }}">Visit your profile</a></h3>
+  </div>
+
+  <div class="db-guest" ng-if="!loggedIn">
+    <h2>Welcome Guest User,</h2>
+    <p>You are not logged in, so your dashboard is pretty basic, but once you login, it comes alive!</p>
+
+    <h3><a href="" class="LoginBtn">Login</a></h3>
+  </div>
+
+  <div class="db-userStats" ng-if="loggedIn">
+    <h2>Stats:</h2>
+    <ul>
+      <li>Private Clusters: 21</li>
+      <li>Subscribed Clusters: 13</li>
+      <li>Admin of Clusters: 3</li>
+      <li>Public Cluster: 18</li>
+    </ul>
+  </div>
+
+  <div class="db-publicClusters">
+    <h2>Public Clusters</h2>
+    <ul>
+      <li ng-repeat="cluster in publicClusters">
+        <a href="{{ cluster | clusterUrl }}">
+          {{cluster.owner.redditName}}/{{cluster.name}}
+        </a>
+        | {{ cluster.subreddits.join(', ') }}
+      </li>
+    </ul>
+  </div>
 </div>
 
-<div ng-if="!loggedIn">
-  <h2>You are not logged in mate</h2>
-</div>
 
-<h2>Public Clusters</h2>
-<ul>
-  <li ng-repeat="cluster in publicClusters">
-    <br />
-    <h4>
-      <a href="{{cluster | clusterUrl}}">
-        {{cluster.owner.redditName}}/{{cluster.name}}
-      </a>
-    </h4>
-    <p>{{cluster.subreddits.join(', ')}}</p>
-    <br />
-  </li>
-</ul>
+
 
 
