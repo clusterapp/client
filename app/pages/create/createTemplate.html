@@ -1,15 +1,16 @@
-<div class="">
-  Lets create a cluster<br/><br/>
+<div class="create">
 
-  <label>Cluster Name</label>
-  <input placeholder="Cluster Name" class="c-Name" ng-model="cName" required><br/>
+  <h2 class="create-title">Create your own cluster</h2>
+  
+  <label class="create-label">Cluster Name (cannot be called 'create')</label>
+  <input placeholder="The name of your cluster" class="c-Name" ng-model="cName" required><br/>
 
-  <label>Subreddits in the cluster E.g. swift, angularjs, gamedev</label>
+  <label class="create-label">Subreddits in the cluster (E.g. swift, angularjs, gamedev)</label>
   <input placeholder="Subreddits" class="c-SR" ng-model="cSR" required><br/>
 
-  <label>Public</label>
+  <label class="create-label">Public</label>
   <input type="checkbox" class="c-Public" ng-model="cPublic"><br/>
 
 
-  <button class="c-Submit" ng-click="createCluster()">Create</button>
+  <div class="c-Submit" ng-click="createCluster()">Create</div>
 </div>
