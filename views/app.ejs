@@ -37,6 +37,16 @@
         <div class="sbl-text">Cluster</div>
       </a>
 
+
+
+      <% if(loggedIn) { %>
+        <a class="sb-create" href="<%= userName %>/create">
+          <i class="fa fa-plus fa-2x"></i>
+          <div class="">Create</div>
+        </a>
+      <% } %>
+
+
       <% if(loggedIn) { %>
         <a class="sb-logout" href="/logout">
           <i class="fa fa-power-off fa-2x"></i>
