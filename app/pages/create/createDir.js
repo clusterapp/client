@@ -14,8 +14,6 @@ angular.module('app')
           if (result.errors && result.errors.lenth) {
             // something went wrong
           }
-
-          console.log(result);
           $location.url($location.path());
         });
       }
