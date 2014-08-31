@@ -8,7 +8,8 @@
   "main": "app.js",
   "scripts": {
     "test": "./node_modules/.bin/karma start --single-run --browsers PhantomJS",
-    "features": "./node_modules/.bin/mocha features -t 5000"
+    "features": "./node_modules/.bin/mocha features -t 5000",
+    "deploy": "./node_modules/cluster-deploy/deploy deploy.json"
   },
   "repository": {
     "type": "git",
@@ -21,6 +22,7 @@
   },
   "homepage": "https://github.com/clusterapp/fontend",
   "devDependencies": {
+    "cluster-deploy": "0.0.1",
     "gulp": "^3.8.6",
     "gulp-concat": "^2.3.3",
     "gulp-load-plugins": "^0.5.3",

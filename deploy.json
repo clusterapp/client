@@ -1,0 +1,10 @@
+{
+  "location": "/www/client",
+  "stop_server": "forever stop app.js",
+  "start_server": "forever start app.js",
+  "prefix": ". $HOME/.profile",
+  "post_checkout": [
+    "npm install",
+    "gulp heroku"
+  ]
+}
