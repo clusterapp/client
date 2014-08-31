@@ -4,6 +4,7 @@
   "start_server": "forever start app.js",
   "prefix": ". $HOME/.profile",
   "post_checkout": [
+    "export CLUSTER_PORT=80",
     "npm install",
     "gulp heroku"
   ]
