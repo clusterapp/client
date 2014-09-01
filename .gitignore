@@ -3,3 +3,4 @@ tags
 node_modules/
 app/assets/js/*.js
 app/assets/css/cluster.css
+.sass-cache
