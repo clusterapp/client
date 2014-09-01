@@ -1,8 +1,8 @@
 angular.module('app')
 .directive('whenScrolled', function() {
   return function(scope, elem, attr) {
-    elem.parent().bind('scroll', function() {
-      if(Math.abs($(this).scrollTop() - elem[0].scrollHeight) < 1500) {
+    $(window).scroll(function() {
+      if($(window).scrollTop() + $(window).height() == $(document).height()) {
         scope.$apply(attr.whenScrolled);
       }
     });
