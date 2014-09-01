@@ -17,7 +17,7 @@ app.factory('APIURLS', function($location) {
        $location.absUrl().indexOf('http://server/') > -1) { // karma
       return 'http://127.0.0.1:3000';
     } else {
-      return 'http://clusterit.me';
+      return 'http://clusterit.me:3000';
     }
   };
 
